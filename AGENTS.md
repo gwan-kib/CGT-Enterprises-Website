@@ -35,12 +35,22 @@ The expected production stack is:
 
 - **React:** Build the public-facing, primarily one-page website and its reusable sections, forms, navigation, and interactive UI.
 - **TypeScript:** Use TypeScript for all React application source code. Write components in `.tsx` files and non-JSX application modules in `.ts` files. Do not create JavaScript application files unless a specific tool or external platform requires them and the reason is documented.
-- **Tailwind CSS:** Implement the responsive layout, CGT design tokens, typography, spacing, states, and component styling.
+- **Tailwind CSS:** Implement the responsive layout, CGT design tokens, typography, spacing, states, and component styling. Keep reusable Tailwind and CSS rules in separate stylesheet files instead of filling React components with long utility-class strings.
 - **Render:** Build and host the production React website. Use a preview or staging deployment before the custom domain points to it.
 - **Porkbun:** Register or manage the custom domain and DNS records that connect the CGT domain to Render. Do not treat Porkbun as the website host.
 - **Google Apps Script:** Provide the server-side endpoint for the contact form, including validation, submission handling, and delivery to the client-designated email. It is also the expected bridge for writing approved review-form submissions to Google Sheets if that workflow is implemented.
 - **Google Sheets:** Store reviews submitted through the website. Define the final columns, moderation process, permissions, and client ownership before connecting production submissions. Do not use Sheets as a general application database.
 - **Google Business Profile and Google Reviews:** Provide the outbound Leave a Google Review destination and, if approved, the source for displaying existing public reviews. The access method and display integration must be confirmed; do not scrape reviews or invent an unsupported API.
+
+CSS and Tailwind organization:
+
+- Keep styles under a dedicated location such as `src/styles/`, with a central stylesheet entrypoint that imports shared tokens, shared component rules, and section-specific stylesheets.
+- Use separate stylesheets for substantial visible areas such as navigation, About, services, reviews, FAQ, contact, and footer. Keep global design tokens and genuinely shared patterns in shared files.
+- Prefer semantic class names in React and compose their fixed styling in CSS with Tailwind directives such as `@apply` when supported by the installed Tailwind version.
+- Keep React files focused on component structure, content, state, accessibility, and behaviour. Whenever practical, move fixed layout, spacing, typography, colour, border, animation, responsive, hover, and focus styling into the appropriate stylesheet.
+- Inline Tailwind utilities or React `style` values are acceptable when they make a small one-off case significantly simpler or clearer, or when a value is genuinely calculated at runtime.
+- For runtime visual values, prefer passing a narrowly scoped CSS custom property from React and consuming it in the stylesheet instead of placing an entire style definition in the component.
+- Do not create a separate stylesheet for every trivial component. Group styles by shared responsibility or visible page section when that keeps implementation and maintenance clearer.
 
 Service boundaries:
 
@@ -209,5 +219,11 @@ State briefly:
 2. How to run it using scripts that exist in the repository.
 3. How it was verified, including responsive and accessibility checks relevant to the change.
 4. Any remaining placeholder, client decision, or deployment requirement.
+
+Then review the local `docs/TODO.md` checklist:
+
+- Check off an item only when the entire item has been completed and verified. Leave partially completed items unchecked.
+- If the completed work reveals additional required work that is not already represented in the checklist, add a clear unchecked item in the appropriate section.
+- Add only work that is now genuinely required for the approved project or the current development phase. Do not add speculative ideas or unapproved scope.
 
 Do not start the next phase unless explicitly asked.
