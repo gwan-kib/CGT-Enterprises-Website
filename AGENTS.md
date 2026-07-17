@@ -115,6 +115,9 @@ Refer to the [Client Website Information Checklist](https://docs.google.com/docu
 
 - Before using an image, check ownership or licensing, quality, dimensions, aspect ratio, background compatibility, file size, and mobile crop behaviour.
 - Prefer modern web formats where supported and provide sensible fallbacks when needed.
+- Use Google Material Symbols for interface symbols. Load them once through a central document or stylesheet entrypoint instead of maintaining local icon files or adding an icon package.
+- Keep approved logos, photographs, and other image content in `src/assets/images/`. Do not create a local `src/assets/icons/` directory unless a later approved requirement cannot be met with Material Symbols.
+- Treat decorative symbols as hidden from assistive technology. Give meaningful symbols an accessible name or accompanying text, and never rely on a symbol alone when its meaning could be unclear.
 - Mark temporary copy, missing links, placeholder images, and unconfirmed details clearly in development.
 
 ## Performance and SEO
