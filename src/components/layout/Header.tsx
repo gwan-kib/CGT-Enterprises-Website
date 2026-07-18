@@ -1,6 +1,9 @@
-import { business } from '../../data/business'
-import { navigationItems } from '../../data/navigation'
-import { Button } from '../ui/Button'
+import { useEffect, useRef } from "react";
+
+import logoBadge from "../../assets/images/CGT Logo Badge 128px.png";
+import { business } from "../../data/business";
+import { navigationItems } from "../../data/navigation";
+import { Button } from "../ui/Button";
 
 function NavigationLinks() {
   return (
@@ -13,21 +16,128 @@ function NavigationLinks() {
         </li>
       ))}
     </ul>
-  )
+  );
 }
 
 export function Header() {
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const header = headerRef.current;
+
+    if (!header) {
+      return;
+    }
+
+    // Distance, in pixels, over which the shell completes its transformation.
+    const scrollRange = 120;
+    // Final top and bottom gap around the floating shell.
+    const maximumBlockInset = 0;
+    // Final horizontal space between the shell edge and the header content.
+    const maximumContentPadding = 24;
+    // Final corner radius of the fully transformed shell.
+    const maximumRadius = 16;
+    // Final downward offset of the floating shell.
+    const maximumTranslateY = 20;
+
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let maximumInlineInset = 8;
+    let targetProgress = Math.min(window.scrollY / scrollRange, 1);
+    let currentProgress = targetProgress;
+    let animationFrame = 0;
+
+    const measureMaximumInlineInset = () => {
+      const headerContent = header.querySelector<HTMLElement>(".site-header__top");
+
+      if (headerContent) {
+        maximumInlineInset = Math.max(8, headerContent.getBoundingClientRect().left - maximumContentPadding);
+      }
+    };
+
+    const applyProgress = (progress: number) => {
+      header.style.setProperty("--header-shell-inset-block", (maximumBlockInset * progress).toFixed(2) + "px");
+      header.style.setProperty("--header-shell-inset-inline", (maximumInlineInset * progress).toFixed(2) + "px");
+      header.style.setProperty("--header-shell-radius", (maximumRadius * progress).toFixed(2) + "px");
+      header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
+      header.style.setProperty("--header-shell-outline-strength", (progress * 100).toFixed(1) + "%");
+      header.style.setProperty("--header-shell-divider-strength", ((1 - progress) * 100).toFixed(1) + "%");
+      header.style.setProperty(
+        "--header-shell-shadow-y",
+        // Final vertical shadow offset. Change 8 to adjust the shadow depth.
+        (8 * progress).toFixed(2) + "px",
+      );
+      header.style.setProperty(
+        "--header-shell-shadow-blur",
+        // Final shadow blur. Change 24 to make the shadow sharper or softer.
+        (24 * progress).toFixed(2) + "px",
+      );
+      header.style.setProperty(
+        "--header-shell-shadow-alpha",
+        // Final shadow opacity. Keep this value between 0 and 1.
+        (0.08 * progress).toFixed(3),
+      );
+    };
+
+    const animateToScrollPosition = () => {
+      animationFrame = 0;
+
+      if (reducedMotionQuery.matches) {
+        currentProgress = targetProgress;
+      } else {
+        // Larger values follow the scroll faster; smaller values feel softer.
+        currentProgress += (targetProgress - currentProgress) * 0.001;
+
+        if (Math.abs(targetProgress - currentProgress) < 0.001) {
+          currentProgress = targetProgress;
+        }
+      }
+
+      applyProgress(currentProgress);
+
+      if (currentProgress !== targetProgress) {
+        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
+      }
+    };
+
+    const updateTargetProgress = () => {
+      targetProgress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
+
+      if (animationFrame === 0) {
+        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
+      }
+    };
+
+    const handleResize = () => {
+      measureMaximumInlineInset();
+      applyProgress(currentProgress);
+      updateTargetProgress();
+    };
+
+    const handleMotionPreferenceChange = () => {
+      currentProgress = targetProgress;
+      applyProgress(currentProgress);
+    };
+
+    measureMaximumInlineInset();
+    applyProgress(currentProgress);
+    window.addEventListener("scroll", updateTargetProgress, { passive: true });
+    window.addEventListener("resize", handleResize);
+    reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
+
+    return () => {
+      window.removeEventListener("scroll", updateTargetProgress);
+      window.removeEventListener("resize", handleResize);
+      reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange);
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <div className="site-header__shell">
         <div className="site-header__top">
-          <a
-            aria-label="CGT Enterprises home"
-            className="site-brand"
-            href="#home"
-          >
-            <span className="site-brand__mark">CGT</span>
-            <span className="site-brand__name">{business.name}</span>
+          <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
+            <img alt="" className="site-brand__mark" height="128" src={logoBadge} width="128" />
           </a>
 
           <nav className="site-nav" aria-label="Primary">
@@ -40,5 +150,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }

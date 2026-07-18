@@ -5,11 +5,14 @@
 
   .hero-section__grid {
     @apply grid items-center;
-    gap: clamp(var(--space-12), 7vw, var(--space-24));
+    margin-top: clamp(var(--space-10), 6vw, var(--space-16));
+    gap: clamp(var(--space-10), 6vw, var(--space-20));
   }
 
-  .hero-section__content {
-    max-width: 44rem;
+  .hero-section__header {
+    max-width: var(--content-width);
+    margin-inline: auto;
+    text-align: center;
   }
 
   .hero-section__eyebrow {
@@ -34,7 +37,7 @@
 
   .hero-section__summary {
     max-width: 38rem;
-    margin: var(--space-8) 0 0;
+    margin: 0;
     color: var(--color-neutral-200);
     font-size: 1.125rem;
     line-height: 1.65;
@@ -55,7 +58,7 @@
   }
 
   .hero-section__media {
-    width: min(100%, 31rem);
+    width: min(100%, 32rem);
     margin-inline: auto;
   }
 }
@@ -72,7 +75,7 @@
 
 @media (min-width: 64rem) {
   .hero-section__grid {
-    grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 1fr);
   }
 
   .hero-section__media {

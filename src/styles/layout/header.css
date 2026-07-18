@@ -1,20 +1,60 @@
 @layer components {
   .site-header {
     @apply sticky top-0 z-40;
+    --header-shell-inset-block: 0px;
+    --header-shell-inset-inline: 0px;
+    --header-shell-radius: 0px;
+    --header-shell-translate-y: 0px;
+    --header-shell-outline-strength: 0%;
+    --header-shell-divider-strength: 100%;
+    --header-shell-shadow-y: 0px;
+    --header-shell-shadow-blur: 0px;
+    --header-shell-shadow-alpha: 0;
     min-height: var(--header-height);
+    margin-bottom: calc(0px - var(--header-height));
   }
 
   .site-header__shell {
-    border-bottom: var(--border-width) solid var(--color-divider);
+    @apply relative;
+    background: transparent;
+    transform: translateY(var(--header-shell-translate-y));
+  }
+
+  .site-header__shell::before,
+  .site-header__shell::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: var(--header-shell-inset-block);
+    right: var(--header-shell-inset-inline);
+    bottom: var(--header-shell-inset-block);
+    left: var(--header-shell-inset-inline);
+    border-radius: var(--header-shell-radius);
+    pointer-events: none;
+  }
+
+  .site-header__shell::before {
+    /* The fully scrolled shell background comes from this surface token. */
     background: var(--color-surface);
+    /* Shadow dimensions and opacity are supplied by the scroll animation. */
+    box-shadow: 0 var(--header-shell-shadow-y) var(--header-shell-shadow-blur)
+      rgb(24 23 27 / var(--header-shell-shadow-alpha));
+  }
+
+  .site-header__shell::after {
+    /* The outline strengthens as the full-width divider fades away. */
+    border: var(--border-width) solid
+      color-mix(in srgb, var(--color-border) var(--header-shell-outline-strength), transparent);
+    border-bottom-color: color-mix(
+      in srgb,
+      var(--color-border) var(--header-shell-outline-strength),
+      var(--color-divider) var(--header-shell-divider-strength)
+    );
   }
 
   .site-header__top {
-    @apply flex items-center;
-    width: min(
-      calc(100% - var(--page-gutter) - var(--page-gutter)),
-      var(--content-width)
-    );
+    @apply relative z-10 flex items-center;
+    width: min(calc(100% - var(--page-gutter) - var(--page-gutter)), var(--content-width));
     min-height: var(--header-height);
     margin-inline: auto;
     gap: var(--space-4);
@@ -28,25 +68,15 @@
   }
 
   .site-brand__mark {
-    @apply grid place-items-center;
+    @apply block shrink-0;
     width: 2.75rem;
-    aspect-ratio: 1;
-    border-radius: var(--radius-small);
-    background: var(--color-brand-primary);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-extrabold);
-    transform: rotate(-2deg);
-  }
-
-  .site-brand__name {
-    font-size: var(--font-size-navigation);
-    font-weight: var(--font-weight-bold);
-    letter-spacing: var(--letter-spacing-navigation);
+    height: 2.75rem;
+    object-fit: contain;
   }
 
   .site-nav {
+    flex: 1 1 0%;
     min-width: 0;
-    margin-left: auto;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scrollbar-width: none;
@@ -58,6 +88,7 @@
 
   .site-nav__list {
     @apply m-0 flex w-max list-none p-0;
+    margin-inline: auto;
     gap: var(--space-1);
   }
 
@@ -73,7 +104,7 @@
   }
 
   .site-nav__link::before {
-    content: '';
+    content: "";
     position: absolute;
     z-index: -1;
     inset: 0.35rem 0.1rem;
@@ -96,12 +127,6 @@
     @apply hidden shrink-0;
   }
 
-  @media (max-width: 29.99rem) {
-    .site-brand__name {
-      @apply sr-only;
-    }
-  }
-
   @media (min-width: 64rem) {
     .site-header__top {
       gap: var(--space-6);
@@ -112,7 +137,8 @@
     }
 
     .site-nav__list {
-      width: auto;
+      width: 100%;
+      justify-content: center;
       gap: var(--space-2);
     }
 

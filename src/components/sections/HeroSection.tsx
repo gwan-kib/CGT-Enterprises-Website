@@ -1,24 +1,22 @@
-import { SectionContainer } from '../layout/SectionContainer'
-import { Button } from '../ui/Button'
-import { ImagePlaceholder } from '../ui/ImagePlaceholder'
+import { SectionContainer } from "../layout/SectionContainer";
+import { Button } from "../ui/Button";
+import { ImagePlaceholder } from "../ui/ImagePlaceholder";
 
 export function HeroSection() {
   return (
-    <SectionContainer
-      className="hero-section"
-      id="home"
-      labelledBy="hero-title"
-      tone="dark"
-    >
+    <SectionContainer className="hero-section" id="home" labelledBy="hero-title" tone="dark">
+      <header className="hero-section__header">
+        <p className="hero-section__eyebrow">Family Owned Business</p>
+        <h1 className="hero-section__title" id="hero-title">
+          Hauling, recycling, and delivery.
+        </h1>
+      </header>
+
       <div className="hero-section__grid">
         <div className="hero-section__content">
-          <p className="hero-section__eyebrow">CGT Enterprises / Wireframe</p>
-          <h1 className="hero-section__title" id="hero-title">
-            A clear headline for the work you do.
-          </h1>
           <p className="hero-section__summary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            posuere, justo vitae feugiat luctus, neque lorem facilisis urna.
+            From dump runs and appliance disposal to curbside delivery and full-service beverage recycling, CGT
+            Enterprises provides convenient, dependable service for customers across Yellowknife.
           </p>
           <div className="hero-section__actions">
             <Button href="#services">Explore services</Button>
@@ -27,17 +25,15 @@ export function HeroSection() {
             </Button>
           </div>
           <p className="hero-section__note">
-            Placeholder introduction / content pending approval
+            Questions about a load or need help estimating the price? Get in touch and tell us what you need.
           </p>
         </div>
 
         <div className="hero-section__media">
-          <ImagePlaceholder ratio="portrait" />
-          <p className="hero-section__media-note">
-            Primary visual area / no image selected
-          </p>
+          <ImagePlaceholder ratio="square" />
+          <p className="hero-section__media-note">Primary visual area / no image selected</p>
         </div>
       </div>
     </SectionContainer>
-  )
+  );
 }
