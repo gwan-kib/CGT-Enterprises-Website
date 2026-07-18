@@ -2,7 +2,7 @@
 
 This repository contains the frontend foundation for the CGT Enterprises website. It provides a configured React and TypeScript development environment, a section-based application structure, quality-checking scripts, and approved brand assets.
 
-The project is currently at the foundation stage. The application entrypoint, page components, content modules, and stylesheets are scaffolded but empty, so the development server and production build do not render the website interface.
+The project is currently at the foundation stage. The application entrypoint, page components, content modules, and most stylesheets are scaffolded but empty, so the development server and production build do not render the website interface. The colour and typography foundations are implemented in `src/styles/tokens.css`.
 
 ## Repository contents
 
@@ -12,6 +12,9 @@ The project is currently at the foundation stage. The application entrypoint, pa
 - PostCSS and Autoprefixer configuration.
 - Development, linting, type-checking, production-build, and preview scripts.
 - Separate folders for layout components, page sections, reusable UI, content data, styles, and images.
+- A semantic colour system for brand, background, surface, text, border, action, focus, success, warning, and error roles.
+- Documented contrast pairings for readable text, focus indicators, control boundaries, and feedback states.
+- A Manrope typography system with documented source, license, loading strategy, system fallbacks, weights, and role-based type scales.
 - CGT logo assets stored in `src/assets/images/`.
 - Google Material Symbols established as the interface-icon source.
 - Git ignore rules for dependencies, generated builds, caches, logs, local environment files, and local tooling.
@@ -44,7 +47,7 @@ The project is currently at the foundation stage. The application entrypoint, pa
 |   |   |-- layout/           # Layout stylesheets
 |   |   |-- sections/         # Section stylesheets
 |   |   |-- shared.css        # Shared style entry
-|   |   `-- tokens.css        # Design-token entry
+|   |   `-- tokens.css        # Semantic colour and typography tokens
 |   |-- App.tsx               # Application composition entry
 |   |-- index.css             # Main stylesheet entry
 |   `-- main.tsx              # React application entry
@@ -107,6 +110,8 @@ The completed repository work demonstrates:
 - Organizing the codebase by layout, page section, reusable UI, content data, and styling responsibility.
 - Separating shared styles, design tokens, layout styles, and section styles.
 - Establishing a consistent asset strategy for brand imagery and interface symbols.
+- Creating semantic colour roles from the supplied CGT palette and verifying their required contrast pairings.
+- Defining a fluid Manrope typography scale with explicit weights, line heights, letter spacing, and system fallbacks.
 - Documenting the repository so its implementation state and technical decisions are easy to inspect.
 
 ## Lessons learned
@@ -114,6 +119,8 @@ The completed repository work demonstrates:
 - Establishing linting, strict typing, and build checks early creates a clear baseline for later work.
 - Separating content, components, and styles at the scaffold stage makes ownership easier to understand.
 - Keeping generated output, local configuration, and dependencies out of source control protects repository clarity.
+- Bright brand colours require deliberate foreground pairings and darker interaction tones to remain readable.
+- One webfont with a strong fallback stack provides clear hierarchy without adding an unnecessary second font request.
 - Documentation is most useful when every claim can be verified directly against the checkout.
 
 ## Asset architecture

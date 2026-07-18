@@ -1,0 +1,190 @@
+/*
+ * Typography decision
+ *
+ * - Primary family: Manrope.
+ * - Supporting fallback: Segoe UI, Roboto, Helvetica, Arial, sans-serif.
+ * - Source: Google Fonts (https://fonts.google.com/specimen/Manrope).
+ * - License: SIL Open Font License 1.1.
+ * - Available style: normal, variable weight axis from 200 through 800.
+ * - Site weights: 400, 500, 600, 700, and 800.
+ * - Loading strategy: load Manrope once from the central document entrypoint,
+ *   request only the site weights, preconnect to the font origins, and use
+ *   display=swap. Do not load a second webfont.
+ */
+
+:root {
+  /* Font families */
+  --font-family-primary:
+    "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-supporting:
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-family-display: var(--font-family-primary);
+  --font-family-body: var(--font-family-primary);
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Display text */
+  --font-size-display: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+  --font-weight-display: var(--font-weight-extrabold);
+  --line-height-display: 1.02;
+  --letter-spacing-display: -0.045em;
+
+  /* Page headings */
+  --font-size-heading-page: clamp(2.5rem, 1.95rem + 2.2vw, 3.75rem);
+  --font-weight-heading-page: var(--font-weight-extrabold);
+  --line-height-heading-page: 1.08;
+  --letter-spacing-heading-page: -0.035em;
+
+  /* Section headings */
+  --font-size-heading-section: clamp(2rem, 1.65rem + 1.4vw, 3rem);
+  --font-weight-heading-section: var(--font-weight-bold);
+  --line-height-heading-section: 1.15;
+  --letter-spacing-heading-section: -0.025em;
+
+  /* Card headings */
+  --font-size-heading-card: 1.25rem;
+  --font-weight-heading-card: var(--font-weight-bold);
+  --line-height-heading-card: 1.3;
+  --letter-spacing-heading-card: -0.01em;
+
+  /* Body copy */
+  --font-size-body: 1rem;
+  --font-weight-body: var(--font-weight-regular);
+  --line-height-body: 1.65;
+  --letter-spacing-body: 0;
+
+  /* Small copy */
+  --font-size-small: 0.875rem;
+  --font-weight-small: var(--font-weight-regular);
+  --line-height-small: 1.55;
+  --letter-spacing-small: 0.005em;
+
+  /* Labels */
+  --font-size-label: 0.875rem;
+  --font-weight-label: var(--font-weight-semibold);
+  --line-height-label: 1.4;
+  --letter-spacing-label: 0.01em;
+
+  /* Buttons */
+  --font-size-button: 0.9375rem;
+  --font-weight-button: var(--font-weight-bold);
+  --line-height-button: 1.2;
+  --letter-spacing-button: 0.01em;
+
+  /* Navigation */
+  --font-size-navigation: 0.9375rem;
+  --font-weight-navigation: var(--font-weight-semibold);
+  --line-height-navigation: 1.25;
+  --letter-spacing-navigation: 0.005em;
+
+  /* Supplied brand colours */
+  --color-brand-green-500: #3fce61;
+  --color-brand-red-500: #c8372b;
+  --color-neutral-900: #18171b;
+  --color-neutral-white: #ffffff;
+  --color-neutral-black: #000000;
+
+  /* Supporting green tones */
+  --color-brand-green-50: #effcf2;
+  --color-brand-green-600: #2eaa4d;
+  --color-brand-green-700: #217c39;
+  --color-brand-green-800: #195f2d;
+
+  /* Supporting red tones */
+  --color-brand-red-50: #fff3f1;
+  --color-brand-red-600: #aa2c23;
+  --color-brand-red-700: #87231c;
+
+  /* Supporting neutral tones */
+  --color-neutral-50: #f7f7f8;
+  --color-neutral-100: #eeeef0;
+  --color-neutral-200: #dad9dd;
+  --color-neutral-500: #65626c;
+
+  /* Warning tones remain distinct from brand, success, and error colours. */
+  --color-warning-50: #fff8e6;
+  --color-warning-500: #9a6700;
+  --color-warning-700: #704700;
+
+  /* Brand roles */
+  --color-brand-primary: var(--color-brand-green-500);
+  --color-brand-secondary: var(--color-brand-red-500);
+
+  /* Background and surface roles */
+  --color-background-page: var(--color-neutral-white);
+  --color-background-subtle: var(--color-neutral-50);
+  --color-surface: var(--color-neutral-white);
+  --color-surface-subtle: var(--color-neutral-50);
+  --color-surface-emphasis: var(--color-neutral-900);
+
+  /* Text roles */
+  --color-text: var(--color-neutral-900);
+  --color-text-muted: var(--color-neutral-500);
+  --color-text-inverse: var(--color-neutral-white);
+  --color-text-on-brand-primary: var(--color-neutral-900);
+  --color-text-on-brand-secondary: var(--color-neutral-white);
+  --color-text-link: var(--color-brand-green-700);
+  --color-text-link-hover: var(--color-brand-green-800);
+
+  /* Border and divider roles */
+  --color-border: var(--color-neutral-200);
+  --color-border-strong: var(--color-neutral-500);
+  --color-divider: var(--color-neutral-200);
+
+  /* Action roles */
+  --color-action-background: var(--color-brand-green-500);
+  --color-action-background-hover: #36b957;
+  --color-action-background-active: var(--color-brand-green-600);
+  --color-action-text: var(--color-neutral-900);
+  --color-action-background-disabled: var(--color-neutral-100);
+  --color-action-text-disabled: var(--color-neutral-500);
+
+  /* Focus roles: red for light surfaces and green for dark surfaces. */
+  --color-focus-ring: var(--color-brand-red-500);
+  --color-focus-ring-inverse: var(--color-brand-green-500);
+  --color-focus-offset: var(--color-neutral-white);
+  --color-focus-offset-inverse: var(--color-neutral-900);
+
+  /* Feedback roles */
+  --color-success-background: var(--color-brand-green-50);
+  --color-success-border: var(--color-brand-green-700);
+  --color-success-text: var(--color-brand-green-700);
+  --color-warning-background: var(--color-warning-50);
+  --color-warning-border: var(--color-warning-500);
+  --color-warning-text: var(--color-warning-700);
+  --color-error-background: var(--color-brand-red-50);
+  --color-error-border: var(--color-brand-red-500);
+  --color-error-text: var(--color-brand-red-500);
+}
+
+/*
+ * Verified contrast pairings
+ *
+ * Normal text and interactive labels meet or exceed 4.5:1:
+ * - default text / page or surface: 17.84:1
+ * - muted text / page or surface: 5.97:1
+ * - inverse text / emphasized surface: 17.84:1
+ * - on-brand-primary text / primary brand: 8.68:1
+ * - on-brand-secondary text / secondary brand: 5.20:1
+ * - action text / default, hover, active backgrounds: 8.68:1, 6.99:1, 5.92:1
+ * - link / page, and link hover / page: 5.24:1, 7.73:1
+ * - success text / success background: 4.96:1
+ * - warning text / warning background: 7.65:1
+ * - error text / error background: 4.79:1
+ *
+ * Required visible boundaries meet or exceed 3:1:
+ * - strong border / white surface: 5.97:1
+ * - light-surface focus ring / white: 5.20:1
+ * - dark-surface focus ring / emphasized surface: 8.68:1
+ * - success border / success background: 4.96:1
+ * - warning border / warning background: 4.59:1
+ * - error border / error background: 4.79:1
+ *
+ * The standard border and divider are decorative only. Use the strong border
+ * token whenever a visible control boundary is required.
+ */
