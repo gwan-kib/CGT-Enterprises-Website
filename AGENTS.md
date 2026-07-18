@@ -156,6 +156,38 @@ Refer to the [Client Website Information Checklist](https://docs.google.com/docu
 - If a check cannot be run because the project has not defined it, state that limitation.
 - For bug reports, include reproduction steps, expected and actual results, affected browser or viewport, likely cause, files involved, and the smallest reasonable fix.
 
+## README maintenance
+
+Treat the repository's `README.md` as a living snapshot of the project and a professional portfolio artifact. Keep it aligned with the actual checked-out implementation whenever a change materially affects the website's features, architecture, setup process, technologies, integrations, deployment, testing, or status. Do not require a README update for every minor styling adjustment or internal refactor; update it when the existing documentation would otherwise become inaccurate, incomplete, or less useful.
+
+The README must describe only the project's present state. Do not use it as a roadmap or task tracker, reference internal planning documents, list unimplemented features or integrations, or organize content as a comparison between the present and a future state. When the project is incomplete, describe the implemented scope directly and keep unfinished requirements in the appropriate internal planning document.
+
+The README should help:
+
+1. Recruiters, clients, and other non-contributors quickly understand the project, its purpose, current status, and implemented features.
+2. Developers understand how the project is structured, configured, tested, and run.
+3. Demonstrate the developer's technical abilities, responsibilities, decisions, challenges solved, and lessons learned throughout the project.
+
+When relevant, keep the following information current:
+
+- Project purpose and business problem.
+- Implemented features and completed sections.
+- Installed technology stack and the current purpose of each major technology.
+- Actual architecture and implemented data flow.
+- Local installation and development instructions.
+- Required environment variables, using placeholder names only.
+- Available scripts for development, testing, linting, and building.
+- Implemented contact-form, review, or other external workflows.
+- Accessibility, responsive-design, security, performance, and SEO work supported by the current implementation and verification.
+- Active deployment architecture and integrations.
+- Current project status.
+- The developer's responsibilities, technical contributions, challenges solved, skills developed, and lessons learned.
+- Approved screenshots or a production link when they exist.
+
+Keep every README claim accurate and supported by the current implementation. Do not exaggerate the developer's responsibilities, present unimplemented work as part of the project, expose secrets or sensitive client information, or include unconfirmed business details.
+
+When reviewing a meaningful feature, pull request, milestone, or deployment change, include "Does the README need to be updated?" in the documentation checklist.
+
 ## Git and commit messages
 
 - Keep branches and commits focused on one logical change where practical.
@@ -222,6 +254,7 @@ State briefly:
 2. How to run it using scripts that exist in the repository.
 3. How it was verified, including responsive and accessibility checks relevant to the change.
 4. Any remaining placeholder, client decision, or deployment requirement.
+5. Whether the change materially affects `README.md`, and update it when required by the README maintenance guidance.
 
 Then review the local `docs/TODO.md` checklist:
 
