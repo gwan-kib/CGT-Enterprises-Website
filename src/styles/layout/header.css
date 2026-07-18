@@ -34,21 +34,24 @@
   }
 
   .site-header__shell::before {
-    /* The fully scrolled shell background comes from this surface token. */
-    background: var(--color-surface);
+    background: var(--color-brand-green-500);
     /* Shadow dimensions and opacity are supplied by the scroll animation. */
     box-shadow: 0 var(--header-shell-shadow-y) var(--header-shell-shadow-blur)
-      rgb(24 23 27 / var(--header-shell-shadow-alpha));
+      rgb(25 95 45 / var(--header-shell-shadow-alpha));
   }
 
   .site-header__shell::after {
     /* The outline strengthens as the full-width divider fades away. */
     border: var(--border-width) solid
-      color-mix(in srgb, var(--color-border) var(--header-shell-outline-strength), transparent);
+      color-mix(
+        in srgb,
+        var(--color-brand-green-800) var(--header-shell-outline-strength),
+        transparent
+      );
     border-bottom-color: color-mix(
       in srgb,
-      var(--color-border) var(--header-shell-outline-strength),
-      var(--color-divider) var(--header-shell-divider-strength)
+      var(--color-brand-green-800) var(--header-shell-outline-strength),
+      var(--color-brand-green-700) var(--header-shell-divider-strength)
     );
   }
 
@@ -64,7 +67,7 @@
     @apply inline-flex shrink-0 items-center no-underline;
     min-height: var(--touch-target-minimum);
     gap: var(--space-3);
-    color: var(--color-text);
+    color: var(--color-neutral-900);
   }
 
   .site-brand__mark {
@@ -96,11 +99,12 @@
     @apply relative isolate inline-flex items-center justify-center no-underline;
     min-height: var(--touch-target-minimum);
     padding-inline: var(--space-3);
-    color: var(--color-text);
+    color: var(--color-neutral-900);
     font-size: var(--font-size-navigation);
     font-weight: var(--font-weight-navigation);
     line-height: var(--line-height-navigation);
     white-space: nowrap;
+    transition: color var(--transition-fast) var(--easing-standard);
   }
 
   .site-nav__link::before {
@@ -109,7 +113,7 @@
     z-index: -1;
     inset: 0.35rem 0.1rem;
     border-radius: var(--radius-pill);
-    background: var(--color-brand-primary);
+    background: var(--color-brand-green-800);
     opacity: 0;
     transform: rotate(-2deg) scaleX(0.82);
     transition:
@@ -123,8 +127,33 @@
     transform: rotate(-2deg) scaleX(1);
   }
 
+  .site-nav__link:hover,
+  .site-nav__link:focus-visible {
+    color: var(--color-neutral-white);
+  }
+
+  .site-header :where(a, button):focus-visible {
+    outline-color: var(--color-neutral-900);
+  }
+
   .site-header__action {
     @apply hidden shrink-0;
+  }
+
+  .button--header {
+    border-color: var(--color-brand-green-800);
+    background: var(--color-brand-green-800);
+    color: var(--color-neutral-white);
+  }
+
+  .button--header:not(:disabled):hover {
+    border-color: var(--color-neutral-900);
+    background: var(--color-neutral-900);
+  }
+
+  .button--header:not(:disabled):active {
+    border-color: var(--color-brand-green-700);
+    background: var(--color-brand-green-700);
   }
 
   @media (min-width: 64rem) {

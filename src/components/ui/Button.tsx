@@ -1,10 +1,18 @@
 import type { ReactNode } from 'react'
 
+type ButtonVariant = 'header' | 'outline' | 'primary'
+
+const buttonVariantClasses: Record<ButtonVariant, string> = {
+  header: 'button--header',
+  outline: 'button--outline',
+  primary: 'button--primary',
+}
+
 interface ButtonProps {
   children: ReactNode
   disabled?: boolean
   href?: `#${string}`
-  variant?: 'outline' | 'primary'
+  variant?: ButtonVariant
 }
 
 export function Button({
@@ -13,7 +21,7 @@ export function Button({
   href,
   variant = 'primary',
 }: ButtonProps) {
-  const className = `button button--${variant}`
+  const className = `button ${buttonVariantClasses[variant]}`
 
   if (href && !disabled) {
     return (

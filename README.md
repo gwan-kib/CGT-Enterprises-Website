@@ -1,6 +1,6 @@
 # CGT Enterprises Website
 
-This repository contains a responsive, one-page website wireframe for CGT Enterprises. It establishes the site's section order, visual hierarchy, reusable design system, and potential image placement without publishing unconfirmed business content.
+iThis repository contains a responsive, one-page website wireframe for CGT Enterprises. It establishes the site's section order, visual hierarchy, reusable design system, and potential image placement without publishing unconfirmed business content.
 
 ## Website overview
 
