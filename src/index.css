@@ -1,0 +1,15 @@
+@import './styles/tokens.css';
+@import './styles/shared.css';
+@import './styles/layout/header.css';
+@import './styles/layout/footer.css';
+@import './styles/sections/hero.css';
+@import './styles/sections/about.css';
+@import './styles/sections/services.css';
+@import './styles/sections/reviews.css';
+@import './styles/sections/review-form.css';
+@import './styles/sections/faq.css';
+@import './styles/sections/contact.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

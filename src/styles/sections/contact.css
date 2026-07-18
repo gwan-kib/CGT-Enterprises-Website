@@ -1,0 +1,41 @@
+@layer components {
+  .contact-section__grid {
+    @apply grid items-center;
+    gap: clamp(var(--space-12), 7vw, var(--space-24));
+  }
+
+  .contact-section__details {
+    @apply grid;
+    margin: var(--space-10) 0 0;
+    border-top: var(--border-width) solid var(--color-neutral-900);
+  }
+
+  .contact-section__details > div {
+    @apply grid items-center;
+    grid-template-columns: minmax(5rem, 0.35fr) 1fr;
+    gap: var(--space-4);
+    padding-block: var(--space-4);
+    border-bottom: var(--border-width) solid var(--color-neutral-900);
+  }
+
+  .contact-section__details dt {
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  .contact-section__details dd {
+    margin: 0;
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .contact-section .static-form {
+    box-shadow: none;
+  }
+}
+
+@media (min-width: 64rem) {
+  .contact-section__grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(24rem, 1.1fr);
+  }
+}

@@ -1,0 +1,51 @@
+@layer components {
+  .reviews-section__intro {
+    margin-bottom: clamp(var(--space-12), 7vw, var(--space-20));
+  }
+
+  .reviews-section__grid {
+    @apply grid;
+    gap: var(--space-6);
+  }
+
+  .review-card {
+    @apply flex flex-col;
+    min-height: 19rem;
+    margin: 0;
+    padding: clamp(var(--space-6), 3vw, var(--space-10));
+    border: var(--border-width) solid var(--color-border);
+    border-radius: var(--radius-large);
+    background: var(--color-surface-subtle);
+  }
+
+  .review-card__quote {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.6;
+  }
+
+  .review-card__footer {
+    @apply flex flex-col;
+    margin-top: auto;
+    padding-top: var(--space-10);
+    gap: var(--space-1);
+    border-top: var(--border-width) solid var(--color-divider);
+  }
+
+  .review-card__footer cite {
+    font-style: normal;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .review-card__footer span {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-small);
+  }
+}
+
+@media (min-width: 48rem) {
+  .reviews-section__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

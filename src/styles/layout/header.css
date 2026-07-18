@@ -1,0 +1,127 @@
+@layer components {
+  .site-header {
+    @apply sticky top-0 z-40;
+    min-height: var(--header-height);
+  }
+
+  .site-header__shell {
+    border-bottom: var(--border-width) solid var(--color-divider);
+    background: var(--color-surface);
+  }
+
+  .site-header__top {
+    @apply flex items-center;
+    width: min(
+      calc(100% - var(--page-gutter) - var(--page-gutter)),
+      var(--content-width)
+    );
+    min-height: var(--header-height);
+    margin-inline: auto;
+    gap: var(--space-4);
+  }
+
+  .site-brand {
+    @apply inline-flex shrink-0 items-center no-underline;
+    min-height: var(--touch-target-minimum);
+    gap: var(--space-3);
+    color: var(--color-text);
+  }
+
+  .site-brand__mark {
+    @apply grid place-items-center;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    border-radius: var(--radius-small);
+    background: var(--color-brand-primary);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-extrabold);
+    transform: rotate(-2deg);
+  }
+
+  .site-brand__name {
+    font-size: var(--font-size-navigation);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-navigation);
+  }
+
+  .site-nav {
+    min-width: 0;
+    margin-left: auto;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav__list {
+    @apply m-0 flex w-max list-none p-0;
+    gap: var(--space-1);
+  }
+
+  .site-nav__link {
+    @apply relative isolate inline-flex items-center justify-center no-underline;
+    min-height: var(--touch-target-minimum);
+    padding-inline: var(--space-3);
+    color: var(--color-text);
+    font-size: var(--font-size-navigation);
+    font-weight: var(--font-weight-navigation);
+    line-height: var(--line-height-navigation);
+    white-space: nowrap;
+  }
+
+  .site-nav__link::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 0.35rem 0.1rem;
+    border-radius: var(--radius-pill);
+    background: var(--color-brand-primary);
+    opacity: 0;
+    transform: rotate(-2deg) scaleX(0.82);
+    transition:
+      opacity var(--transition-fast) var(--easing-standard),
+      transform var(--transition-fast) var(--easing-standard);
+  }
+
+  .site-nav__link:hover::before,
+  .site-nav__link:focus-visible::before {
+    opacity: 1;
+    transform: rotate(-2deg) scaleX(1);
+  }
+
+  .site-header__action {
+    @apply hidden shrink-0;
+  }
+
+  @media (max-width: 29.99rem) {
+    .site-brand__name {
+      @apply sr-only;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .site-header__top {
+      gap: var(--space-6);
+    }
+
+    .site-nav {
+      overflow: visible;
+    }
+
+    .site-nav__list {
+      width: auto;
+      gap: var(--space-2);
+    }
+
+    .site-nav__link {
+      padding-inline: var(--space-4);
+    }
+
+    .site-header__action {
+      @apply block;
+    }
+  }
+}
