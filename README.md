@@ -12,6 +12,7 @@ The current page includes:
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
 - Static review and contact form layouts with read-only fields and disabled buttons.
 - Native FAQ disclosure controls with one example expanded on initial load.
+- An accessible Services carousel with direct card selection, Previous and Next controls, circular wrapping, active-service status, and a single-card mobile layout.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
 The interface is intentionally a structural wireframe. It does not submit forms, store reviews, call external services, or display real customer or business information.
@@ -25,6 +26,7 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 - Every major section uses at least the viewport height and stacks into a single-column mobile layout without changing the content order.
 - Semantic landmarks, logical heading levels, a skip link, labelled controls, native disclosure elements, minimum touch targets, and visible focus styles support keyboard and assistive-technology use.
 - Reduced-motion preferences disable smooth scrolling and shorten transitions.
+- The Services carousel uses native buttons, a polite position announcement, focus restoration after direct card selection, and motion-free reduced-motion behavior.
 
 ## Technology stack
 
@@ -115,6 +117,7 @@ The implementation demonstrates:
 - Translating a visual brief into a responsive, semantic React page architecture.
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
+- Implementing a data-driven circular carousel without adding a UI dependency or duplicating hidden services.
 - Creating static form compositions that show the intended layout without implying working submission behaviour.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.

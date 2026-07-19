@@ -3,19 +3,54 @@
     margin-bottom: clamp(var(--space-12), 7vw, var(--space-20));
   }
 
-  .services-section__grid {
+  .services-carousel {
+    min-width: 0;
+  }
+
+  .services-carousel__track {
     @apply grid;
     gap: var(--space-6);
+    min-width: 0;
+  }
+
+  .services-carousel__item {
+    min-width: 0;
+  }
+
+  .services-carousel__item.is-inactive {
+    display: none;
   }
 
   .service-card {
-    @apply flex flex-col;
+    @apply relative flex flex-col;
     min-height: 24rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
     background: var(--color-surface);
     box-shadow: var(--shadow-small);
+    transition:
+      border-color var(--transition-standard) var(--easing-standard),
+      box-shadow var(--transition-standard) var(--easing-standard),
+      filter var(--transition-standard) var(--easing-standard),
+      opacity var(--transition-standard) var(--easing-standard),
+      transform var(--transition-standard) var(--easing-standard);
+  }
+
+  .service-card.is-active {
+    border-color: var(--color-border-strong);
+    box-shadow: var(--shadow-card);
+  }
+
+  .service-card.is-inactive {
+    filter: blur(0.045rem);
+    opacity: 0.7;
+    transform: scale(0.97);
+  }
+
+  .service-card.is-inactive:focus-within {
+    filter: none;
+    opacity: 1;
   }
 
   .service-card__topline {
@@ -33,6 +68,24 @@
     color: var(--color-text-muted);
     font-size: var(--font-size-small);
     line-height: var(--line-height-small);
+  }
+
+  .service-card__state {
+    align-self: flex-start;
+    margin-top: var(--space-5);
+    padding: var(--space-1) var(--space-3);
+    border: var(--border-width) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-small);
+  }
+
+  .service-card.is-active .service-card__state {
+    border-color: var(--color-brand-green-700);
+    background: var(--color-brand-green-50);
+    color: var(--color-brand-green-700);
   }
 
   .service-card__title {
@@ -59,20 +112,153 @@
   .service-card__link:hover {
     color: var(--color-text-link-hover);
   }
-}
 
-@media (min-width: 48rem) {
-  .services-section__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .service-card__select-label {
+    margin-top: auto;
+    padding-top: var(--space-8);
+    color: var(--color-text-link);
+    font-weight: var(--font-weight-bold);
+    text-decoration: underline;
+    text-underline-offset: 0.3rem;
+  }
+
+  .service-card__select {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    width: 100%;
+    min-height: var(--touch-target-minimum);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-large);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .service-card__select:focus-visible {
+    outline-offset: 0.35rem;
+  }
+
+  .services-carousel__controls {
+    @apply flex items-center justify-center;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+  }
+
+  .services-carousel__control {
+    min-width: var(--touch-target-minimum);
+    min-height: var(--touch-target-minimum);
+    padding: var(--space-2) var(--space-5);
+    border: var(--border-width-strong) solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: var(--font-size-button);
+    font-weight: var(--font-weight-button);
+    line-height: var(--line-height-button);
+    cursor: pointer;
+    transition:
+      background-color var(--transition-fast) var(--easing-standard),
+      color var(--transition-fast) var(--easing-standard),
+      transform var(--transition-fast) var(--easing-standard);
+  }
+
+  .services-carousel__control:not(:disabled):hover {
+    background: var(--color-surface-emphasis);
+    color: var(--color-text-inverse);
+  }
+
+  .services-carousel__control:not(:disabled):active {
+    transform: translateY(1px);
+  }
+
+  .services-carousel__control:disabled {
+    cursor: not-allowed;
+    border-color: var(--color-neutral-200);
+    background: var(--color-action-background-disabled);
+    color: var(--color-action-text-disabled);
+  }
+
+  .services-carousel__position {
+    min-width: 0;
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-small);
+    text-align: center;
   }
 }
 
-@media (min-width: 64rem) {
-  .services-section__grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+@keyframes service-carousel-enter-next {
+  from {
+    opacity: 0.65;
+    transform: translateX(var(--space-6));
+  }
+}
+
+@keyframes service-carousel-enter-previous {
+  from {
+    opacity: 0.65;
+    transform: translateX(calc(var(--space-6) * -1));
+  }
+}
+
+@layer components {
+  @media (max-width: 63.999rem) {
+    .services-carousel__track {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .services-carousel__controls {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .services-carousel__position {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
   }
 
-  .service-card:nth-child(2) {
-    transform: translateY(var(--space-8));
+  @media (min-width: 64rem) {
+    .services-carousel__track {
+      grid-template-columns: repeat(
+        var(--services-visible-count),
+        minmax(0, 1fr)
+      );
+      padding-block: var(--space-4);
+    }
+
+    .services-carousel__item.is-inactive {
+      display: block;
+    }
+
+    .service-card.is-active {
+      transform: translateY(calc(var(--space-4) * -1)) scale(1.015);
+    }
+
+    .services-carousel__track[data-transition='next']
+      .services-carousel__item {
+      animation: service-carousel-enter-next var(--transition-standard)
+        var(--easing-standard);
+    }
+
+    .services-carousel__track[data-transition='previous']
+      .services-carousel__item {
+      animation: service-carousel-enter-previous var(--transition-standard)
+        var(--easing-standard);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .services-carousel__item {
+      animation: none !important;
+    }
+
+    .service-card,
+    .services-carousel__control {
+      transition: none;
+    }
   }
 }
