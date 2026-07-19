@@ -41,7 +41,6 @@ export function Header() {
     // Final downward offset of the floating shell.
     const maximumTranslateY = 20;
 
-    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     let maximumInlineInset = 8;
     let targetProgress = Math.min(window.scrollY / scrollRange, 1);
     let currentProgress = targetProgress;
@@ -83,17 +82,13 @@ export function Header() {
     const animateToScrollPosition = (timestamp: number) => {
       animationFrame = 0;
 
-      if (reducedMotionQuery.matches) {
+      const elapsedSeconds = Math.min(Math.max((timestamp - previousFrameTime) / 1000, 0), 0.1);
+      const smoothingFactor = 1 - Math.exp(-smoothingRate * elapsedSeconds);
+
+      currentProgress += (targetProgress - currentProgress) * smoothingFactor;
+
+      if (Math.abs(targetProgress - currentProgress) < 0.001) {
         currentProgress = targetProgress;
-      } else {
-        const elapsedSeconds = Math.min(Math.max((timestamp - previousFrameTime) / 1000, 0), 0.1);
-        const smoothingFactor = 1 - Math.exp(-smoothingRate * elapsedSeconds);
-
-        currentProgress += (targetProgress - currentProgress) * smoothingFactor;
-
-        if (Math.abs(targetProgress - currentProgress) < 0.001) {
-          currentProgress = targetProgress;
-        }
       }
 
       previousFrameTime = timestamp;
@@ -121,22 +116,14 @@ export function Header() {
       updateTargetProgress();
     };
 
-    const handleMotionPreferenceChange = () => {
-      currentProgress = targetProgress;
-      previousFrameTime = 0;
-      applyProgress(currentProgress);
-    };
-
     measureMaximumInlineInset();
     applyProgress(currentProgress);
     window.addEventListener("scroll", updateTargetProgress, { passive: true });
     window.addEventListener("resize", handleResize);
-    reducedMotionQuery.addEventListener("change", handleMotionPreferenceChange);
 
     return () => {
       window.removeEventListener("scroll", updateTargetProgress);
       window.removeEventListener("resize", handleResize);
-      reducedMotionQuery.removeEventListener("change", handleMotionPreferenceChange);
       window.cancelAnimationFrame(animationFrame);
     };
   }, []);

@@ -76,9 +76,3 @@
     transform: translateY(var(--space-8));
   }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .service-card:nth-child(2) {
-    transform: none;
-  }
-}

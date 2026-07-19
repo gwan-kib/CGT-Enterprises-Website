@@ -91,7 +91,7 @@ Refer to the [Client Website Information Checklist](https://docs.google.com/docu
 - Use one consistent design system across all sections.
 - Prioritize readable type, strong hierarchy, sufficient contrast, controlled spacing, consistent alignment, clear buttons, professional imagery, and a polished mobile layout.
 - Avoid excessive gradients, animation, glass effects, decorative clutter, or crowded layouts unless they support an approved direction.
-- Add subtle, consistent transitions for hover, focus, selected, menu, accordion, carousel, and validation states. Respect `prefers-reduced-motion`.
+- Add subtle, consistent transitions for hover, focus, selected, menu, accordion, carousel, and validation states.
 
 ## Responsive implementation
 
@@ -150,7 +150,7 @@ Refer to the [Client Website Information Checklist](https://docs.google.com/docu
 - Run only commands that actually exist in the repository. Do not invent missing scripts.
 - Before considering a change complete, run the relevant formatter, lint, type-check, tests, and production build when those scripts exist.
 - Manually verify the affected user path at mobile and desktop sizes.
-- Check navigation and anchors, buttons, contact details, form validation, loading/success/error states, external links, image loading, keyboard navigation, focus visibility, reduced motion, browser-console errors, and nearby sections.
+- Check navigation and anchors, buttons, contact details, form validation, loading/success/error states, external links, image loading, keyboard navigation, focus visibility, browser-console errors, and nearby sections.
 - Test current major browsers where practical.
 - Do not say a bug is fixed or a feature is complete without verifying the affected behaviour.
 - If a check cannot be run because the project has not defined it, state that limitation.

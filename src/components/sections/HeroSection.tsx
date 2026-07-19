@@ -15,8 +15,8 @@ export function HeroSection() {
       <div className="hero-section__grid">
         <div className="hero-section__content">
           <p className="hero-section__summary">
-            From dump runs and appliance disposal to curbside delivery and full-service beverage recycling, CGT
-            Enterprises provides convenient, dependable service for customers across Yellowknife.
+            Our goal is to take away your garbage and deliver outstanding customer service.
+            Whether you need help with dump runs or beverage recycling, we are here to help.
           </p>
           <div className="hero-section__actions">
             <Button href="#services">Explore services</Button>
