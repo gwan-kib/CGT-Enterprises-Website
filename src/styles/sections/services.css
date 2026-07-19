@@ -5,6 +5,7 @@
 
   .services-carousel {
     min-width: 0;
+    overflow-x: clip;
   }
 
   .services-carousel__track {
@@ -23,12 +24,17 @@
 
   .service-card {
     @apply relative flex flex-col;
+    --service-card-offset-y: 0rem;
+    --service-card-scale: 1;
+    --service-card-hover-scale: 1.015;
     min-height: 24rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
     background: var(--color-surface);
     box-shadow: var(--shadow-small);
+    transform: translateY(var(--service-card-offset-y))
+      scale(var(--service-card-scale));
     transition:
       border-color var(--transition-standard) var(--easing-standard),
       box-shadow var(--transition-standard) var(--easing-standard),
@@ -43,9 +49,10 @@
   }
 
   .service-card.is-inactive {
+    --service-card-scale: 0.97;
+    --service-card-hover-scale: 0.985;
     filter: blur(0.045rem);
     opacity: 0.7;
-    transform: scale(0.97);
   }
 
   .service-card.is-inactive:focus-within {
@@ -120,6 +127,7 @@
     font-weight: var(--font-weight-bold);
     text-decoration: underline;
     text-underline-offset: 0.3rem;
+    transition: color var(--transition-fast) var(--easing-standard);
   }
 
   .service-card__select {
@@ -188,23 +196,74 @@
     line-height: var(--line-height-small);
     text-align: center;
   }
-}
 
-@keyframes service-carousel-enter-next {
-  from {
-    opacity: 0.65;
-    transform: translateX(var(--space-6));
+  .services-carousel__track[data-transition='next']
+    .services-carousel__item {
+    animation: service-carousel-slide-next var(--transition-standard)
+      var(--easing-standard) both;
+  }
+
+  .services-carousel__track[data-transition='previous']
+    .services-carousel__item {
+    animation: service-carousel-slide-previous var(--transition-standard)
+      var(--easing-standard) both;
   }
 }
 
-@keyframes service-carousel-enter-previous {
-  from {
-    opacity: 0.65;
-    transform: translateX(calc(var(--space-6) * -1));
+@keyframes service-carousel-slide-next {
+  0% {
+    opacity: 0.35;
+    transform: translateX(var(--space-12));
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(calc(var(--space-1) * -1));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes service-carousel-slide-previous {
+  0% {
+    opacity: 0.35;
+    transform: translateX(calc(var(--space-12) * -1));
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateX(var(--space-1));
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
 
 @layer components {
+  @media (hover: hover) and (pointer: fine) {
+    .service-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-card);
+      transform: translateY(
+          calc(var(--service-card-offset-y) - var(--space-2))
+        )
+        scale(var(--service-card-hover-scale));
+    }
+
+    .service-card.is-inactive:hover {
+      filter: blur(0.015rem);
+      opacity: 0.9;
+    }
+
+    .service-card:hover
+      :where(.service-card__link, .service-card__select-label) {
+      color: var(--color-text-link-hover);
+    }
+  }
+
   @media (max-width: 63.999rem) {
     .services-carousel__track {
       grid-template-columns: minmax(0, 1fr);
@@ -235,30 +294,9 @@
     }
 
     .service-card.is-active {
-      transform: translateY(calc(var(--space-4) * -1)) scale(1.015);
-    }
-
-    .services-carousel__track[data-transition='next']
-      .services-carousel__item {
-      animation: service-carousel-enter-next var(--transition-standard)
-        var(--easing-standard);
-    }
-
-    .services-carousel__track[data-transition='previous']
-      .services-carousel__item {
-      animation: service-carousel-enter-previous var(--transition-standard)
-        var(--easing-standard);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .services-carousel__item {
-      animation: none !important;
-    }
-
-    .service-card,
-    .services-carousel__control {
-      transition: none;
+      --service-card-offset-y: calc(var(--space-4) * -1);
+      --service-card-scale: 1.015;
+      --service-card-hover-scale: 1.025;
     }
   }
 }

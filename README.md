@@ -25,9 +25,6 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 - Reusable React components provide section containers, headings, buttons, cards, labelled fields, and image placeholders.
 - Every major section uses at least the viewport height and stacks into a single-column mobile layout without changing the content order.
 - Semantic landmarks, logical heading levels, a skip link, labelled controls, native disclosure elements, minimum touch targets, and visible focus styles support keyboard and assistive-technology use.
-- Reduced-motion preferences disable smooth scrolling and shorten transitions.
-- The Services carousel uses native buttons, a polite position announcement, focus restoration after direct card selection, and motion-free reduced-motion behavior.
-
 ## Technology stack
 
 | Technology | Role |
