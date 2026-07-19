@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-import logoBadge from "../../assets/images/CGT Logo Badge 128px.png";
+import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { navigationItems } from "../../data/navigation";
 import { Button } from "../ui/Button";
 
