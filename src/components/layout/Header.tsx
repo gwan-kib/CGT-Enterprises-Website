@@ -1,20 +1,39 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
 import { business } from "../../data/business";
 import { navigationItems } from "../../data/navigation";
 import { Button } from "../ui/Button";
 
-function NavigationLinks() {
+type NavigationHref = (typeof navigationItems)[number]["href"];
+
+interface NavigationLinksProps {
+  activeHref: NavigationHref | null;
+  highlightedHref: NavigationHref | null;
+  onHoverChange: (href: NavigationHref | null) => void;
+}
+
+function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: NavigationLinksProps) {
   return (
     <ul className="site-nav__list">
-      {navigationItems.map((item) => (
-        <li key={item.href}>
-          <a className="site-nav__link" href={item.href}>
-            {item.label}
-          </a>
-        </li>
-      ))}
+      {navigationItems.map((item) => {
+        const isActive = activeHref === item.href;
+        const isHighlighted = highlightedHref === item.href;
+
+        return (
+          <li key={item.href}>
+            <a
+              aria-current={isActive ? "location" : undefined}
+              className={`site-nav__link${isHighlighted ? " site-nav__link--highlighted" : ""}`}
+              href={item.href}
+              onMouseEnter={() => onHoverChange(item.href)}
+              onMouseLeave={() => onHoverChange(null)}
+            >
+              {item.label}
+            </a>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -60,6 +79,12 @@ function handleSectionLinkClick(event: MouseEvent<HTMLElement>) {
 
 export function Header() {
   const headerRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const navTrackRef = useRef<HTMLDivElement>(null);
+  const navIndicatorRef = useRef<HTMLSpanElement>(null);
+  const [activeHref, setActiveHref] = useState<NavigationHref | null>(null);
+  const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
+  const highlightedHref = hoveredHref ?? activeHref;
 
   useEffect(() => {
     const header = headerRef.current;
@@ -168,6 +193,120 @@ export function Header() {
     };
   }, []);
 
+  useEffect(() => {
+    const sections = navigationItems.flatMap((item) => {
+      const section = document.getElementById(item.href.slice(1));
+
+      return section ? [{ href: item.href, section }] : [];
+    });
+
+    if (sections.length === 0) {
+      return;
+    }
+
+    let animationFrame = 0;
+
+    const updateActiveSection = () => {
+      animationFrame = 0;
+
+      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
+      const activationLine = headerBottom + (window.innerHeight - headerBottom) * 0.35;
+      let nextActiveHref: NavigationHref | null = null;
+
+      for (const { href, section } of sections) {
+        const sectionRect = section.getBoundingClientRect();
+
+        if (sectionRect.top <= activationLine && sectionRect.bottom > activationLine) {
+          nextActiveHref = href;
+          break;
+        }
+      }
+
+      setActiveHref((currentHref) => (currentHref === nextActiveHref ? currentHref : nextActiveHref));
+    };
+
+    const scheduleActiveSectionUpdate = () => {
+      if (animationFrame === 0) {
+        animationFrame = window.requestAnimationFrame(updateActiveSection);
+      }
+    };
+
+    scheduleActiveSectionUpdate();
+    window.addEventListener("scroll", scheduleActiveSectionUpdate, { passive: true });
+    window.addEventListener("resize", scheduleActiveSectionUpdate);
+
+    return () => {
+      window.removeEventListener("scroll", scheduleActiveSectionUpdate);
+      window.removeEventListener("resize", scheduleActiveSectionUpdate);
+      window.cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const track = navTrackRef.current;
+    const indicator = navIndicatorRef.current;
+
+    if (!track || !indicator || !highlightedHref) {
+      return;
+    }
+
+    const highlightedLink = track.querySelector<HTMLAnchorElement>(
+      'a[href="' + highlightedHref + '"]',
+    );
+
+    if (!highlightedLink) {
+      return;
+    }
+
+    const updateIndicatorPosition = () => {
+      const trackRect = track.getBoundingClientRect();
+      const linkRect = highlightedLink.getBoundingClientRect();
+
+      indicator.style.setProperty("--site-nav-indicator-left", linkRect.left - trackRect.left + "px");
+      indicator.style.setProperty("--site-nav-indicator-top", linkRect.top - trackRect.top + "px");
+      indicator.style.setProperty("--site-nav-indicator-width", linkRect.width + "px");
+      indicator.style.setProperty("--site-nav-indicator-height", linkRect.height + "px");
+    };
+
+    updateIndicatorPosition();
+
+    const resizeObserver = new ResizeObserver(updateIndicatorPosition);
+    resizeObserver.observe(track);
+    resizeObserver.observe(highlightedLink);
+    window.addEventListener("resize", updateIndicatorPosition);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateIndicatorPosition);
+    };
+  }, [highlightedHref]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    const track = navTrackRef.current;
+
+    if (!nav || !track || !activeHref) {
+      return;
+    }
+
+    const activeLink = track.querySelector<HTMLAnchorElement>('a[href="' + activeHref + '"]');
+
+    if (!activeLink) {
+      return;
+    }
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    const isOutsideVisibleArea = linkRect.left < navRect.left || linkRect.right > navRect.right;
+
+    if (isOutsideVisibleArea) {
+      const nextScrollLeft =
+        nav.scrollLeft + linkRect.left + linkRect.width / 2 - (navRect.left + navRect.width / 2);
+
+      nav.scrollTo({ behavior: "smooth", left: nextScrollLeft });
+    }
+  }, [activeHref]);
+
   return (
     <header className="site-header" onClick={handleSectionLinkClick} ref={headerRef}>
       <div className="site-header__shell">
@@ -176,8 +315,23 @@ export function Header() {
             <span className="site-brand__mark">{business.name}</span>
           </a>
 
-          <nav className="site-nav" aria-label="Primary">
-            <NavigationLinks />
+          <nav className="site-nav" aria-label="Primary" ref={navRef}>
+            <div className="site-nav__track" ref={navTrackRef}>
+              <span
+                aria-hidden="true"
+                className={
+                  "site-nav__indicator" +
+                  (highlightedHref ? " site-nav__indicator--visible" : "") +
+                  (hoveredHref ? " site-nav__indicator--preview" : "")
+                }
+                ref={navIndicatorRef}
+              />
+              <NavigationLinks
+                activeHref={activeHref}
+                highlightedHref={highlightedHref}
+                onHoverChange={setHoveredHref}
+              />
+            </div>
           </nav>
 
           <div className="site-header__action">

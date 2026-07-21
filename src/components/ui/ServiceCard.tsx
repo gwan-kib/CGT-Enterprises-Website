@@ -5,6 +5,7 @@ interface ServiceCardProps {
   articleRef?: Ref<HTMLElement>
   isActive: boolean
   onSelect?: () => void
+  selectionDisabled?: boolean
   service: Service
 }
 
@@ -12,6 +13,7 @@ export function ServiceCard({
   articleRef,
   isActive,
   onSelect,
+  selectionDisabled = false,
   service,
 }: ServiceCardProps) {
   return (
@@ -44,6 +46,7 @@ export function ServiceCard({
           <button
             aria-label={`Make ${service.name} the current service`}
             className="service-card__select"
+            disabled={selectionDisabled}
             onClick={onSelect}
             type="button"
           />
