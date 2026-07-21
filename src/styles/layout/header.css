@@ -57,9 +57,12 @@
 
   .site-brand__mark {
     @apply block shrink-0;
-    width: 2.75rem;
-    height: 2.75rem;
-    object-fit: contain;
+    font-family: var(--font-family-display);
+    font-size: clamp(0.8125rem, 2.8vw, 1rem);
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
 
   .site-nav {
@@ -100,7 +103,6 @@
     border-radius: var(--radius-pill);
     background: var(--color-brand-green-800);
     opacity: 0;
-    transform: rotate(-2deg) scaleX(0.82);
     transition:
       opacity var(--transition-fast) var(--easing-standard),
       transform var(--transition-fast) var(--easing-standard);
@@ -109,7 +111,6 @@
   .site-nav__link:hover::before,
   .site-nav__link:focus-visible::before {
     opacity: 1;
-    transform: rotate(-2deg) scaleX(1);
   }
 
   .site-nav__link:hover,

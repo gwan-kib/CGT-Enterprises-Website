@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import type { MouseEvent } from "react";
 
-import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
+import { business } from "../../data/business";
 import { navigationItems } from "../../data/navigation";
 import { Button } from "../ui/Button";
 
@@ -173,7 +173,7 @@ export function Header() {
       <div className="site-header__shell">
         <div className="site-header__top">
           <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
-            <img alt="" className="site-brand__mark" height="128" src={logoBadge} width="128" />
+            <span className="site-brand__mark">{business.name}</span>
           </a>
 
           <nav className="site-nav" aria-label="Primary">

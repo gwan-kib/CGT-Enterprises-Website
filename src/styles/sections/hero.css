@@ -49,8 +49,7 @@
     gap: var(--space-4);
   }
 
-  .hero-section__note,
-  .hero-section__media-note {
+  .hero-section__note {
     margin: var(--space-6) 0 0;
     color: var(--color-neutral-200);
     font-size: var(--font-size-small);
@@ -60,6 +59,11 @@
   .hero-section__media {
     width: min(100%, 32rem);
     margin-inline: auto;
+  }
+
+  .hero-section__media-image {
+    @apply block h-full w-full;
+    object-fit: contain;
   }
 }
 

@@ -1,6 +1,6 @@
+import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
-import { ImagePlaceholder } from "../ui/ImagePlaceholder";
 
 export function HeroSection() {
   return (
@@ -30,8 +30,15 @@ export function HeroSection() {
         </div>
 
         <div className="hero-section__media">
-          <ImagePlaceholder ratio="square" />
-          <p className="hero-section__media-note">Primary visual area / no image selected</p>
+          <div className="">
+            <img
+              alt="CGT Enterprises logo badge"
+              className="hero-section__media-image"
+              height="1549"
+              src={logoBadge}
+              width="2194"
+            />
+          </div>
         </div>
       </div>
     </SectionContainer>
