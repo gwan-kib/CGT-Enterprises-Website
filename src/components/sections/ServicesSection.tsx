@@ -12,8 +12,8 @@ import { SectionHeading } from '../ui/SectionHeading'
 import { ServiceCard } from '../ui/ServiceCard'
 import {
   getInitialActiveServiceIndex,
+  getServiceIndexAtOffset,
   getVisibleServiceIndexes,
-  getWrappedServiceIndex,
 } from './servicesCarousel'
 
 type CarouselDirection = 'idle' | 'next' | 'previous'
@@ -22,9 +22,18 @@ type MoveDirection = Exclude<CarouselDirection, 'idle'>
 interface CarouselState {
   activeIndex: number
   direction: CarouselDirection
-  motionOriginIndex: number | null
-  queuedDirection: MoveDirection | null
-  remainingSteps: number
+  steps: number
+  targetIndex: number | null
+}
+
+interface RenderedServiceItem {
+  bufferStep?: number
+  bufferViewport?: 'desktop' | 'mobile'
+  isBuffer: boolean
+  isMobileSlideVisible: boolean
+  key: string
+  position: number
+  serviceIndex: number
 }
 
 export function ServicesSection() {
@@ -32,12 +41,12 @@ export function ServicesSection() {
   const [carouselState, setCarouselState] = useState<CarouselState>(() => ({
     activeIndex: getInitialActiveServiceIndex(serviceCount),
     direction: 'idle',
-    motionOriginIndex: null,
-    queuedDirection: null,
-    remainingSteps: 0,
+    steps: 0,
+    targetIndex: null,
   }))
   const activeCardRef = useRef<HTMLElement>(null)
   const carouselTrackRef = useRef<HTMLDivElement>(null)
+  const movementLockRef = useRef(false)
   const shouldFocusActiveCard = useRef(false)
   const activeService = placeholderServices[carouselState.activeIndex]
   const visibleServiceIndexes = getVisibleServiceIndexes(
@@ -49,102 +58,70 @@ export function ServicesSection() {
   )
   const carouselStyle = {
     '--services-visible-count': visibleServiceIndexes.length,
+    '--services-motion-extra-duration':
+      String(Math.max(carouselState.steps - 1, 0) * 125) + 'ms',
   } as CSSProperties
-  const isMoving =
-    carouselState.direction !== 'idle' || carouselState.remainingSteps > 0
-  const renderedServiceItems = visibleServiceIndexes.map(
-    (serviceIndex, position) => ({
+  const isMoving = carouselState.direction !== 'idle'
+  const renderedServiceItems: RenderedServiceItem[] =
+    visibleServiceIndexes.map((serviceIndex, position) => ({
       isBuffer: false,
-      isMotionOrigin: serviceIndex === carouselState.motionOriginIndex,
-      isMobileSlideVisible:
-        serviceIndex === carouselState.activeIndex ||
-        (carouselState.direction === 'previous' &&
-          position === activePosition - 1) ||
-        (carouselState.direction === 'next' &&
-          position === activePosition + 1),
+      isMobileSlideVisible: serviceIndex === carouselState.activeIndex,
       key: placeholderServices[serviceIndex].id,
       position,
       serviceIndex,
-    }),
-  )
+    }))
 
   if (visibleServiceIndexes.length > 0) {
     const movementDirection =
       carouselState.direction === 'previous' ? 'previous' : 'next'
+    const movementOffset = movementDirection === 'next' ? 1 : -1
     const edgeIndex =
       movementDirection === 'next'
         ? visibleServiceIndexes[visibleServiceIndexes.length - 1]
         : visibleServiceIndexes[0]
-    const bufferServiceIndex = getWrappedServiceIndex(
-      edgeIndex,
-      movementDirection,
-      serviceCount,
-    )
-    const bufferItem = {
-      isBuffer: true,
-      isMotionOrigin: false,
-      isMobileSlideVisible:
-        carouselState.direction === 'next' &&
-        !renderedServiceItems.some(
-          (item) =>
-            item.isMobileSlideVisible &&
-            item.serviceIndex !== carouselState.activeIndex,
-        ),
-      key: 'service-carousel-buffer',
-      position: -1,
-      serviceIndex: bufferServiceIndex,
-    }
+    const bufferCount = Math.max(carouselState.steps, 1)
 
-    renderedServiceItems.push(bufferItem)
+    for (let bufferStep = 1; bufferStep <= bufferCount; bufferStep += 1) {
+      renderedServiceItems.push(
+        {
+          bufferStep,
+          bufferViewport: 'desktop',
+          isBuffer: true,
+          isMobileSlideVisible: true,
+          key: 'service-carousel-desktop-buffer-' + bufferStep,
+          position: -1,
+          serviceIndex: getServiceIndexAtOffset(
+            edgeIndex,
+            movementOffset * bufferStep,
+            serviceCount,
+          ),
+        },
+        {
+          bufferStep,
+          bufferViewport: 'mobile',
+          isBuffer: true,
+          isMobileSlideVisible: true,
+          key: 'service-carousel-mobile-buffer-' + bufferStep,
+          position: -1,
+          serviceIndex: getServiceIndexAtOffset(
+            carouselState.activeIndex,
+            movementOffset * bufferStep,
+            serviceCount,
+          ),
+        },
+      )
+    }
   }
 
   useEffect(() => {
     if (
       carouselState.direction === 'idle' &&
-      carouselState.remainingSteps === 0 &&
       shouldFocusActiveCard.current
     ) {
       activeCardRef.current?.focus()
       shouldFocusActiveCard.current = false
     }
-  }, [
-    carouselState.activeIndex,
-    carouselState.direction,
-    carouselState.remainingSteps,
-  ])
-
-  useEffect(() => {
-    if (
-      carouselState.direction !== 'idle' ||
-      carouselState.remainingSteps === 0 ||
-      !carouselState.queuedDirection
-    ) {
-      return
-    }
-
-    const animationFrame = window.requestAnimationFrame(() => {
-      setCarouselState((currentState) => {
-        if (
-          currentState.direction !== 'idle' ||
-          currentState.remainingSteps === 0 ||
-          !currentState.queuedDirection
-        ) {
-          return currentState
-        }
-
-        return {
-          ...currentState,
-          direction: currentState.queuedDirection,
-        }
-      })
-    })
-
-    return () => window.cancelAnimationFrame(animationFrame)
-  }, [
-    carouselState.direction,
-    carouselState.queuedDirection,
-    carouselState.remainingSteps,
-  ])
+  }, [carouselState.activeIndex, carouselState.direction])
 
   useLayoutEffect(() => {
     if (carouselState.direction === 'idle') {
@@ -154,7 +131,9 @@ export function ServicesSection() {
     const track = carouselTrackRef.current
     const visibleItem = track
       ? Array.from(
-          track.querySelectorAll<HTMLElement>('.services-carousel__item'),
+          track.querySelectorAll<HTMLElement>(
+            '.services-carousel__item:not(.is-buffer)',
+          ),
         ).find((item) => item.getBoundingClientRect().width > 0)
       : undefined
 
@@ -167,21 +146,50 @@ export function ServicesSection() {
       visibleItem.getBoundingClientRect().width +
       (Number.isFinite(columnGap) ? columnGap : 0)
 
-    track.style.setProperty('--services-card-width', `${visibleItem.offsetWidth}px`)
-    track.style.setProperty('--services-slide-distance', `${slideDistance}px`)
-  }, [carouselState.direction])
+    track.style.setProperty(
+      '--services-card-width',
+      String(visibleItem.offsetWidth) + 'px',
+    )
+    track.style.setProperty(
+      '--services-slide-distance',
+      String(slideDistance * carouselState.steps) + 'px',
+    )
 
-  function moveCarousel(direction: MoveDirection, steps = 1) {
-    if (serviceCount <= 1 || isMoving) {
+    track
+      .querySelectorAll<HTMLElement>('.services-carousel__item.is-buffer')
+      .forEach((bufferItem) => {
+        const bufferStep = Number(bufferItem.dataset.bufferStep)
+
+        bufferItem.style.setProperty(
+          '--services-buffer-offset',
+          String(Math.max(bufferStep - 1, 0) * slideDistance) + 'px',
+        )
+      })
+  }, [carouselState.direction, carouselState.steps])
+
+  function moveCarousel(
+    direction: MoveDirection,
+    steps = 1,
+    targetIndex?: number,
+    restoreFocus = false,
+  ) {
+    if (serviceCount <= 1 || movementLockRef.current) {
       return
     }
 
+    movementLockRef.current = true
+    shouldFocusActiveCard.current = restoreFocus
     setCarouselState((currentState) => ({
       ...currentState,
       direction,
-      queuedDirection: direction,
-      motionOriginIndex: currentState.activeIndex,
-      remainingSteps: steps,
+      steps,
+      targetIndex:
+        targetIndex ??
+        getServiceIndexAtOffset(
+          currentState.activeIndex,
+          (direction === 'next' ? 1 : -1) * steps,
+          serviceCount,
+        ),
     }))
   }
 
@@ -194,10 +202,11 @@ export function ServicesSection() {
       return
     }
 
-    shouldFocusActiveCard.current = true
     moveCarousel(
       position < activePosition ? 'previous' : 'next',
       Math.abs(position - activePosition),
+      serviceIndex,
+      true,
     )
   }
 
@@ -209,25 +218,20 @@ export function ServicesSection() {
       return
     }
 
+    movementLockRef.current = false
     setCarouselState((currentState) => {
-      if (currentState.direction === 'idle') {
+      if (
+        currentState.direction === 'idle' ||
+        currentState.targetIndex === null
+      ) {
         return currentState
       }
 
-      const remainingSteps = Math.max(currentState.remainingSteps - 1, 0)
-
       return {
-        activeIndex: getWrappedServiceIndex(
-          currentState.activeIndex,
-          currentState.direction,
-          serviceCount,
-        ),
+        activeIndex: currentState.targetIndex,
         direction: 'idle',
-        motionOriginIndex:
-          remainingSteps > 0 ? currentState.motionOriginIndex : null,
-        queuedDirection:
-          remainingSteps > 0 ? currentState.queuedDirection : null,
-        remainingSteps,
+        steps: 0,
+        targetIndex: null,
       }
     })
   }
@@ -259,10 +263,11 @@ export function ServicesSection() {
         >
           {renderedServiceItems.map(
             ({
+              bufferStep,
+              bufferViewport,
               isBuffer,
               isMobileSlideVisible,
               key,
-              isMotionOrigin,
               position,
               serviceIndex,
             }) => {
@@ -272,7 +277,8 @@ export function ServicesSection() {
               return (
                 <div
                   aria-hidden={isBuffer ? true : undefined}
-                  className={`services-carousel__item${isActive ? ' is-active' : ' is-inactive'}${isBuffer ? ' is-buffer' : ''}${isMotionOrigin ? ' is-motion-origin' : ''}${isMobileSlideVisible ? ' is-mobile-slide-visible' : ''}`}
+                  className={`services-carousel__item${isActive ? ' is-active' : ' is-inactive'}${isBuffer ? ` is-buffer is-${bufferViewport}-buffer` : ''}${isMobileSlideVisible ? ' is-mobile-slide-visible' : ''}`}
+                  data-buffer-step={bufferStep}
                   inert={isBuffer ? true : undefined}
                   key={key}
                 >

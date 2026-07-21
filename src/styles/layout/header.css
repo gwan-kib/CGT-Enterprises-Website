@@ -89,6 +89,9 @@
     --site-nav-indicator-top: 0px;
     --site-nav-indicator-width: 0px;
     --site-nav-indicator-height: 0px;
+    --site-nav-slide-duration: 250ms;
+    --site-nav-slide-easing: cubic-bezier(.645, .045, .355, 1);
+    
     position: absolute;
     z-index: 0;
     top: 0;
@@ -103,10 +106,10 @@
       0
     );
     transition:
-      width var(--transition-standard) var(--easing-standard),
-      height var(--transition-standard) var(--easing-standard),
-      opacity var(--transition-fast) var(--easing-standard),
-      transform var(--transition-standard) var(--easing-standard);
+      width var(--site-nav-slide-duration) var(--site-nav-slide-easing),
+      height var(--site-nav-slide-duration) var(--site-nav-slide-easing),
+      opacity var(--transition-fast) var(--site-nav-slide-easing),
+      transform var(--site-nav-slide-duration) var(--site-nav-slide-easing);
   }
 
   .site-nav__indicator::before {

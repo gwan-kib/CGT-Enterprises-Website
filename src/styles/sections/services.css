@@ -30,15 +30,23 @@
     pointer-events: none;
   }
 
+  .services-carousel__item.is-desktop-buffer {
+    display: none;
+  }
+
   .services-carousel__track[data-transition='next']
     .services-carousel__item.is-buffer {
-    left: calc(100% + var(--space-6));
+    left: calc(
+      100% + var(--space-6) + var(--services-buffer-offset, 0px)
+    );
     visibility: visible;
   }
 
   .services-carousel__track[data-transition='previous']
     .services-carousel__item.is-buffer {
-    right: calc(100% + var(--space-6));
+    right: calc(
+      100% + var(--space-6) + var(--services-buffer-offset, 0px)
+    );
     visibility: visible;
   }
 
@@ -82,21 +90,33 @@
 
   .services-carousel__track[data-moving='true'] .service-card {
     --service-card-offset-y: 0rem;
-    --service-card-hover-scale: 0.97;
+    --service-card-scale: 1;
+    --service-card-hover-scale: 1;
     border-color: var(--color-border);
-    box-shadow: var(--shadow-small);
-    opacity: 0.7;
+    box-shadow: none;
+    filter: none;
+    opacity: 1;
+    transition: none;
+  }
+
+  .services-carousel__track[data-moving='true'] .service-card .service-card__state {
+    border-color: var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
   }
 
   .services-carousel__track[data-moving='true']
-    .services-carousel__item.is-motion-origin
-    .service-card {
-    --service-card-scale: 1;
-    --service-card-hover-scale: 1;
-    border-color: var(--color-border-strong);
-    box-shadow: var(--shadow-card);
-    filter: none;
-    opacity: 1;
+    .service-card
+    .service-card__link {
+    color: var(--color-text-muted);
+    transition: none;
+  }
+
+  .services-carousel__track[data-moving='true']
+    .service-card
+    .service-card__select-label {
+    color: var(--color-text-muted);
+    transition: none;
   }
 
   .service-card__topline {
@@ -237,12 +257,20 @@
   }
 
   .services-carousel__track[data-transition='next'] {
-    animation: service-carousel-track-next var(--transition-standard)
+    animation: service-carousel-track-next
+      calc(
+        var(--transition-standard) +
+          var(--services-motion-extra-duration, 0ms)
+      )
       var(--easing-standard) both;
   }
 
   .services-carousel__track[data-transition='previous'] {
-    animation: service-carousel-track-previous var(--transition-standard)
+    animation: service-carousel-track-previous
+      calc(
+        var(--transition-standard) +
+          var(--services-motion-extra-duration, 0ms)
+      )
       var(--easing-standard) both;
   }
 }
@@ -324,18 +352,18 @@
       display: block;
     }
 
+    .services-carousel__item.is-mobile-buffer {
+      display: none;
+    }
+
+    .services-carousel__item.is-desktop-buffer {
+      display: block;
+    }
+
     .service-card.is-active {
       --service-card-offset-y: calc(var(--space-4) * -1);
       --service-card-scale: 1.015;
       --service-card-hover-scale: 1.025;
-    }
-
-    .services-carousel__track[data-moving='true']
-      .services-carousel__item.is-motion-origin
-      .service-card {
-      --service-card-offset-y: calc(var(--space-4) * -1);
-      --service-card-scale: 1.015;
-      --service-card-hover-scale: 1.015;
     }
   }
 }
