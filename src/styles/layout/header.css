@@ -40,21 +40,6 @@
       rgb(25 95 45 / var(--header-shell-shadow-alpha));
   }
 
-  .site-header__shell::after {
-    /* The outline strengthens as the full-width divider fades away. */
-    border: var(--border-width) solid
-      color-mix(
-        in srgb,
-        var(--color-brand-green-800) var(--header-shell-outline-strength),
-        transparent
-      );
-    border-bottom-color: color-mix(
-      in srgb,
-      var(--color-brand-green-800) var(--header-shell-outline-strength),
-      var(--color-brand-green-700) var(--header-shell-divider-strength)
-    );
-  }
-
   .site-header__top {
     @apply relative z-10 flex items-center;
     width: min(calc(100% - var(--page-gutter) - var(--page-gutter)), var(--content-width));
