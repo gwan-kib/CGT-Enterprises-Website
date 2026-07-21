@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import type { MouseEvent } from "react";
 
 import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { navigationItems } from "../../data/navigation";
@@ -16,6 +17,45 @@ function NavigationLinks() {
       ))}
     </ul>
   );
+}
+
+function handleSectionLinkClick(event: MouseEvent<HTMLElement>) {
+  if (
+    event.defaultPrevented ||
+    event.button !== 0 ||
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return;
+  }
+
+  const clickedElement = event.target;
+
+  if (!(clickedElement instanceof Element)) {
+    return;
+  }
+
+  const link = clickedElement.closest<HTMLAnchorElement>('a[href^="#"]');
+
+  if (!link || !event.currentTarget.contains(link)) {
+    return;
+  }
+
+  const sectionId = link.hash.slice(1);
+  const section = document.getElementById(sectionId);
+
+  if (!section) {
+    return;
+  }
+
+  event.preventDefault();
+  section.scrollIntoView({ behavior: "smooth", block: "center" });
+
+  if (window.location.hash !== link.hash) {
+    window.history.pushState(null, "", link.hash);
+  }
 }
 
 export function Header() {
@@ -129,7 +169,7 @@ export function Header() {
   }, []);
 
   return (
-    <header className="site-header" ref={headerRef}>
+    <header className="site-header" onClick={handleSectionLinkClick} ref={headerRef}>
       <div className="site-header__shell">
         <div className="site-header__top">
           <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
