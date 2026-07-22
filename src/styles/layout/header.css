@@ -39,14 +39,6 @@
   .site-header__group {
     min-width: 0;
     padding-inline: var(--space-1);
-    border:
-      var(--border-width)
-      solid
-      color-mix(
-        in srgb,
-        var(--color-brand-green-800) var(--header-pill-strength),
-        transparent
-      );
     border-radius: var(--radius-pill);
     background: color-mix(
       in srgb,
@@ -136,7 +128,7 @@
     position: absolute;
     inset: 0.35rem 0.1rem;
     border-radius: var(--radius-pill);
-    background: var(--color-brand-green-800);
+    background: var(--color-brand-green-600);
   }
 
   .site-nav__indicator--visible {
@@ -159,7 +151,7 @@
     padding-inline: var(--space-3);
     color: var(--color-neutral-900);
     font-size: 1.1rem;
-    font-weight: var(--font-weight-semibold);
+    font-weight: 500;
     line-height: 1.25;
     white-space: nowrap;
     transition: color var(--transition-fast) var(--easing-standard);

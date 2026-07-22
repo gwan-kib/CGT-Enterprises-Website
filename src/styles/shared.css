@@ -10,8 +10,7 @@
     overflow-x: hidden;
     background: var(--color-background-page);
     color: var(--color-text);
-    font-family:
-      "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.65;
@@ -45,15 +44,12 @@
   }
 
   .page-section__inner {
-    width: min(
-      calc(100% - var(--page-gutter) - var(--page-gutter)),
-      var(--content-width)
-    );
+    width: min(calc(100% - var(--page-gutter) - var(--page-gutter)), var(--content-width));
     margin-inline: auto;
   }
 
   .page-section--subtle {
-    background: var(--color-neutral-50);
+    background: var(--color-neutral-100);
   }
 
   .page-section--dark {
@@ -66,8 +62,7 @@
     color: var(--color-text-on-brand-primary);
   }
 
-  .page-section--dark
-    :where(a, button, input, textarea, summary):focus-visible {
+  .page-section--dark :where(a, button, input, textarea, summary):focus-visible {
     outline-color: var(--color-brand-green-500);
   }
 
@@ -156,7 +151,7 @@
   }
 
   .button--primary:not(:disabled):active {
-    background: #2eaa4d;
+    background: var(--color-brand-green-600);
   }
 
   .button--outline {
@@ -191,19 +186,8 @@
     border: var(--border-width-strong) dashed var(--color-border-strong);
     border-radius: var(--radius-large);
     background:
-      linear-gradient(
-        135deg,
-        transparent 49.8%,
-        var(--color-border) 50%,
-        transparent 50.2%
-      ),
-      linear-gradient(
-        45deg,
-        transparent 49.8%,
-        var(--color-border) 50%,
-        transparent 50.2%
-      ),
-      var(--color-surface-subtle);
+      linear-gradient(135deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%),
+      linear-gradient(45deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%), var(--color-surface-subtle);
   }
 
   .image-placeholder--landscape {
@@ -229,20 +213,10 @@
   }
 
   .page-section--dark .image-placeholder {
-    border-color: var(--color-neutral-500);
+    border-color: var(--color-neutral-1000);
     background:
-      linear-gradient(
-        135deg,
-        transparent 49.8%,
-        var(--color-neutral-500) 50%,
-        transparent 50.2%
-      ),
-      linear-gradient(
-        45deg,
-        transparent 49.8%,
-        var(--color-neutral-500) 50%,
-        transparent 50.2%
-      ),
+      linear-gradient(135deg, transparent 49.8%, var(--color-neutral-1000) 50%, transparent 50.2%),
+      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-1000) 50%, transparent 50.2%),
       var(--color-neutral-900);
   }
 
@@ -258,7 +232,7 @@
   }
 
   .static-form--inverse {
-    border-color: var(--color-neutral-500);
+    border-color: var(--color-neutral-1000);
     background: var(--color-neutral-900);
     box-shadow: none;
     color: var(--color-text-inverse);
