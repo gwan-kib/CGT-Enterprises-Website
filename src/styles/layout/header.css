@@ -1,15 +1,13 @@
 @layer components {
   .site-header {
     @apply sticky top-0 z-40;
-    --header-shell-inset-block: 0px;
-    --header-shell-inset-inline: 0px;
-    --header-shell-radius: 0px;
+    --header-shell-progress: 0;
     --header-shell-translate-y: 0px;
-    --header-shell-outline-strength: 0%;
-    --header-shell-divider-strength: 100%;
-    --header-shell-shadow-y: 0px;
-    --header-shell-shadow-blur: 0px;
-    --header-shell-shadow-alpha: 0;
+    --header-group-strength: 0%;
+    --header-unified-strength: 100%;
+    --header-group-shadow-y: 0px;
+    --header-group-shadow-blur: 0px;
+    --header-group-shadow-alpha: 0;
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
   }
@@ -20,24 +18,17 @@
     transform: translateY(var(--header-shell-translate-y));
   }
 
-  .site-header__shell::before,
-  .site-header__shell::after {
+  .site-header__shell::before {
     content: "";
     position: absolute;
     z-index: 0;
-    top: var(--header-shell-inset-block);
-    right: var(--header-shell-inset-inline);
-    bottom: var(--header-shell-inset-block);
-    left: var(--header-shell-inset-inline);
-    border-radius: var(--header-shell-radius);
+    inset: 0;
     pointer-events: none;
-  }
-
-  .site-header__shell::before {
-    background: var(--color-brand-green-500);
-    /* Shadow dimensions and opacity are supplied by the scroll animation. */
-    box-shadow: 0 var(--header-shell-shadow-y) var(--header-shell-shadow-blur)
-      rgb(25 95 45 / var(--header-shell-shadow-alpha));
+    background: color-mix(
+      in srgb,
+      var(--color-brand-green-500) var(--header-unified-strength),
+      transparent
+    );
   }
 
   .site-header__top {
@@ -53,6 +44,26 @@
     min-height: var(--touch-target-minimum);
     gap: var(--space-3);
     color: var(--color-neutral-900);
+  }
+
+  .site-brand,
+  .site-nav,
+  .site-header__action {
+    border-radius: var(--radius-pill);
+    background: color-mix(
+      in srgb,
+      var(--color-brand-green-500) var(--header-group-strength),
+      transparent
+    );
+    box-shadow:
+      0 0 0 calc(var(--header-shell-progress) * var(--space-1))
+        color-mix(
+          in srgb,
+          var(--color-brand-green-500) var(--header-group-strength),
+          transparent
+        ),
+      0 var(--header-group-shadow-y) var(--header-group-shadow-blur)
+        rgb(25 95 45 / var(--header-group-shadow-alpha));
   }
 
   .site-brand__mark {
@@ -130,7 +141,7 @@
   .site-nav__list {
     @apply relative z-10 m-0 flex w-max list-none p-0;
     margin-inline: auto;
-    gap: var(--space-1);
+    gap: var(--space-2);
   }
 
   .site-nav__link {
@@ -138,15 +149,11 @@
     min-height: var(--touch-target-minimum);
     padding-inline: var(--space-3);
     color: var(--color-neutral-900);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: var(--font-weight-semibold);
     line-height: 1.25;
     white-space: nowrap;
     transition: color var(--transition-fast) var(--easing-standard);
-  }
-
-  .site-nav__link--highlighted {
-    color: var(--color-neutral-white);
   }
 
   .site-header :where(a, button):focus-visible {
@@ -197,7 +204,8 @@
     }
 
     .site-header__action {
-      @apply block;
+      @apply flex items-center;
+      min-height: var(--touch-target-minimum);
     }
   }
 }

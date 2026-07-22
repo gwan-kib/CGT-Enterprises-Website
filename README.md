@@ -12,7 +12,7 @@ The current page includes:
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
 - Static review and contact form layouts with read-only fields and disabled buttons.
 - Native FAQ disclosure controls with one example expanded on initial load.
-- An accessible Services carousel with direct card selection, Previous and Next controls, circular wrapping, active-service status, and a single-card mobile layout.
+- A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
 The interface is intentionally a structural wireframe. It does not submit forms, store reviews, call external services, or display real customer or business information.
@@ -36,7 +36,7 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 | PostCSS and Autoprefixer | Process and improve browser compatibility for the stylesheet bundle. |
 | ESLint | Checks TypeScript and React source for correctness and maintainability issues. |
 
-No additional UI, form, carousel, or icon dependencies are used.
+No additional UI, form, or icon dependencies are used.
 
 ## Project structure
 
@@ -114,7 +114,7 @@ The implementation demonstrates:
 - Translating a visual brief into a responsive, semantic React page architecture.
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
-- Implementing a data-driven circular carousel without adding a UI dependency or duplicating hidden services.
+- Rendering a data-driven four-card Services grid without adding a UI dependency or duplicating service content.
 - Creating static form compositions that show the intended layout without implying working submission behaviour.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.

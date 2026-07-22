@@ -97,49 +97,29 @@ export function Header() {
     const scrollRange = 120;
     // Time-based easing strength. Higher values settle faster.
     const smoothingRate = 14;
-    // Final top and bottom gap around the floating shell.
-    const maximumBlockInset = 0;
-    // Final horizontal space between the shell edge and the header content.
-    const maximumContentPadding = 24;
-    // Final corner radius of the fully transformed shell.
-    const maximumRadius = 50;
     // Final downward offset of the floating shell.
     const maximumTranslateY = 20;
 
-    let maximumInlineInset = 8;
     let targetProgress = Math.min(window.scrollY / scrollRange, 1);
     let currentProgress = targetProgress;
     let animationFrame = 0;
     let previousFrameTime = 0;
 
-    const measureMaximumInlineInset = () => {
-      const headerContent = header.querySelector<HTMLElement>(".site-header__top");
-
-      if (headerContent) {
-        maximumInlineInset = Math.max(8, headerContent.getBoundingClientRect().left - maximumContentPadding);
-      }
-    };
-
     const applyProgress = (progress: number) => {
-      header.style.setProperty("--header-shell-inset-block", (maximumBlockInset * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-shell-inset-inline", (maximumInlineInset * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-shell-radius", (maximumRadius * progress).toFixed(2) + "px");
+      header.style.setProperty("--header-shell-progress", progress.toFixed(3));
       header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-shell-outline-strength", (progress * 100).toFixed(1) + "%");
-      header.style.setProperty("--header-shell-divider-strength", ((1 - progress) * 100).toFixed(1) + "%");
+      header.style.setProperty("--header-group-strength", (progress * 100).toFixed(1) + "%");
+      header.style.setProperty("--header-unified-strength", ((1 - progress) * 100).toFixed(1) + "%");
       header.style.setProperty(
-        "--header-shell-shadow-y",
-        // Final vertical shadow offset. Change 8 to adjust the shadow depth.
+        "--header-group-shadow-y",
         (8 * progress).toFixed(2) + "px",
       );
       header.style.setProperty(
-        "--header-shell-shadow-blur",
-        // Final shadow blur. Change 24 to make the shadow sharper or softer.
+        "--header-group-shadow-blur",
         (24 * progress).toFixed(2) + "px",
       );
       header.style.setProperty(
-        "--header-shell-shadow-alpha",
-        // Final shadow opacity. Keep this value between 0 and 1.
+        "--header-group-shadow-alpha",
         (0.08 * progress).toFixed(3),
       );
     };
@@ -175,20 +155,11 @@ export function Header() {
       }
     };
 
-    const handleResize = () => {
-      measureMaximumInlineInset();
-      applyProgress(currentProgress);
-      updateTargetProgress();
-    };
-
-    measureMaximumInlineInset();
     applyProgress(currentProgress);
     window.addEventListener("scroll", updateTargetProgress, { passive: true });
-    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("scroll", updateTargetProgress);
-      window.removeEventListener("resize", handleResize);
       window.cancelAnimationFrame(animationFrame);
     };
   }, []);
