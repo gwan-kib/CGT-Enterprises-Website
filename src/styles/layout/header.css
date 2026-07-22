@@ -1,17 +1,13 @@
 @layer components {
   .site-header {
     @apply sticky top-0 z-40;
-    --header-shell-progress: 0;
     --header-shell-translate-y: 0px;
-    --header-group-strength: 0%;
-    --header-unified-strength: 100%;
-    --header-group-shadow-y: 0px;
-    --header-group-shadow-blur: 0px;
-    --header-group-shadow-alpha: 0;
-
-    --header-brand-shell-width: max-content;
-    --header-nav-shell-width: fit-content;
-    --header-action-shell-width: max-content;
+    --header-shell-inline-inset: max(
+      var(--page-gutter),
+      calc((100% - var(--content-width)) / 2)
+    );
+    --header-pill-strength: 0%;
+    --header-bar-strength: 100%;
 
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
@@ -19,58 +15,64 @@
 
   .site-header__shell {
     @apply relative;
-    background: transparent;
+    background: color-mix(
+      in srgb,
+      var(--color-brand-green-500) var(--header-bar-strength),
+      transparent
+    );
     transform: translateY(var(--header-shell-translate-y));
   }
 
-  .site-header__shell::before {
-    content: "";
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-    pointer-events: none;
+  .site-header__top {
+    @apply relative z-10 grid items-center;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--header-height);
+    padding-inline: var(--header-shell-inline-inset);
+    grid-template-columns:
+      minmax(8.5rem, 1fr)
+      minmax(0, auto)
+      minmax(8.5rem, 1fr);
+    gap: var(--space-2);
+  }
+
+  .site-header__group {
+    min-width: 0;
+    padding-inline: var(--space-1);
+    border:
+      var(--border-width)
+      solid
+      color-mix(
+        in srgb,
+        var(--color-brand-green-800) var(--header-pill-strength),
+        transparent
+      );
+    border-radius: var(--radius-pill);
     background: color-mix(
       in srgb,
-      var(--color-brand-green-500) var(--header-unified-strength),
+      var(--color-brand-green-500) var(--header-pill-strength),
       transparent
     );
   }
 
-  .site-header__top {
-    @apply relative z-10 flex items-center justify-center;
-    width: min(calc(100% - var(--page-gutter) - var(--page-gutter)), var(--content-width));
-    height: var(--header-height);
-    margin-inline: auto;
-    gap: var(--space-4);
+  .site-header__group--brand {
+    justify-self: start;
+  }
+
+  .site-header__group--nav {
+    justify-self: stretch;
+    overflow: hidden;
+  }
+
+  .site-header__group--action {
+    justify-self: end;
   }
 
   .site-brand {
     @apply inline-flex shrink-0 items-center no-underline;
-    flex-basis: var(--header-brand-shell-width);
-    width: var(--header-brand-shell-width);
     min-height: var(--touch-target-minimum);
     gap: var(--space-3);
     color: var(--color-neutral-900);
-  }
-
-  .site-brand,
-  .site-nav,
-  .site-header__action {
-    border-radius: var(--radius-pill);
-    background: color-mix(
-      in srgb,
-      var(--color-brand-green-500) var(--header-group-strength),
-      transparent
-    );
-    box-shadow:
-      0 0 0 calc(var(--header-shell-progress) * var(--space-1))
-        color-mix(
-          in srgb,
-          var(--color-brand-green-500) var(--header-group-strength),
-          transparent
-        ),
-      0 var(--header-group-shadow-y) var(--header-group-shadow-blur)
-        rgb(25 95 45 / var(--header-group-shadow-alpha));
   }
 
   .site-brand__mark {
@@ -84,8 +86,7 @@
 
   .site-nav {
     @apply relative;
-    flex: 0 1 var(--header-nav-shell-width);
-    width: var(--header-nav-shell-width);
+    width: 100%;
     min-width: 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
@@ -169,9 +170,12 @@
   }
 
   .site-header__action {
-    @apply hidden shrink-0;
-    flex-basis: var(--header-action-shell-width);
-    width: var(--header-action-shell-width);
+    @apply flex shrink-0 items-center;
+    min-width: 0;
+  }
+
+  .site-header__action .button {
+    padding-inline: var(--space-4);
   }
 
   .button--header {
@@ -192,9 +196,16 @@
 
   @media (min-width: 64rem) {
     .site-header__top {
+      grid-template-columns:
+        minmax(0, 1fr)
+        auto
+        minmax(0, 1fr);
       gap: var(--space-6);
     }
 
+    .site-header__group--nav {
+      justify-self: center;
+    }
     .site-nav {
       overflow: visible;
     }
@@ -213,9 +224,8 @@
       padding-inline: var(--space-4);
     }
 
-    .site-header__action {
-      @apply flex items-center;
-      min-height: var(--touch-target-minimum);
+    .site-header__action .button {
+      padding-inline: var(--space-6);
     }
   }
 }

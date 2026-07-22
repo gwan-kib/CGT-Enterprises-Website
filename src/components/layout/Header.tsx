@@ -117,8 +117,23 @@ export function Header() {
     const scrollRange = 120;
     // Time-based easing strength. Higher values settle faster.
     const smoothingRate = 14;
-    // Final downward offset of the floating shell.
-    const maximumTranslateY = 20;
+    // Final downward offset matches the extra space reserved by --anchor-offset.
+    const maximumTranslateY = 16;
+
+    const getFullWidthInlineInset = () => {
+      const pageContent = document.querySelector<HTMLElement>(".page-section__inner");
+
+      if (pageContent) {
+        return pageContent.getBoundingClientRect().left;
+      }
+
+      return Math.max(20, (window.innerWidth - 1200) / 2);
+    };
+
+    // Keep a viewport-relative safety inset while allowing the outer pills to
+    // move beyond the centered page-content boundary.
+    const getFloatingInlineInset = () =>
+      Math.min(20, Math.max(12, window.innerWidth * 0.04));
 
     let targetProgress = Math.min(window.scrollY / scrollRange, 1);
     let currentProgress = targetProgress;
@@ -126,21 +141,23 @@ export function Header() {
     let previousFrameTime = 0;
 
     const applyProgress = (progress: number) => {
-      header.style.setProperty("--header-shell-progress", progress.toFixed(3));
+      const fullWidthInlineInset = getFullWidthInlineInset();
+      const floatingInlineInset = getFloatingInlineInset();
+      const currentInlineInset =
+        fullWidthInlineInset + (floatingInlineInset - fullWidthInlineInset) * progress;
+
       header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-group-strength", (progress * 100).toFixed(1) + "%");
-      header.style.setProperty("--header-unified-strength", ((1 - progress) * 100).toFixed(1) + "%");
       header.style.setProperty(
-        "--header-group-shadow-y",
-        (8 * progress).toFixed(2) + "px",
+        "--header-shell-inline-inset",
+        currentInlineInset.toFixed(2) + "px",
       );
       header.style.setProperty(
-        "--header-group-shadow-blur",
-        (24 * progress).toFixed(2) + "px",
+        "--header-pill-strength",
+        (progress * 100).toFixed(1) + "%",
       );
       header.style.setProperty(
-        "--header-group-shadow-alpha",
-        (0.08 * progress).toFixed(3),
+        "--header-bar-strength",
+        ((1 - progress) * 100).toFixed(1) + "%",
       );
     };
 
@@ -177,9 +194,11 @@ export function Header() {
 
     applyProgress(currentProgress);
     window.addEventListener("scroll", updateTargetProgress, { passive: true });
+    window.addEventListener("resize", updateTargetProgress);
 
     return () => {
       window.removeEventListener("scroll", updateTargetProgress);
+      window.removeEventListener("resize", updateTargetProgress);
       window.cancelAnimationFrame(animationFrame);
     };
   }, []);
@@ -362,30 +381,34 @@ export function Header() {
     >
       <div className="site-header__shell">
         <div className="site-header__top">
-          <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
-            <span className="site-brand__mark">{business.name}</span>
-          </a>
+          <div className="site-header__group site-header__group--brand">
+            <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
+              <span className="site-brand__mark">{business.name}</span>
+            </a>
+          </div>
 
-          <nav className="site-nav" aria-label="Primary" ref={navRef}>
-            <div className="site-nav__track" ref={navTrackRef}>
-              <span
-                aria-hidden="true"
-                className={
-                  "site-nav__indicator" +
-                  (highlightedHref ? " site-nav__indicator--visible" : "") +
-                  (hoveredHref ? " site-nav__indicator--preview" : "")
-                }
-                ref={navIndicatorRef}
-              />
-              <NavigationLinks
-                activeHref={activeHref}
-                highlightedHref={highlightedHref}
-                onHoverChange={setHoveredHref}
-              />
-            </div>
-          </nav>
+          <div className="site-header__group site-header__group--nav">
+            <nav className="site-nav" aria-label="Primary" ref={navRef}>
+              <div className="site-nav__track" ref={navTrackRef}>
+                <span
+                  aria-hidden="true"
+                  className={
+                    "site-nav__indicator" +
+                    (highlightedHref ? " site-nav__indicator--visible" : "") +
+                    (hoveredHref ? " site-nav__indicator--preview" : "")
+                  }
+                  ref={navIndicatorRef}
+                />
+                <NavigationLinks
+                  activeHref={activeHref}
+                  highlightedHref={highlightedHref}
+                  onHoverChange={setHoveredHref}
+                />
+              </div>
+            </nav>
+          </div>
 
-          <div className="site-header__action">
+          <div className="site-header__action site-header__group site-header__group--action">
             <Button href="#contact" variant="header">
               Contact
             </Button>

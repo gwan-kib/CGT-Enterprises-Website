@@ -6,7 +6,7 @@ This repository contains a responsive, one-page website wireframe for CGT Enterp
 
 The current page includes:
 
-- A sticky header with animated current-section highlighting, direct anchor navigation, a desktop contact action, and a compact horizontally scrollable mobile navigation row.
+- A sticky, scroll-responsive header that transforms from a full-width bar into separate brand, navigation, and Contact pills while preserving animated current-section highlighting and horizontally scrollable mobile navigation.
 - Full-viewport Hero, Services and Pricing, Customer Reviews, Leave a Review, FAQ, and Contact sections.
 - A footer with repeated page navigation and a clear prototype-status note.
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
