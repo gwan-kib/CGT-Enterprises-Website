@@ -7,6 +7,10 @@ import { Button } from "../ui/Button";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
 
+function getNavigationHref(hash: string): NavigationHref | null {
+  return navigationItems.find((item) => item.href === hash)?.href ?? null;
+}
+
 interface NavigationLinksProps {
   activeHref: NavigationHref | null;
   highlightedHref: NavigationHref | null;
@@ -38,7 +42,10 @@ function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: Navigat
   );
 }
 
-function handleSectionLinkClick(event: MouseEvent<HTMLElement>) {
+function handleSectionLinkClick(
+  event: MouseEvent<HTMLElement>,
+  onSectionNavigation: (href: NavigationHref | null) => void,
+) {
   if (
     event.defaultPrevented ||
     event.button !== 0 ||
@@ -69,6 +76,8 @@ function handleSectionLinkClick(event: MouseEvent<HTMLElement>) {
     return;
   }
 
+  onSectionNavigation(getNavigationHref(link.hash));
+
   event.preventDefault();
   section.scrollIntoView({ behavior: "smooth", block: "center" });
 
@@ -82,9 +91,20 @@ export function Header() {
   const navRef = useRef<HTMLElement>(null);
   const navTrackRef = useRef<HTMLDivElement>(null);
   const navIndicatorRef = useRef<HTMLSpanElement>(null);
-  const [activeHref, setActiveHref] = useState<NavigationHref | null>(null);
+  const isNavigationScrollingRef = useRef(false);
+  const [activeHref, setActiveHref] = useState<NavigationHref | null>(() =>
+    getNavigationHref(window.location.hash),
+  );
   const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
   const highlightedHref = hoveredHref ?? activeHref;
+
+  const handleSectionNavigation = (href: NavigationHref | null) => {
+    isNavigationScrollingRef.current = true;
+
+    if (href) {
+      setActiveHref(href);
+    }
+  };
 
   useEffect(() => {
     const header = headerRef.current;
@@ -165,6 +185,21 @@ export function Header() {
   }, []);
 
   useEffect(() => {
+    const syncActiveHrefFromHash = () => {
+      setActiveHref(getNavigationHref(window.location.hash));
+      isNavigationScrollingRef.current = true;
+    };
+
+    window.addEventListener("hashchange", syncActiveHrefFromHash);
+    window.addEventListener("popstate", syncActiveHrefFromHash);
+
+    return () => {
+      window.removeEventListener("hashchange", syncActiveHrefFromHash);
+      window.removeEventListener("popstate", syncActiveHrefFromHash);
+    };
+  }, []);
+
+  useEffect(() => {
     const sections = navigationItems.flatMap((item) => {
       const section = document.getElementById(item.href.slice(1));
 
@@ -179,6 +214,10 @@ export function Header() {
 
     const updateActiveSection = () => {
       animationFrame = 0;
+
+      if (isNavigationScrollingRef.current) {
+        return;
+      }
 
       const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
       const activationLine = headerBottom + (window.innerHeight - headerBottom) * 0.35;
@@ -197,18 +236,55 @@ export function Header() {
     };
 
     const scheduleActiveSectionUpdate = () => {
-      if (animationFrame === 0) {
-        animationFrame = window.requestAnimationFrame(updateActiveSection);
+      if (isNavigationScrollingRef.current || animationFrame !== 0) {
+        return;
+      }
+
+      animationFrame = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    const releaseNavigationScroll = (event?: Event) => {
+      if (event && event.target !== document) {
+        return;
+      }
+
+      isNavigationScrollingRef.current = false;
+    };
+
+    const handleUserScrollIntent = () => {
+      if (!isNavigationScrollingRef.current) {
+        return;
+      }
+
+      releaseNavigationScroll();
+    };
+
+    const handleScrollKey = (event: KeyboardEvent) => {
+      switch (event.key) {
+        case "ArrowDown":
+        case "ArrowUp":
+        case "End":
+        case "Home":
+        case "PageDown":
+        case "PageUp":
+        case " ":
+          handleUserScrollIntent();
+          break;
       }
     };
 
-    scheduleActiveSectionUpdate();
     window.addEventListener("scroll", scheduleActiveSectionUpdate, { passive: true });
-    window.addEventListener("resize", scheduleActiveSectionUpdate);
+    document.addEventListener("scrollend", releaseNavigationScroll);
+    window.addEventListener("wheel", handleUserScrollIntent, { passive: true });
+    window.addEventListener("touchstart", handleUserScrollIntent, { passive: true });
+    window.addEventListener("keydown", handleScrollKey);
 
     return () => {
       window.removeEventListener("scroll", scheduleActiveSectionUpdate);
-      window.removeEventListener("resize", scheduleActiveSectionUpdate);
+      document.removeEventListener("scrollend", releaseNavigationScroll);
+      window.removeEventListener("wheel", handleUserScrollIntent);
+      window.removeEventListener("touchstart", handleUserScrollIntent);
+      window.removeEventListener("keydown", handleScrollKey);
       window.cancelAnimationFrame(animationFrame);
     };
   }, []);
@@ -279,7 +355,11 @@ export function Header() {
   }, [activeHref]);
 
   return (
-    <header className="site-header" onClick={handleSectionLinkClick} ref={headerRef}>
+    <header
+      className="site-header"
+      onClick={(event) => handleSectionLinkClick(event, handleSectionNavigation)}
+      ref={headerRef}
+    >
       <div className="site-header__shell">
         <div className="site-header__top">
           <a aria-label="CGT Enterprises home" className="site-brand" href="#home">

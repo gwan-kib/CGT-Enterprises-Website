@@ -20,9 +20,6 @@ export function HeroSection() {
           </p>
           <div className="hero-section__actions">
             <Button href="#services">Explore services</Button>
-            <Button href="#about" variant="outline">
-              Learn more
-            </Button>
           </div>
           <p className="hero-section__note">
             Questions about a load or need help estimating the price? Get in touch and tell us what you need.
