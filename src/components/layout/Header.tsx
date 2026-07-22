@@ -102,7 +102,7 @@ export function Header() {
     // Final horizontal space between the shell edge and the header content.
     const maximumContentPadding = 24;
     // Final corner radius of the fully transformed shell.
-    const maximumRadius = 16;
+    const maximumRadius = 50;
     // Final downward offset of the floating shell.
     const maximumTranslateY = 20;
 

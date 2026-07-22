@@ -20,7 +20,7 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 ## Design and accessibility
 
 - Manrope provides the complete type hierarchy through one centrally loaded webfont and a system fallback stack.
-- Semantic colour tokens cover brand, surface, text, border, action, focus, and feedback roles.
+- Reusable colour tokens cover repeated brand, surface, text, border, divider, link, and disabled-action roles; one-off colours stay with their owning rules.
 - Shared spacing, content-width, radius, shadow, control-size, and motion tokens keep sections consistent.
 - Reusable React components provide section containers, headings, buttons, cards, labelled fields, and image placeholders.
 - Every major section uses at least the viewport height and stacks into a single-column mobile layout without changing the content order.

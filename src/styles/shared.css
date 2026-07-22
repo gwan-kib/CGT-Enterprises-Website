@@ -10,11 +10,11 @@
     overflow-x: hidden;
     background: var(--color-background-page);
     color: var(--color-text);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
+    font-family:
+      "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.65;
     text-rendering: optimizeLegibility;
   }
 
@@ -25,7 +25,7 @@
   }
 
   :where(a, button, input, textarea, summary):focus-visible {
-    outline: var(--border-width-strong) solid var(--color-focus-ring);
+    outline: var(--border-width-strong) solid var(--color-brand-red-500);
     outline-offset: 0.25rem;
   }
 
@@ -40,7 +40,7 @@
     @apply flex min-h-screen items-center;
     min-height: 100svh;
     scroll-margin-top: var(--anchor-offset);
-    padding-block: var(--section-space-block);
+    padding-block: clamp(5rem, 9vw, 8rem);
     background: var(--color-background-page);
   }
 
@@ -53,7 +53,7 @@
   }
 
   .page-section--subtle {
-    background: var(--color-background-subtle);
+    background: var(--color-neutral-50);
   }
 
   .page-section--dark {
@@ -68,11 +68,11 @@
 
   .page-section--dark
     :where(a, button, input, textarea, summary):focus-visible {
-    outline-color: var(--color-focus-ring-inverse);
+    outline-color: var(--color-brand-green-500);
   }
 
   .section-heading {
-    max-width: var(--content-width-narrow);
+    max-width: 44rem;
   }
 
   .section-heading--center {
@@ -84,7 +84,7 @@
     margin: 0 0 var(--space-5);
     color: var(--color-brand-red-500);
     font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     text-transform: uppercase;
@@ -100,11 +100,10 @@
 
   .section-heading__title {
     margin: 0;
-    font-family: var(--font-family-display);
-    font-size: var(--font-size-heading-section);
-    font-weight: var(--font-weight-heading-section);
-    line-height: var(--line-height-heading-section);
-    letter-spacing: var(--letter-spacing-heading-section);
+    font-size: clamp(2rem, 1.65rem + 1.4vw, 3rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
     text-wrap: balance;
   }
 
@@ -133,9 +132,9 @@
     border: var(--border-width-strong) solid transparent;
     border-radius: var(--radius-pill);
     font-size: var(--font-size-button);
-    font-weight: var(--font-weight-button);
+    font-weight: var(--font-weight-bold);
     line-height: var(--line-height-button);
-    letter-spacing: var(--letter-spacing-button);
+    letter-spacing: 0.01em;
     transition:
       background-color var(--transition-fast) var(--easing-standard),
       border-color var(--transition-fast) var(--easing-standard),
@@ -148,16 +147,16 @@
   }
 
   .button--primary {
-    background: var(--color-action-background);
-    color: var(--color-action-text);
+    background: var(--color-brand-green-500);
+    color: var(--color-neutral-900);
   }
 
   .button--primary:not(:disabled):hover {
-    background: var(--color-action-background-hover);
+    background: #36b957;
   }
 
   .button--primary:not(:disabled):active {
-    background: var(--color-action-background-active);
+    background: #2eaa4d;
   }
 
   .button--outline {
@@ -277,7 +276,7 @@
 
   .static-field__label {
     font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
   }
@@ -287,7 +286,7 @@
     min-height: var(--control-height);
     padding: var(--space-3) var(--space-4);
     border: var(--border-width-strong) solid var(--color-border-strong);
-    border-radius: var(--radius-small);
+    border-radius: 0.5rem;
     background: var(--color-surface);
     color: var(--color-text);
   }

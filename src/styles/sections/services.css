@@ -60,7 +60,7 @@
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
     background: var(--color-surface);
-    box-shadow: var(--shadow-small);
+    box-shadow: 0 0.5rem 1.5rem rgb(24 23 27 / 8%);
     transform: translateY(var(--service-card-offset-y))
       scale(var(--service-card-scale));
     transition:
@@ -150,16 +150,16 @@
 
   .service-card.is-active .service-card__state {
     border-color: var(--color-brand-green-700);
-    background: var(--color-brand-green-50);
+    background: #effcf2;
     color: var(--color-brand-green-700);
   }
 
   .service-card__title {
     margin: var(--space-12) 0 0;
     font-size: var(--font-size-heading-card);
-    font-weight: var(--font-weight-heading-card);
+    font-weight: var(--font-weight-bold);
     line-height: var(--line-height-heading-card);
-    letter-spacing: var(--letter-spacing-heading-card);
+    letter-spacing: -0.01em;
   }
 
   .service-card__description {
@@ -221,7 +221,7 @@
     background: var(--color-surface);
     color: var(--color-text);
     font-size: var(--font-size-button);
-    font-weight: var(--font-weight-button);
+    font-weight: var(--font-weight-bold);
     line-height: var(--line-height-button);
     cursor: pointer;
     transition:

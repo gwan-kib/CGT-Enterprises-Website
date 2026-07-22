@@ -2,7 +2,7 @@
   .site-footer {
     padding-block: var(--space-12);
     border-top: var(--border-width) solid var(--color-neutral-500);
-    background: var(--color-neutral-black);
+    background: #000;
     color: var(--color-text-inverse);
   }
 

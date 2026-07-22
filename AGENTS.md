@@ -52,6 +52,15 @@ CSS and Tailwind organization:
 - For runtime visual values, prefer passing a narrowly scoped CSS custom property from React and consuming it in the stylesheet instead of placing an entire style definition in the component.
 - Do not create a separate stylesheet for every trivial component. Group styles by shared responsibility or visible page section when that keeps implementation and maintenance clearer.
 
+CSS token discipline:
+
+- Treat `src/styles/tokens.css` as a small set of genuinely shared design values, not as an inventory of every CSS value used by the site.
+- Before adding a token, search the current stylesheets and confirm that the value or semantic role has at least two realistic consumers. Because this is a one-page website, do not create tokens for hypothetical future pages, variants, components, or states.
+- Write a static value directly in its owning rule when it is used in only one realistic place. For example, keep a navigation-only font size in `.site-nav__link` instead of creating a global navigation font-size token.
+- Prefer an existing shared primitive directly over a one-use alias. Do not create chains such as a component-specific weight token that only points to `--font-weight-semibold` unless the alias is independently reused and needs to change as one semantic role.
+- Keep CSS custom properties local to the owning component when they carry calculated or runtime state, animation geometry, or values passed from React. These are behavioural variables and do not need multiple consumers to be justified.
+- When removing or changing a component or state, audit `tokens.css` and delete tokens that no longer have a real consumer. Before completing CSS work, verify that every remaining global token is used and that newly introduced tokens satisfy the reuse rule.
+
 Service boundaries:
 
 - Keep the React application static and client-facing; do not introduce a separate backend framework unless an approved requirement cannot be handled safely by Apps Script.
