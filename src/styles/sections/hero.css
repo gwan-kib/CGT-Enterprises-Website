@@ -5,7 +5,7 @@
 
   .hero-section__grid {
     @apply grid items-center;
-    margin-top: clamp(var(--space-10), 6vw, var(--space-16));
+    margin-top: clamp(var(--space-10), 6vw, 4rem);
     gap: clamp(var(--space-10), 6vw, var(--space-20));
   }
 
@@ -19,7 +19,7 @@
     margin: 0 0 var(--space-6);
     color: var(--color-brand-green-500);
     font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     text-transform: uppercase;
@@ -27,12 +27,15 @@
 
   .hero-section__title {
     margin: 0;
-    font-family: var(--font-family-display);
-    font-size: var(--font-size-display);
-    font-weight: var(--font-weight-display);
-    line-height: var(--line-height-display);
-    letter-spacing: var(--letter-spacing-display);
+    font-size: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1.02;
+    letter-spacing: -0.045em;
     text-wrap: balance;
+  }
+
+  .hero-section__title-accent {
+    color: var(--color-brand-red-500);
   }
 
   .hero-section__summary {
@@ -41,6 +44,7 @@
     color: var(--color-neutral-200);
     font-size: 1.125rem;
     line-height: 1.65;
+    text-align: center;
   }
 
   .hero-section__actions {
@@ -49,8 +53,7 @@
     gap: var(--space-4);
   }
 
-  .hero-section__note,
-  .hero-section__media-note {
+  .hero-section__note {
     margin: var(--space-6) 0 0;
     color: var(--color-neutral-200);
     font-size: var(--font-size-small);
@@ -60,6 +63,11 @@
   .hero-section__media {
     width: min(100%, 32rem);
     margin-inline: auto;
+  }
+
+  .hero-section__media-image {
+    @apply block h-full w-full;
+    object-fit: contain;
   }
 }
 

@@ -45,12 +45,21 @@ The expected production stack is:
 CSS and Tailwind organization:
 
 - Keep styles under a dedicated location such as `src/styles/`, with a central stylesheet entrypoint that imports shared tokens, shared component rules, and section-specific stylesheets.
-- Use separate stylesheets for substantial visible areas such as navigation, About, services, reviews, FAQ, contact, and footer. Keep global design tokens and genuinely shared patterns in shared files.
+- Use separate stylesheets for substantial visible areas such as navigation, services, reviews, FAQ, contact, and footer. Keep global design tokens and genuinely shared patterns in shared files.
 - Prefer semantic class names in React and compose their fixed styling in CSS with Tailwind directives such as `@apply` when supported by the installed Tailwind version.
 - Keep React files focused on component structure, content, state, accessibility, and behaviour. Whenever practical, move fixed layout, spacing, typography, colour, border, animation, responsive, hover, and focus styling into the appropriate stylesheet.
 - Inline Tailwind utilities or React `style` values are acceptable when they make a small one-off case significantly simpler or clearer, or when a value is genuinely calculated at runtime.
 - For runtime visual values, prefer passing a narrowly scoped CSS custom property from React and consuming it in the stylesheet instead of placing an entire style definition in the component.
 - Do not create a separate stylesheet for every trivial component. Group styles by shared responsibility or visible page section when that keeps implementation and maintenance clearer.
+
+CSS token discipline:
+
+- Treat `src/styles/tokens.css` as a small set of genuinely shared design values, not as an inventory of every CSS value used by the site.
+- Before adding a token, search the current stylesheets and confirm that the value or semantic role has at least two realistic consumers. Because this is a one-page website, do not create tokens for hypothetical future pages, variants, components, or states.
+- Write a static value directly in its owning rule when it is used in only one realistic place. For example, keep a navigation-only font size in `.site-nav__link` instead of creating a global navigation font-size token.
+- Prefer an existing shared primitive directly over a one-use alias. Do not create chains such as a component-specific weight token that only points to `--font-weight-semibold` unless the alias is independently reused and needs to change as one semantic role.
+- Keep CSS custom properties local to the owning component when they carry calculated or runtime state, animation geometry, or values passed from React. These are behavioural variables and do not need multiple consumers to be justified.
+- When removing or changing a component or state, audit `tokens.css` and delete tokens that no longer have a real consumer. Before completing CSS work, verify that every remaining global token is used and that newly introduced tokens satisfy the reuse rule.
 
 Service boundaries:
 
@@ -72,13 +81,12 @@ Service boundaries:
 Use this as the default one-page structure unless a confirmed revision changes it:
 
 1. Header and anchor navigation.
-2. About.
-3. Services and prices, presented as responsive cards.
-4. Customer reviews or testimonials, if the display source and permissions are confirmed.
-5. Leave-a-review section, if the submission workflow is confirmed.
-6. FAQ with approximately 5-10 approved questions and answers.
-7. Contact section and contact form.
-8. Footer.
+2. Services and prices, presented as responsive cards.
+3. Customer reviews or testimonials, if the display source and permissions are confirmed.
+4. Leave-a-review section, if the submission workflow is confirmed.
+5. FAQ with approximately 5-10 approved questions and answers.
+6. Contact section and contact form.
+7. Footer.
 
 - Organize components by visible page section and create small shared components only for genuinely repeated patterns such as buttons, section headings, cards, fields, and layout containers.
 
@@ -193,7 +201,7 @@ When reviewing a meaningful feature, pull request, milestone, or deployment chan
 - Keep branches and commits focused on one logical change where practical.
 - Use a concise conventional-commit subject: `tag(scope): short summary`.
 - Use `feat` for user-visible functionality, `fix` for broken behaviour, `style` for visual-only changes, `content` for approved copy or asset updates, `refactor` for behaviour-preserving structure changes, `docs` for documentation, `test` for tests, `build` for tooling or deployment builds, `ci` for automation, and `chore` for maintenance.
-- Helpful scopes include `layout`, `navigation`, `about`, `services`, `reviews`, `faq`, `contact`, `footer`, `forms`, `responsive`, `accessibility`, `seo`, `assets`, `config`, and `deploy`. Feel free to add any the were not explicitly listed when necessary.
+- Helpful scopes include `layout`, `navigation`, `services`, `reviews`, `faq`, `contact`, `footer`, `forms`, `responsive`, `accessibility`, `seo`, `assets`, `config`, and `deploy`. Feel free to add any the were not explicitly listed when necessary.
 - Write commit subjects in the imperative mood. If the developer asks for a commit message describing work already completed, keep the body in past tense.
 - For a multi-part change, add a concise body grouped by the areas that actually changed. Do not add empty headings.
 - When asked for a commit message, first inspect recent commits, staged and unstaged changes, untracked files, and the relevant diff. Do not reuse a stale message after the working tree changes.

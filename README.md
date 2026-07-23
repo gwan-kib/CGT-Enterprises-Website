@@ -1,18 +1,18 @@
 # CGT Enterprises Website
 
-iThis repository contains a responsive, one-page website wireframe for CGT Enterprises. It establishes the site's section order, visual hierarchy, reusable design system, and potential image placement without publishing unconfirmed business content.
+This repository contains a responsive, one-page website wireframe for CGT Enterprises. It establishes the site's section order, visual hierarchy, reusable design system, and potential image placement without publishing unconfirmed business content.
 
 ## Website overview
 
 The current page includes:
 
-- A sticky header with direct anchor navigation, a desktop contact action, and a compact horizontally scrollable mobile navigation row.
-- Full-viewport Hero, About, Services and Pricing, Customer Reviews, Leave a Review, FAQ, and Contact sections.
+- A sticky, scroll-responsive header that transforms from a full-width bar into separate brand, navigation, and Contact pills while preserving animated current-section highlighting and horizontally scrollable mobile navigation.
+- Full-viewport Hero, Services and Pricing, Customer Reviews, Leave a Review, FAQ, and Contact sections.
 - A footer with repeated page navigation and a clear prototype-status note.
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
 - Static review and contact form layouts with read-only fields and disabled buttons.
 - Native FAQ disclosure controls with one example expanded on initial load.
-- An accessible Services carousel with direct card selection, Previous and Next controls, circular wrapping, active-service status, and a single-card mobile layout.
+- A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
 The interface is intentionally a structural wireframe. It does not submit forms, store reviews, call external services, or display real customer or business information.
@@ -20,7 +20,7 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 ## Design and accessibility
 
 - Manrope provides the complete type hierarchy through one centrally loaded webfont and a system fallback stack.
-- Semantic colour tokens cover brand, surface, text, border, action, focus, and feedback roles.
+- Reusable colour tokens cover repeated brand, surface, text, border, divider, link, and disabled-action roles; one-off colours stay with their owning rules.
 - Shared spacing, content-width, radius, shadow, control-size, and motion tokens keep sections consistent.
 - Reusable React components provide section containers, headings, buttons, cards, labelled fields, and image placeholders.
 - Every major section uses at least the viewport height and stacks into a single-column mobile layout without changing the content order.
@@ -36,7 +36,7 @@ The interface is intentionally a structural wireframe. It does not submit forms,
 | PostCSS and Autoprefixer | Process and improve browser compatibility for the stylesheet bundle. |
 | ESLint | Checks TypeScript and React source for correctness and maintainability issues. |
 
-No additional UI, form, carousel, or icon dependencies are used.
+No additional UI, form, or icon dependencies are used.
 
 ## Project structure
 
@@ -114,7 +114,7 @@ The implementation demonstrates:
 - Translating a visual brief into a responsive, semantic React page architecture.
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
-- Implementing a data-driven circular carousel without adding a UI dependency or duplicating hidden services.
+- Rendering a data-driven four-card Services grid without adding a UI dependency or duplicating service content.
 - Creating static form compositions that show the intended layout without implying working submission behaviour.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.

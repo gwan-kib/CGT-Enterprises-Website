@@ -21,7 +21,7 @@
   .review-card__quote {
     margin: 0;
     font-size: 1.125rem;
-    font-weight: var(--font-weight-medium);
+    font-weight: 500;
     line-height: 1.6;
   }
 

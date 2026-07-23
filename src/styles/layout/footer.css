@@ -1,17 +1,14 @@
 @layer components {
   .site-footer {
     padding-block: var(--space-12);
-    border-top: var(--border-width) solid var(--color-neutral-500);
-    background: var(--color-neutral-black);
+    border-top: var(--border-width) solid var(--color-neutral-1000);
+    background: #000;
     color: var(--color-text-inverse);
   }
 
   .site-footer__inner {
     @apply grid;
-    width: min(
-      calc(100% - var(--page-gutter) - var(--page-gutter)),
-      var(--content-width)
-    );
+    width: min(calc(100% - var(--page-gutter) - var(--page-gutter)), var(--content-width));
     margin-inline: auto;
     gap: var(--space-10);
   }
