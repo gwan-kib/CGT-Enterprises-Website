@@ -57,7 +57,7 @@
 
   /* Controls */
   --control-height: 4rem;
-  --touch-target-minimum: 4rem;
+  --touch-target-minimum: 3rem;
 
   /* Motion */
   --transition-fast: 150ms;

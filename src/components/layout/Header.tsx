@@ -3,7 +3,6 @@ import type { MouseEvent } from "react";
 
 import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { navigationItems } from "../../data/navigation";
-import { Button } from "../ui/Button";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
 
@@ -337,9 +336,9 @@ export function Header() {
           </div>
 
           <div className="site-header__action">
-            <Button href="#contact" variant="header">
+            <a className="site-nav__link site-nav__link--header" href="#contact">
               Contact
-            </Button>
+            </a>
           </div>
         </div>
       </div>

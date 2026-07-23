@@ -5,7 +5,6 @@
 
   .hero-section__grid {
     @apply grid items-center;
-    margin-top: clamp(var(--space-10), 6vw, 4rem);
     gap: clamp(var(--space-10), 6vw, var(--space-20));
   }
 
@@ -16,7 +15,7 @@
   }
 
   .hero-section__eyebrow {
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-2);
     color: var(--color-brand-green-500);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-semibold);
@@ -27,23 +26,24 @@
 
   .hero-section__title {
     margin: 0;
-    font-size: clamp(2.75rem, 2rem + 3vw, 4.5rem);
+    font-size: 4rem;
     font-weight: var(--font-weight-extrabold);
-    line-height: 1.02;
+    line-height: 1.1;
     letter-spacing: -0.045em;
     text-wrap: balance;
+    padding-bottom: var(--space-6);
   }
 
   .hero-section__title-accent {
-    color: var(--color-brand-red-500);
+    color: var(--color-brand-red-400);
   }
 
   .hero-section__summary {
     max-width: 38rem;
     margin: 0;
     color: var(--color-neutral-200);
-    font-size: 1.125rem;
-    line-height: 1.65;
+    font-size: 1.5rem;
+    line-height: 1.4;
     text-align: center;
   }
 
@@ -51,13 +51,7 @@
     @apply flex flex-wrap;
     margin-top: var(--space-8);
     gap: var(--space-4);
-  }
-
-  .hero-section__note {
-    margin: var(--space-6) 0 0;
-    color: var(--color-neutral-200);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    justify-content: center;
   }
 
   .hero-section__media {

@@ -21,13 +21,11 @@
     --header-highlight-color: var(--color-brand-green-900);
     --header-highlight-text-color: var(--header-text-color);
 
-    --header-action-color: var(--color-brand-green-800);
-    --header-action-text-color: var(--color-neutral-100);
+    --header-action-color: var(--color-brand-green-600);
+    --header-action-text-color: var(--header-text-color);
 
-    --header-action-hover-color: var(--color-neutral-900);
-    --header-action-hover-text-color: var(--color-neutral-100);
-
-    --header-focus-color: var(--color-neutral-900);
+    --header-action-hover-color: var(--color-brand-green-700);
+    --header-action-hover-text-color: var(--header-text-color);
   }
 
   .site-header__shell {
@@ -134,7 +132,7 @@
   .site-nav__indicator::before {
     content: "";
     position: absolute;
-    inset: 0.35rem 0.1rem;
+    inset: 0 0.1rem;
     border-radius: var(--radius-pill);
     background: color-mix(in srgb, var(--header-highlight-color) 50%, transparent);
     transition: background-color var(--transition-fast) var(--easing-standard);
@@ -173,27 +171,21 @@
     opacity: 1;
   }
 
-  .site-header :where(a, button):focus-visible {
-    outline-color: var(--header-focus-color);
-  }
-
   .site-header__action {
     @apply flex shrink-0 items-center;
   }
 
-  .site-header__action .button {
+  .site-header__action .site-nav__link--header {
     padding-inline: var(--space-4);
-    line-height: 1.25;
-  }
-
-  .button--header {
-    border-color: var(--header-action-color);
+    border-radius: var(--radius-pill);
     background: var(--header-action-color);
     color: var(--header-action-text-color);
+    font-weight: 700;
+    opacity: 1;
   }
 
-  .button--header:not(:disabled):hover {
-    border-color: var(--header-action-hover-color);
+  .site-nav__link--header:hover,
+  .site-nav__link--header:focus-visible {
     background: var(--header-action-hover-color);
     color: var(--header-action-hover-text-color);
   }
