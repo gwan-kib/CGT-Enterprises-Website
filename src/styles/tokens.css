@@ -67,7 +67,7 @@
   /* Brand green scale (500 supplied) */
   --color-brand-green-100: #d9f5df;
   --color-brand-green-200: #b2ebc0;
-  --color-brand-green-300: #8ce2a0;
+  --color-brand-green-300: #8ce28f;
   --color-brand-green-400: #65d881;
   --color-brand-green-500: #3fce61;
   --color-brand-green-600: #2eaa4d;
@@ -91,26 +91,24 @@
   --color-neutral-200: #dad9dd;
   --color-neutral-300: #b3b1b7;
   --color-neutral-400: #8c8a92;
-  --color-neutral-1000: #65626c;
   --color-neutral-600: #524f57;
   --color-neutral-700: #3f3d44;
   --color-neutral-800: #2b2a2f;
   --color-neutral-900: #18171b;
-  --color-neutral-white: #ffffff;
 
   /* Brand roles */
   --color-brand-primary: var(--color-brand-green-500);
 
   /* Background and surface roles */
-  --color-background-page: var(--color-neutral-white);
-  --color-surface: var(--color-neutral-white);
+  --color-background-page: var(--color-neutral-100);
+  --color-surface: var(--color-neutral-100);
   --color-surface-subtle: var(--color-neutral-100);
   --color-surface-emphasis: var(--color-neutral-900);
 
   /* Text roles */
   --color-text: var(--color-neutral-900);
   --color-text-muted: var(--color-neutral-1000);
-  --color-text-inverse: var(--color-neutral-white);
+  --color-text-inverse: var(--color-neutral-100);
   --color-text-on-brand-primary: var(--color-neutral-900);
   --color-text-link: var(--color-brand-green-700);
   --color-text-link-hover: var(--color-brand-green-800);

@@ -2,25 +2,70 @@
   .site-header {
     @apply sticky top-0 z-40;
     --header-shell-translate-y: 0px;
-    --header-shell-inline-inset: max(
-      var(--page-gutter),
-      calc((100% - var(--content-width)) / 2)
-    );
-    --header-pill-strength: 0%;
-    --header-bar-strength: 100%;
+    --header-shell-inline-inset: max(var(--page-gutter), calc((100% - var(--content-width)) / 2));
+    --header-backdrop-blur-maximum: 100px;
+    --header-bar-blur: var(--header-backdrop-blur-maximum);
+    --header-pill-blur: 0px;
 
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
   }
 
+  /*
+   * Backdrop-aware header palette
+   *
+   * Edit these two contrast blocks to retheme the header. They control text,
+   * navigation highlights, Contact states, and keyboard focus colors.
+   */
+
+  .site-header[data-header-contrast="on-dark"],
+  .site-header__group[data-header-contrast="on-dark"] {
+    --header-text-color: var(--color-neutral-900);
+
+    --header-highlight-color: var(--color-brand-green-600);
+    --header-highlight-text-color: var(--color-neutral-900);
+
+    --header-action-color: var(--color-brand-green-800);
+    --header-action-text-color: var(--color-neutral-100);
+
+    --header-action-hover-color: var(--color-neutral-900);
+    --header-action-hover-text-color: var(--color-neutral-100);
+
+    --header-action-active-color: var(--color-brand-green-700);
+    --header-action-active-text-color: var(--color-neutral-100);
+
+    --header-focus-color: var(--color-neutral-900);
+  }
+
+  .site-header[data-header-contrast="on-light"],
+  .site-header__group[data-header-contrast="on-light"] {
+    --header-text-color: var(--color-neutral-100);
+
+    --header-highlight-color: var(--color-brand-green-500);
+    --header-highlight-text-color: var(--color-neutral-900);
+
+    --header-action-color: var(--color-brand-green-700);
+    --header-action-text-color: var(--color-neutral-100);
+
+    --header-action-hover-color: var(--color-brand-green-500);
+    --header-action-hover-text-color: var(--color-neutral-900);
+
+    --header-action-active-color: var(--color-brand-green-800);
+    --header-action-active-text-color: var(--color-neutral-100);
+
+    --header-focus-color: var(--color-neutral-100);
+  }
+
   .site-header__shell {
     @apply relative;
-    background: color-mix(
-      in srgb,
-      var(--color-brand-green-500) var(--header-bar-strength),
-      transparent
-    );
     transform: translateY(var(--header-shell-translate-y));
+  }
+
+  .site-header__backdrop {
+    @apply pointer-events-none absolute inset-0;
+    background: transparent;
+    -webkit-backdrop-filter: blur(var(--header-bar-blur));
+    backdrop-filter: blur(var(--header-bar-blur));
   }
 
   .site-header__top {
@@ -40,12 +85,11 @@
     min-width: 0;
     padding-inline: var(--space-1);
     border-radius: var(--radius-pill);
-    background: color-mix(
-      in srgb,
-      var(--color-brand-green-500) var(--header-pill-strength),
-      transparent
-    );
+    background: transparent;
+    -webkit-backdrop-filter: blur(var(--header-pill-blur));
+    backdrop-filter: blur(var(--header-pill-blur));
   }
+
 
   .site-header__group--brand {
     justify-self: start;
@@ -64,7 +108,8 @@
     @apply inline-flex shrink-0 items-center no-underline;
     min-height: var(--touch-target-minimum);
     gap: var(--space-3);
-    color: var(--color-neutral-900);
+    color: var(--header-text-color);
+    transition: color var(--transition-fast) var(--easing-standard);
   }
 
   .site-brand__mark {
@@ -101,8 +146,8 @@
     --site-nav-indicator-width: 0px;
     --site-nav-indicator-height: 0px;
     --site-nav-slide-duration: 250ms;
-    --site-nav-slide-easing: cubic-bezier(.645, .045, .355, 1);
-    
+    --site-nav-slide-easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+
     position: absolute;
     z-index: 0;
     top: 0;
@@ -111,11 +156,7 @@
     height: var(--site-nav-indicator-height);
     pointer-events: none;
     opacity: 0;
-    transform: translate3d(
-      var(--site-nav-indicator-left),
-      var(--site-nav-indicator-top),
-      0
-    );
+    transform: translate3d(var(--site-nav-indicator-left), var(--site-nav-indicator-top), 0);
     transition:
       width var(--site-nav-slide-duration) var(--site-nav-slide-easing),
       height var(--site-nav-slide-duration) var(--site-nav-slide-easing),
@@ -128,7 +169,8 @@
     position: absolute;
     inset: 0.35rem 0.1rem;
     border-radius: var(--radius-pill);
-    background: var(--color-brand-green-600);
+    background: var(--header-highlight-color);
+    transition: background-color var(--transition-fast) var(--easing-standard);
   }
 
   .site-nav__indicator--visible {
@@ -149,7 +191,7 @@
     @apply relative isolate inline-flex items-center justify-center no-underline;
     min-height: var(--touch-target-minimum);
     padding-inline: var(--space-3);
-    color: var(--color-neutral-900);
+    color: var(--header-text-color);
     font-size: 1.1rem;
     font-weight: 500;
     line-height: 1.25;
@@ -157,8 +199,12 @@
     transition: color var(--transition-fast) var(--easing-standard);
   }
 
+  .site-nav__link--highlighted {
+    color: var(--header-highlight-text-color);
+  }
+
   .site-header :where(a, button):focus-visible {
-    outline-color: var(--color-neutral-900);
+    outline-color: var(--header-focus-color);
   }
 
   .site-header__action {
@@ -171,19 +217,21 @@
   }
 
   .button--header {
-    border-color: var(--color-brand-green-800);
-    background: var(--color-brand-green-800);
-    color: var(--color-neutral-white);
+    border-color: var(--header-action-color);
+    background: var(--header-action-color);
+    color: var(--header-action-text-color);
   }
 
   .button--header:not(:disabled):hover {
-    border-color: var(--color-neutral-900);
-    background: var(--color-neutral-900);
+    border-color: var(--header-action-hover-color);
+    background: var(--header-action-hover-color);
+    color: var(--header-action-hover-text-color);
   }
 
   .button--header:not(:disabled):active {
-    border-color: var(--color-brand-green-700);
-    background: var(--color-brand-green-700);
+    border-color: var(--header-action-active-color);
+    background: var(--header-action-active-color);
+    color: var(--header-action-active-text-color);
   }
 
   @media (min-width: 64rem) {

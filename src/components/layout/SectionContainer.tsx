@@ -18,10 +18,12 @@ export function SectionContainer({
   const classes = ['page-section', `page-section--${tone}`, className]
     .filter(Boolean)
     .join(' ')
+  const headerContrast = tone === 'dark' ? 'on-dark' : 'on-light'
 
   return (
     <section
       aria-labelledby={labelledBy}
+      data-header-contrast={headerContrast}
       className={classes}
       id={id}
     >

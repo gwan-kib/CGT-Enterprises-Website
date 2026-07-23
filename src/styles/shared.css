@@ -170,7 +170,7 @@
   }
 
   .page-section--dark .button--outline:not(:disabled):hover {
-    background: var(--color-neutral-white);
+    background: var(--color-neutral-100);
     color: var(--color-neutral-900);
   }
 
