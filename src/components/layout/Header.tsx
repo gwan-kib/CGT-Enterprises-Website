@@ -132,31 +132,6 @@ export function Header() {
       return;
     }
 
-    // Distance, in pixels, over which the shell completes its transformation.
-    const scrollRange = 120;
-    // Time-based easing strength. Higher values settle faster.
-    const smoothingRate = 14;
-    // Final downward offset matches the extra space reserved by --anchor-offset.
-    const maximumTranslateY = 16;
-    // The maximum blur is configured beside the header styles for easy tuning.
-    const maximumBackdropBlur = Number.parseFloat(
-      getComputedStyle(header).getPropertyValue("--header-backdrop-blur-maximum"),
-    );
-
-    const getFullWidthInlineInset = () => {
-      const pageContent = document.querySelector<HTMLElement>(".page-section__inner");
-
-      if (pageContent) {
-        return pageContent.getBoundingClientRect().left;
-      }
-
-      return Math.max(20, (window.innerWidth - 1200) / 2);
-    };
-
-    // Keep a viewport-relative safety inset while allowing the outer pills to
-    // move beyond the centered page-content boundary.
-    const getFloatingInlineInset = () => Math.min(20, Math.max(12, window.innerWidth * 0.04));
-
     const shell = header.querySelector<HTMLElement>(".site-header__shell");
     const colorZones = header.querySelectorAll<HTMLElement>("[data-header-color-zone]");
 
@@ -188,72 +163,13 @@ export function Header() {
       }
     };
 
-    let targetProgress = Math.min(window.scrollY / scrollRange, 1);
-    let currentProgress = targetProgress;
-    let animationFrame = 0;
-    let previousFrameTime = 0;
-
-    const applyProgress = (progress: number) => {
-      const fullWidthInlineInset = getFullWidthInlineInset();
-      const floatingInlineInset = getFloatingInlineInset();
-      const currentInlineInset = fullWidthInlineInset + (floatingInlineInset - fullWidthInlineInset) * progress;
-      const currentBarBlur = maximumBackdropBlur * (1 - progress);
-      const currentPillBlur = maximumBackdropBlur * progress;
-
-      header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-shell-inline-inset", currentInlineInset.toFixed(2) + "px");
-      header.style.setProperty("--header-bar-blur", currentBarBlur.toFixed(2) + "px");
-      header.style.setProperty("--header-pill-blur", currentPillBlur.toFixed(2) + "px");
-      header.dataset.layoutState = progress <= 0.001 ? "bar" : progress >= 0.999 ? "pills" : "transition";
-
-      const maximumTintStrength =
-        Number.parseFloat(window.getComputedStyle(header).getPropertyValue("--header-tint-maximum")) || 0;
-
-      header.style.setProperty("--header-bar-tint", `${(maximumTintStrength * (1 - progress)).toFixed(1)}%`);
-
-      header.style.setProperty("--header-pill-tint", `${(maximumTintStrength * progress).toFixed(1)}%`);
-      syncHeaderContrasts();
-    };
-
-    const animateToScrollPosition = (timestamp: number) => {
-      animationFrame = 0;
-
-      const elapsedSeconds = Math.min(Math.max((timestamp - previousFrameTime) / 1000, 0), 0.1);
-      const smoothingFactor = 1 - Math.exp(-smoothingRate * elapsedSeconds);
-
-      currentProgress += (targetProgress - currentProgress) * smoothingFactor;
-
-      if (Math.abs(targetProgress - currentProgress) < 0.001) {
-        currentProgress = targetProgress;
-      }
-
-      previousFrameTime = timestamp;
-      applyProgress(currentProgress);
-
-      if (currentProgress !== targetProgress) {
-        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
-      } else {
-        previousFrameTime = 0;
-      }
-    };
-
-    const updateTargetProgress = () => {
-      targetProgress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
-
-      if (animationFrame === 0) {
-        previousFrameTime = window.performance.now();
-        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
-      }
-    };
-
-    applyProgress(currentProgress);
-    window.addEventListener("scroll", updateTargetProgress, { passive: true });
-    window.addEventListener("resize", updateTargetProgress);
+    syncHeaderContrasts();
+    window.addEventListener("scroll", syncHeaderContrasts, { passive: true });
+    window.addEventListener("resize", syncHeaderContrasts);
 
     return () => {
-      window.removeEventListener("scroll", updateTargetProgress);
-      window.removeEventListener("resize", updateTargetProgress);
-      window.cancelAnimationFrame(animationFrame);
+      window.removeEventListener("scroll", syncHeaderContrasts);
+      window.removeEventListener("resize", syncHeaderContrasts);
     };
   }, []);
 
@@ -428,28 +344,19 @@ export function Header() {
     <header
       className="site-header"
       data-header-contrast="on-dark"
-      data-layout-state="bar"
       onClick={(event) => handleSectionLinkClick(event, handleSectionNavigation)}
       ref={headerRef}
     >
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
         <div className="site-header__top">
-          <div
-            className="site-header__group site-header__group--brand"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
+          <div className="site-header__brand" data-header-contrast="on-dark" data-header-color-zone>
             <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
               <span className="site-brand__mark">{business.name}</span>
             </a>
           </div>
 
-          <div
-            className="site-header__group site-header__group--nav"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
+          <div className="site-header__nav" data-header-contrast="on-dark" data-header-color-zone>
             <nav className="site-nav" aria-label="Primary" ref={navRef}>
               <div className="site-nav__track" ref={navTrackRef}>
                 <span
@@ -470,11 +377,7 @@ export function Header() {
             </nav>
           </div>
 
-          <div
-            className="site-header__action site-header__group site-header__group--action"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
+          <div className="site-header__action" data-header-contrast="on-dark" data-header-color-zone>
             <Button href="#contact" variant="header">
               Contact
             </Button>
