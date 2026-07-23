@@ -65,15 +65,17 @@
   --easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
   /* Brand green scale (500 supplied) */
-  --color-brand-green-100: #d9f5df;
-  --color-brand-green-200: #b2ebc0;
-  --color-brand-green-300: #8ce28f;
-  --color-brand-green-400: #65d881;
+ 
+
+  --color-brand-green-100: #dcf8e3;
+  --color-brand-green-200: #b9f0c7;
+  --color-brand-green-300: #8ae5a0;
+  --color-brand-green-400: #5bd678;
   --color-brand-green-500: #3fce61;
-  --color-brand-green-600: #2eaa4d;
-  --color-brand-green-700: #217c39;
-  --color-brand-green-800: #195f2d;
-  --color-brand-green-900: #103c1d;
+  --color-brand-green-600: #2eac4b;
+  --color-brand-green-700: #27883f;
+  --color-brand-green-800: #246c37;
+  --color-brand-green-900: #20592f;
 
   /* Brand red scale (500 supplied) */
   --color-brand-red-100: #f4d7d5;
