@@ -12,7 +12,6 @@
   }
 
   .site-header,
-  .site-header__brand,
   .site-header__nav,
   .site-header__action {
     --header-bar-background-color: var(--color-brand-green-500);
@@ -84,7 +83,7 @@
   .site-brand__badge {
     display: block;
     flex-shrink: 0;
-    width: clamp(2rem, 3.2vw, 2.5rem);
+    width: 4.5rem;
     height: auto;
     object-fit: contain;
   }

@@ -100,10 +100,8 @@ export function Header() {
 
   const handleSectionNavigation = (href: NavigationHref | null) => {
     isNavigationScrollingRef.current = true;
-
-    if (href) {
-      setActiveHref(href);
-    }
+    setHoveredHref(null);
+    setActiveHref(href);
   };
 
   useEffect(() => {
