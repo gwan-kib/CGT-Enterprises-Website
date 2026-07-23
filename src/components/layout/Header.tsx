@@ -113,9 +113,7 @@ export function Header() {
   const navTrackRef = useRef<HTMLDivElement>(null);
   const navIndicatorRef = useRef<HTMLSpanElement>(null);
   const isNavigationScrollingRef = useRef(false);
-  const [activeHref, setActiveHref] = useState<NavigationHref | null>(() =>
-    getNavigationHref(window.location.hash),
-  );
+  const [activeHref, setActiveHref] = useState<NavigationHref | null>(() => getNavigationHref(window.location.hash));
   const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
   const highlightedHref = hoveredHref ?? activeHref;
 
@@ -141,10 +139,9 @@ export function Header() {
     // Final downward offset matches the extra space reserved by --anchor-offset.
     const maximumTranslateY = 16;
     // The maximum blur is configured beside the header styles for easy tuning.
-    const maximumBackdropBlur =
-      Number.parseFloat(
-        getComputedStyle(header).getPropertyValue("--header-backdrop-blur-maximum"),
-      );
+    const maximumBackdropBlur = Number.parseFloat(
+      getComputedStyle(header).getPropertyValue("--header-backdrop-blur-maximum"),
+    );
 
     const getFullWidthInlineInset = () => {
       const pageContent = document.querySelector<HTMLElement>(".page-section__inner");
@@ -158,8 +155,7 @@ export function Header() {
 
     // Keep a viewport-relative safety inset while allowing the outer pills to
     // move beyond the centered page-content boundary.
-    const getFloatingInlineInset = () =>
-      Math.min(20, Math.max(12, window.innerWidth * 0.04));
+    const getFloatingInlineInset = () => Math.min(20, Math.max(12, window.innerWidth * 0.04));
 
     const shell = header.querySelector<HTMLElement>(".site-header__shell");
     const colorZones = header.querySelectorAll<HTMLElement>("[data-header-color-zone]");
@@ -200,27 +196,22 @@ export function Header() {
     const applyProgress = (progress: number) => {
       const fullWidthInlineInset = getFullWidthInlineInset();
       const floatingInlineInset = getFloatingInlineInset();
-      const currentInlineInset =
-        fullWidthInlineInset + (floatingInlineInset - fullWidthInlineInset) * progress;
+      const currentInlineInset = fullWidthInlineInset + (floatingInlineInset - fullWidthInlineInset) * progress;
       const currentBarBlur = maximumBackdropBlur * (1 - progress);
       const currentPillBlur = maximumBackdropBlur * progress;
 
       header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
-      header.style.setProperty(
-        "--header-shell-inline-inset",
-        currentInlineInset.toFixed(2) + "px",
-      );
-      header.style.setProperty(
-        "--header-bar-blur",
-        currentBarBlur.toFixed(2) + "px",
-      );
-      header.style.setProperty(
-        "--header-pill-blur",
-        currentPillBlur.toFixed(2) + "px",
-      );
-      header.dataset.layoutState =
-        progress <= 0.001 ? "bar" : progress >= 0.999 ? "pills" : "transition";
+      header.style.setProperty("--header-shell-inline-inset", currentInlineInset.toFixed(2) + "px");
+      header.style.setProperty("--header-bar-blur", currentBarBlur.toFixed(2) + "px");
+      header.style.setProperty("--header-pill-blur", currentPillBlur.toFixed(2) + "px");
+      header.dataset.layoutState = progress <= 0.001 ? "bar" : progress >= 0.999 ? "pills" : "transition";
 
+      const maximumTintStrength =
+        Number.parseFloat(window.getComputedStyle(header).getPropertyValue("--header-tint-maximum")) || 0;
+
+      header.style.setProperty("--header-bar-tint", `${(maximumTintStrength * (1 - progress)).toFixed(1)}%`);
+
+      header.style.setProperty("--header-pill-tint", `${(maximumTintStrength * progress).toFixed(1)}%`);
       syncHeaderContrasts();
     };
 
@@ -379,9 +370,7 @@ export function Header() {
       return;
     }
 
-    const highlightedLink = track.querySelector<HTMLAnchorElement>(
-      'a[href="' + highlightedHref + '"]',
-    );
+    const highlightedLink = track.querySelector<HTMLAnchorElement>('a[href="' + highlightedHref + '"]');
 
     if (!highlightedLink) {
       return;
@@ -429,8 +418,7 @@ export function Header() {
     const isOutsideVisibleArea = linkRect.left < navRect.left || linkRect.right > navRect.right;
 
     if (isOutsideVisibleArea) {
-      const nextScrollLeft =
-        nav.scrollLeft + linkRect.left + linkRect.width / 2 - (navRect.left + navRect.width / 2);
+      const nextScrollLeft = nav.scrollLeft + linkRect.left + linkRect.width / 2 - (navRect.left + navRect.width / 2);
 
       nav.scrollTo({ behavior: "smooth", left: nextScrollLeft });
     }

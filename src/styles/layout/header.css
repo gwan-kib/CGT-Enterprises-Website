@@ -7,6 +7,10 @@
     --header-bar-blur: var(--header-backdrop-blur-maximum);
     --header-pill-blur: 0px;
 
+    --header-tint-maximum: 35%;
+    --header-bar-tint: var(--header-tint-maximum);
+    --header-pill-tint: 0%;
+
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
   }
@@ -20,10 +24,10 @@
 
   .site-header[data-header-contrast="on-dark"],
   .site-header__group[data-header-contrast="on-dark"] {
-    --header-text-color: var(--color-neutral-900);
+    --header-text-color: var(--color-neutral-100);
 
-    --header-highlight-color: var(--color-brand-green-600);
-    --header-highlight-text-color: var(--color-neutral-900);
+    --header-highlight-color: var(--color-brand-green-400);
+    --header-highlight-text-color: var(--header-text-color);
 
     --header-action-color: var(--color-brand-green-800);
     --header-action-text-color: var(--color-neutral-100);
@@ -39,10 +43,10 @@
 
   .site-header[data-header-contrast="on-light"],
   .site-header__group[data-header-contrast="on-light"] {
-    --header-text-color: var(--color-neutral-100);
+    --header-text-color: var(--color-neutral-900);
 
-    --header-highlight-color: var(--color-brand-green-500);
-    --header-highlight-text-color: var(--color-neutral-900);
+    --header-highlight-color: var(--color-brand-green-700);
+    --header-highlight-text-color: var(--header-text-color);
 
     --header-action-color: var(--color-brand-green-700);
     --header-action-text-color: var(--color-neutral-100);
@@ -63,7 +67,9 @@
 
   .site-header__backdrop {
     @apply pointer-events-none absolute inset-0;
-    background: transparent;
+
+    background: color-mix(in srgb, var(--color-brand-green-500) var(--header-bar-tint), transparent);
+
     -webkit-backdrop-filter: blur(var(--header-bar-blur));
     backdrop-filter: blur(var(--header-bar-blur));
   }
@@ -85,11 +91,16 @@
     min-width: 0;
     padding-inline: var(--space-1);
     border-radius: var(--radius-pill);
-    background: transparent;
+
+    box-shadow:
+      0 1rem 2.5rem color-mix(in srgb, rgb(24 23 27 / 20%) var(--header-pill-tint), transparent),
+      0 0.25rem 0.75rem color-mix(in srgb, rgb(24 23 27 / 10%) var(--header-pill-tint), transparent);
+
+    background: color-mix(in srgb, var(--color-brand-green-600) var(--header-pill-tint), transparent);
+
     -webkit-backdrop-filter: blur(var(--header-pill-blur));
     backdrop-filter: blur(var(--header-pill-blur));
   }
-
 
   .site-header__group--brand {
     justify-self: start;
@@ -169,7 +180,7 @@
     position: absolute;
     inset: 0.35rem 0.1rem;
     border-radius: var(--radius-pill);
-    background: var(--header-highlight-color);
+    background: color-mix(in srgb, var(--header-highlight-color) 24%, transparent);
     transition: background-color var(--transition-fast) var(--easing-standard);
   }
 
@@ -192,7 +203,7 @@
     min-height: var(--touch-target-minimum);
     padding-inline: var(--space-3);
     color: var(--header-text-color);
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 500;
     line-height: 1.25;
     white-space: nowrap;

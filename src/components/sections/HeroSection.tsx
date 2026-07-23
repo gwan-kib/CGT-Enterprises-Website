@@ -8,14 +8,14 @@ export function HeroSection() {
       <header className="hero-section__header">
         <p className="hero-section__eyebrow">Family Owned Business</p>
         <h1 className="hero-section__title" id="hero-title">
-          Hauling, recycling, and delivery.
+          <span className="hero-section__title-accent">Hauling,</span> recycling, and delivery.
         </h1>
       </header>
 
       <div className="hero-section__grid">
         <div className="hero-section__content">
           <p className="hero-section__summary">
-            Our goal is to take away your garbage and deliver outstanding customer service.
+            Were here to take away your garbage and deliver outstanding customer service.
             Whether you need help with dump runs or beverage recycling, we are here to help.
           </p>
           <div className="hero-section__actions">
