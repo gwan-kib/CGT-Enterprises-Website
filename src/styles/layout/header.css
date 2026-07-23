@@ -2,31 +2,24 @@
   .site-header {
     @apply sticky top-0 z-40;
     --header-shell-translate-y: 0px;
-    --header-shell-inline-inset: max(var(--page-gutter), calc((100% - var(--content-width)) / 2));
+    --header-shell-inline-inset: max(var(--page-gutter));
 
-    --header-tint-maximum: 100%;
+    --header-tint-maximum: 0%;
     --header-bar-tint: var(--header-tint-maximum);
 
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
   }
 
-  /*
-   * Backdrop-aware header palette
-   *
-   * Edit these two contrast blocks to retheme the header. They control text,
-   * navigation highlights, Contact states, and keyboard focus colors.
-   */
-
-  .site-header[data-header-contrast="on-dark"],
-  .site-header__brand[data-header-contrast="on-dark"],
-  .site-header__nav[data-header-contrast="on-dark"],
-  .site-header__action[data-header-contrast="on-dark"] {
+  .site-header,
+  .site-header__brand,
+  .site-header__nav,
+  .site-header__action {
     --header-bar-background-color: var(--color-brand-green-500);
 
-    --header-text-color: var(--color-neutral-100);
+    --header-text-color: var(--color-neutral-500);
 
-    --header-highlight-color: var(--color-brand-green-100);
+    --header-highlight-color: var(--color-brand-green-900);
     --header-highlight-text-color: var(--header-text-color);
 
     --header-action-color: var(--color-brand-green-800);
@@ -35,33 +28,7 @@
     --header-action-hover-color: var(--color-neutral-900);
     --header-action-hover-text-color: var(--color-neutral-100);
 
-    --header-action-active-color: var(--color-brand-green-700);
-    --header-action-active-text-color: var(--color-neutral-100);
-
     --header-focus-color: var(--color-neutral-900);
-  }
-
-  .site-header[data-header-contrast="on-light"],
-  .site-header__brand[data-header-contrast="on-light"],
-  .site-header__nav[data-header-contrast="on-light"],
-  .site-header__action[data-header-contrast="on-light"] {
-    --header-bar-background-color: var(--color-brand-green-300);
-
-    --header-text-color: var(--color-neutral-900);
-
-    --header-highlight-color: var(--color-brand-green-600);
-    --header-highlight-text-color: var(--header-text-color);
-
-    --header-action-color: var(--color-brand-green-700);
-    --header-action-text-color: var(--color-neutral-100);
-
-    --header-action-hover-color: var(--color-brand-green-500);
-    --header-action-hover-text-color: var(--color-neutral-900);
-
-    --header-action-active-color: var(--color-brand-green-800);
-    --header-action-active-text-color: var(--color-neutral-100);
-
-    --header-focus-color: var(--color-neutral-100);
   }
 
   .site-header__shell {
@@ -114,13 +81,12 @@
     transition: color var(--transition-fast) var(--easing-standard);
   }
 
-  .site-brand__mark {
-    @apply block shrink-0;
-    font-size: clamp(0.8125rem, 2.8vw, 1rem);
-    font-weight: var(--font-weight-extrabold);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
+  .site-brand__badge {
+    display: block;
+    flex-shrink: 0;
+    width: clamp(2rem, 3.2vw, 2.5rem);
+    height: auto;
+    object-fit: contain;
   }
 
   .site-nav {
@@ -171,7 +137,7 @@
     position: absolute;
     inset: 0.35rem 0.1rem;
     border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--header-highlight-color) 24%, transparent);
+    background: color-mix(in srgb, var(--header-highlight-color) 50%, transparent);
     transition: background-color var(--transition-fast) var(--easing-standard);
   }
 
@@ -195,14 +161,17 @@
     padding-inline: var(--space-3);
     color: var(--header-text-color);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.25;
     white-space: nowrap;
-    transition: color var(--transition-fast) var(--easing-standard);
+    opacity: 0.5;
+    transition: all var(--transition-fast) var(--easing-standard);
   }
 
+  .site-nav__link--hero-active,
   .site-nav__link--highlighted {
     color: var(--header-highlight-text-color);
+    opacity: 1;
   }
 
   .site-header :where(a, button):focus-visible {
@@ -215,6 +184,7 @@
 
   .site-header__action .button {
     padding-inline: var(--space-4);
+    line-height: 1.25;
   }
 
   .button--header {
@@ -227,12 +197,6 @@
     border-color: var(--header-action-hover-color);
     background: var(--header-action-hover-color);
     color: var(--header-action-hover-text-color);
-  }
-
-  .button--header:not(:disabled):active {
-    border-color: var(--header-action-active-color);
-    background: var(--header-action-active-color);
-    color: var(--header-action-active-text-color);
   }
 
   @media (min-width: 64rem) {

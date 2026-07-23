@@ -1,32 +1,11 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
-import { business } from "../../data/business";
+import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { navigationItems } from "../../data/navigation";
 import { Button } from "../ui/Button";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
-type HeaderContrast = "on-dark" | "on-light";
-
-function getHeaderContrastBehind(header: HTMLElement, x: number, y: number): HeaderContrast {
-  const sampleX = Math.min(Math.max(x, 0), window.innerWidth - 1);
-  const sampleY = Math.min(Math.max(y, 0), window.innerHeight - 1);
-
-  for (const element of document.elementsFromPoint(sampleX, sampleY)) {
-    if (header.contains(element)) {
-      continue;
-    }
-
-    const section = element.closest<HTMLElement>("[data-header-contrast]");
-    const contrast = section?.dataset.headerContrast;
-
-    if (contrast === "on-dark" || contrast === "on-light") {
-      return contrast;
-    }
-  }
-
-  return "on-light";
-}
 
 function getNavigationHref(hash: string): NavigationHref | null {
   return navigationItems.find((item) => item.href === hash)?.href ?? null;
@@ -35,10 +14,11 @@ function getNavigationHref(hash: string): NavigationHref | null {
 interface NavigationLinksProps {
   activeHref: NavigationHref | null;
   highlightedHref: NavigationHref | null;
+  isHeroSectionActive: boolean;
   onHoverChange: (href: NavigationHref | null) => void;
 }
 
-function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: NavigationLinksProps) {
+function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, onHoverChange }: NavigationLinksProps) {
   return (
     <ul className="site-nav__list">
       {navigationItems.map((item) => {
@@ -49,7 +29,7 @@ function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: Navigat
           <li key={item.href}>
             <a
               aria-current={isActive ? "location" : undefined}
-              className={`site-nav__link${isHighlighted ? " site-nav__link--highlighted" : ""}`}
+              className={`site-nav__link${isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
               href={item.href}
               onMouseEnter={() => onHoverChange(item.href)}
               onMouseLeave={() => onHoverChange(null)}
@@ -115,6 +95,7 @@ export function Header() {
   const isNavigationScrollingRef = useRef(false);
   const [activeHref, setActiveHref] = useState<NavigationHref | null>(() => getNavigationHref(window.location.hash));
   const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
+  const [isHeroSectionActive, setIsHeroSectionActive] = useState(() => window.scrollY <= 0);
   const highlightedHref = hoveredHref ?? activeHref;
 
   const handleSectionNavigation = (href: NavigationHref | null) => {
@@ -126,65 +107,44 @@ export function Header() {
   };
 
   useEffect(() => {
-    const header = headerRef.current;
-
-    if (!header) {
-      return;
-    }
-
-    const shell = header.querySelector<HTMLElement>(".site-header__shell");
-    const colorZones = header.querySelectorAll<HTMLElement>("[data-header-color-zone]");
-
-    const syncHeaderContrasts = () => {
-      if (shell) {
-        const shellRect = shell.getBoundingClientRect();
-        const shellContrast = getHeaderContrastBehind(
-          header,
-          shellRect.left + shellRect.width / 2,
-          shellRect.top + shellRect.height / 2,
-        );
-
-        if (header.dataset.headerContrast !== shellContrast) {
-          header.dataset.headerContrast = shellContrast;
-        }
-      }
-
-      for (const zone of colorZones) {
-        const zoneRect = zone.getBoundingClientRect();
-        const zoneContrast = getHeaderContrastBehind(
-          header,
-          zoneRect.left + zoneRect.width / 2,
-          zoneRect.top + zoneRect.height / 2,
-        );
-
-        if (zone.dataset.headerContrast !== zoneContrast) {
-          zone.dataset.headerContrast = zoneContrast;
-        }
-      }
-    };
-
-    syncHeaderContrasts();
-    window.addEventListener("scroll", syncHeaderContrasts, { passive: true });
-    window.addEventListener("resize", syncHeaderContrasts);
-
-    return () => {
-      window.removeEventListener("scroll", syncHeaderContrasts);
-      window.removeEventListener("resize", syncHeaderContrasts);
-    };
-  }, []);
-
-  useEffect(() => {
     const syncActiveHrefFromHash = () => {
       setActiveHref(getNavigationHref(window.location.hash));
       isNavigationScrollingRef.current = true;
     };
 
+    const syncHeroSectionState = () => {
+      const heroSection = document.getElementById("home");
+
+      if (!heroSection) {
+        setIsHeroSectionActive(false);
+        return;
+      }
+
+      const heroSectionHeight = heroSection.getBoundingClientRect().height;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      setIsHeroSectionActive(window.scrollY <= heroSectionHeight * 0.5 + headerHeight);
+    };
+
+    syncHeroSectionState();
+
+    const heroSection = document.getElementById("home");
+    const heroSectionObserver = heroSection ? new ResizeObserver(syncHeroSectionState) : null;
+
+    if (heroSectionObserver && heroSection) {
+      heroSectionObserver.observe(heroSection);
+    }
+
     window.addEventListener("hashchange", syncActiveHrefFromHash);
     window.addEventListener("popstate", syncActiveHrefFromHash);
+    window.addEventListener("scroll", syncHeroSectionState, { passive: true });
+    window.addEventListener("resize", syncHeroSectionState);
 
     return () => {
+      heroSectionObserver?.disconnect();
       window.removeEventListener("hashchange", syncActiveHrefFromHash);
       window.removeEventListener("popstate", syncActiveHrefFromHash);
+      window.removeEventListener("scroll", syncHeroSectionState);
+      window.removeEventListener("resize", syncHeroSectionState);
     };
   }, []);
 
@@ -208,8 +168,9 @@ export function Header() {
         return;
       }
 
-      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
-      const activationLine = headerBottom + (window.innerHeight - headerBottom) * 0.35;
+      const heroSectionHeight = document.getElementById("home")?.getBoundingClientRect().height ?? 0;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      const activationLine = heroSectionHeight * 0.5 - headerHeight;
       let nextActiveHref: NavigationHref | null = null;
 
       for (const { href, section } of sections) {
@@ -343,20 +304,19 @@ export function Header() {
   return (
     <header
       className="site-header"
-      data-header-contrast="on-dark"
       onClick={(event) => handleSectionLinkClick(event, handleSectionNavigation)}
       ref={headerRef}
     >
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
         <div className="site-header__top">
-          <div className="site-header__brand" data-header-contrast="on-dark" data-header-color-zone>
+          <div className="site-header__brand">
             <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
-              <span className="site-brand__mark">{business.name}</span>
+              <img alt="" aria-hidden="true" className="site-brand__badge" src={logoBadge} />
             </a>
           </div>
 
-          <div className="site-header__nav" data-header-contrast="on-dark" data-header-color-zone>
+          <div className="site-header__nav">
             <nav className="site-nav" aria-label="Primary" ref={navRef}>
               <div className="site-nav__track" ref={navTrackRef}>
                 <span
@@ -371,13 +331,14 @@ export function Header() {
                 <NavigationLinks
                   activeHref={activeHref}
                   highlightedHref={highlightedHref}
+                  isHeroSectionActive={isHeroSectionActive}
                   onHoverChange={setHoveredHref}
                 />
               </div>
             </nav>
           </div>
 
-          <div className="site-header__action" data-header-contrast="on-dark" data-header-color-zone>
+          <div className="site-header__action">
             <Button href="#contact" variant="header">
               Contact
             </Button>
