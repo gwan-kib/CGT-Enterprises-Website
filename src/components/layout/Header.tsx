@@ -79,7 +79,7 @@ function handleSectionLinkClick(
   onSectionNavigation(getNavigationHref(link.hash));
 
   event.preventDefault();
-  section.scrollIntoView({ behavior: "smooth", block: "center" });
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
 
   if (window.location.hash !== link.hash) {
     window.history.pushState(null, "", link.hash);
