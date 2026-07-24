@@ -38,7 +38,6 @@
   .page-section {
     @apply flex min-h-screen items-center;
     min-height: 100svh;
-    scroll-margin-top: var(--anchor-offset);
     padding-block: clamp(5rem, 9vw, 8rem);
     background: var(--color-background-page);
   }

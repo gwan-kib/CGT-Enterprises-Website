@@ -2,62 +2,31 @@
   .site-header {
     @apply sticky top-0 z-40;
     --header-shell-translate-y: 0px;
-    --header-shell-inline-inset: max(var(--page-gutter), calc((100% - var(--content-width)) / 2));
-    --header-backdrop-blur-maximum: 100px;
-    --header-bar-blur: var(--header-backdrop-blur-maximum);
-    --header-pill-blur: 0px;
+    --header-shell-inline-inset: max(var(--page-gutter));
 
-    --header-tint-maximum: 35%;
+    --header-tint-maximum: 0%;
     --header-bar-tint: var(--header-tint-maximum);
-    --header-pill-tint: 0%;
 
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
+    box-shadow: 0 0.125rem 0.75rem color-mix(in srgb, var(--color-neutral-900) 15%, transparent);
   }
 
-  /*
-   * Backdrop-aware header palette
-   *
-   * Edit these two contrast blocks to retheme the header. They control text,
-   * navigation highlights, Contact states, and keyboard focus colors.
-   */
+  .site-header,
+  .site-header__nav,
+  .site-header__action {
+    --header-bar-background-color: var(--color-brand-green-500);
 
-  .site-header[data-header-contrast="on-dark"],
-  .site-header__group[data-header-contrast="on-dark"] {
-    --header-text-color: var(--color-neutral-100);
+    --header-text-color: var(--color-neutral-500);
 
-    --header-highlight-color: var(--color-brand-green-400);
+    --header-highlight-color: var(--color-brand-green-900);
     --header-highlight-text-color: var(--header-text-color);
 
-    --header-action-color: var(--color-brand-green-800);
-    --header-action-text-color: var(--color-neutral-100);
+    --header-action-color: var(--color-brand-green-600);
+    --header-action-text-color: var(--header-text-color);
 
-    --header-action-hover-color: var(--color-neutral-900);
-    --header-action-hover-text-color: var(--color-neutral-100);
-
-    --header-action-active-color: var(--color-brand-green-700);
-    --header-action-active-text-color: var(--color-neutral-100);
-
-    --header-focus-color: var(--color-neutral-900);
-  }
-
-  .site-header[data-header-contrast="on-light"],
-  .site-header__group[data-header-contrast="on-light"] {
-    --header-text-color: var(--color-neutral-900);
-
-    --header-highlight-color: var(--color-brand-green-700);
-    --header-highlight-text-color: var(--header-text-color);
-
-    --header-action-color: var(--color-brand-green-700);
-    --header-action-text-color: var(--color-neutral-100);
-
-    --header-action-hover-color: var(--color-brand-green-500);
-    --header-action-hover-text-color: var(--color-neutral-900);
-
-    --header-action-active-color: var(--color-brand-green-800);
-    --header-action-active-text-color: var(--color-neutral-100);
-
-    --header-focus-color: var(--color-neutral-100);
+    --header-action-hover-color: var(--color-brand-green-700);
+    --header-action-hover-text-color: var(--header-text-color);
   }
 
   .site-header__shell {
@@ -67,11 +36,7 @@
 
   .site-header__backdrop {
     @apply pointer-events-none absolute inset-0;
-
-    background: color-mix(in srgb, var(--color-brand-green-500) var(--header-bar-tint), transparent);
-
-    -webkit-backdrop-filter: blur(var(--header-bar-blur));
-    backdrop-filter: blur(var(--header-bar-blur));
+    background: var(--header-bar-background-color, var(--color-brand-green-500));
   }
 
   .site-header__top {
@@ -87,31 +52,22 @@
     gap: var(--space-2);
   }
 
-  .site-header__group {
+  .site-header__brand,
+  .site-header__nav,
+  .site-header__action {
     min-width: 0;
-    padding-inline: var(--space-1);
-    border-radius: var(--radius-pill);
-
-    box-shadow:
-      0 1rem 2.5rem color-mix(in srgb, rgb(24 23 27 / 20%) var(--header-pill-tint), transparent),
-      0 0.25rem 0.75rem color-mix(in srgb, rgb(24 23 27 / 10%) var(--header-pill-tint), transparent);
-
-    background: color-mix(in srgb, var(--color-brand-green-600) var(--header-pill-tint), transparent);
-
-    -webkit-backdrop-filter: blur(var(--header-pill-blur));
-    backdrop-filter: blur(var(--header-pill-blur));
   }
 
-  .site-header__group--brand {
+  .site-header__brand {
     justify-self: start;
   }
 
-  .site-header__group--nav {
-    justify-self: stretch;
+  .site-header__nav {
+    justify-self: center;
     overflow: hidden;
   }
 
-  .site-header__group--action {
+  .site-header__action {
     justify-self: end;
   }
 
@@ -123,13 +79,12 @@
     transition: color var(--transition-fast) var(--easing-standard);
   }
 
-  .site-brand__mark {
-    @apply block shrink-0;
-    font-size: clamp(0.8125rem, 2.8vw, 1rem);
-    font-weight: var(--font-weight-extrabold);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    white-space: nowrap;
+  .site-brand__badge {
+    display: block;
+    flex-shrink: 0;
+    width: 4.5rem;
+    height: auto;
+    object-fit: contain;
   }
 
   .site-nav {
@@ -178,9 +133,9 @@
   .site-nav__indicator::before {
     content: "";
     position: absolute;
-    inset: 0.35rem 0.1rem;
+    inset: 0 0.1rem;
     border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--header-highlight-color) 24%, transparent);
+    background: color-mix(in srgb, var(--header-highlight-color) 50%, transparent);
     transition: background-color var(--transition-fast) var(--easing-standard);
   }
 
@@ -204,45 +159,36 @@
     padding-inline: var(--space-3);
     color: var(--header-text-color);
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.25;
     white-space: nowrap;
-    transition: color var(--transition-fast) var(--easing-standard);
+    opacity: 0.5;
+    transition: all var(--transition-fast) var(--easing-standard);
   }
 
+  .site-nav__link--hero-active,
   .site-nav__link--highlighted {
     color: var(--header-highlight-text-color);
-  }
-
-  .site-header :where(a, button):focus-visible {
-    outline-color: var(--header-focus-color);
+    opacity: 1;
   }
 
   .site-header__action {
     @apply flex shrink-0 items-center;
-    min-width: 0;
   }
 
-  .site-header__action .button {
+  .site-header__action .site-nav__link--header {
     padding-inline: var(--space-4);
-  }
-
-  .button--header {
-    border-color: var(--header-action-color);
+    border-radius: var(--radius-pill);
     background: var(--header-action-color);
     color: var(--header-action-text-color);
+    font-weight: 700;
+    opacity: 1;
   }
 
-  .button--header:not(:disabled):hover {
-    border-color: var(--header-action-hover-color);
+  .site-nav__link--header:hover,
+  .site-nav__link--header:focus-visible {
     background: var(--header-action-hover-color);
     color: var(--header-action-hover-text-color);
-  }
-
-  .button--header:not(:disabled):active {
-    border-color: var(--header-action-active-color);
-    background: var(--header-action-active-color);
-    color: var(--header-action-active-text-color);
   }
 
   @media (min-width: 64rem) {

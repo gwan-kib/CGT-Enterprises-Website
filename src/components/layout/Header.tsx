@@ -1,32 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
-import { business } from "../../data/business";
+import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
 import { navigationItems } from "../../data/navigation";
-import { Button } from "../ui/Button";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
-type HeaderContrast = "on-dark" | "on-light";
-
-function getHeaderContrastBehind(header: HTMLElement, x: number, y: number): HeaderContrast {
-  const sampleX = Math.min(Math.max(x, 0), window.innerWidth - 1);
-  const sampleY = Math.min(Math.max(y, 0), window.innerHeight - 1);
-
-  for (const element of document.elementsFromPoint(sampleX, sampleY)) {
-    if (header.contains(element)) {
-      continue;
-    }
-
-    const section = element.closest<HTMLElement>("[data-header-contrast]");
-    const contrast = section?.dataset.headerContrast;
-
-    if (contrast === "on-dark" || contrast === "on-light") {
-      return contrast;
-    }
-  }
-
-  return "on-light";
-}
 
 function getNavigationHref(hash: string): NavigationHref | null {
   return navigationItems.find((item) => item.href === hash)?.href ?? null;
@@ -35,10 +13,11 @@ function getNavigationHref(hash: string): NavigationHref | null {
 interface NavigationLinksProps {
   activeHref: NavigationHref | null;
   highlightedHref: NavigationHref | null;
+  isHeroSectionActive: boolean;
   onHoverChange: (href: NavigationHref | null) => void;
 }
 
-function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: NavigationLinksProps) {
+function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, onHoverChange }: NavigationLinksProps) {
   return (
     <ul className="site-nav__list">
       {navigationItems.map((item) => {
@@ -49,7 +28,7 @@ function NavigationLinks({ activeHref, highlightedHref, onHoverChange }: Navigat
           <li key={item.href}>
             <a
               aria-current={isActive ? "location" : undefined}
-              className={`site-nav__link${isHighlighted ? " site-nav__link--highlighted" : ""}`}
+              className={`site-nav__link${isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
               href={item.href}
               onMouseEnter={() => onHoverChange(item.href)}
               onMouseLeave={() => onHoverChange(null)}
@@ -115,147 +94,14 @@ export function Header() {
   const isNavigationScrollingRef = useRef(false);
   const [activeHref, setActiveHref] = useState<NavigationHref | null>(() => getNavigationHref(window.location.hash));
   const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
+  const [isHeroSectionActive, setIsHeroSectionActive] = useState(() => window.scrollY <= 0);
   const highlightedHref = hoveredHref ?? activeHref;
 
   const handleSectionNavigation = (href: NavigationHref | null) => {
     isNavigationScrollingRef.current = true;
-
-    if (href) {
-      setActiveHref(href);
-    }
+    setHoveredHref(null);
+    setActiveHref(href);
   };
-
-  useEffect(() => {
-    const header = headerRef.current;
-
-    if (!header) {
-      return;
-    }
-
-    // Distance, in pixels, over which the shell completes its transformation.
-    const scrollRange = 120;
-    // Time-based easing strength. Higher values settle faster.
-    const smoothingRate = 14;
-    // Final downward offset matches the extra space reserved by --anchor-offset.
-    const maximumTranslateY = 16;
-    // The maximum blur is configured beside the header styles for easy tuning.
-    const maximumBackdropBlur = Number.parseFloat(
-      getComputedStyle(header).getPropertyValue("--header-backdrop-blur-maximum"),
-    );
-
-    const getFullWidthInlineInset = () => {
-      const pageContent = document.querySelector<HTMLElement>(".page-section__inner");
-
-      if (pageContent) {
-        return pageContent.getBoundingClientRect().left;
-      }
-
-      return Math.max(20, (window.innerWidth - 1200) / 2);
-    };
-
-    // Keep a viewport-relative safety inset while allowing the outer pills to
-    // move beyond the centered page-content boundary.
-    const getFloatingInlineInset = () => Math.min(20, Math.max(12, window.innerWidth * 0.04));
-
-    const shell = header.querySelector<HTMLElement>(".site-header__shell");
-    const colorZones = header.querySelectorAll<HTMLElement>("[data-header-color-zone]");
-
-    const syncHeaderContrasts = () => {
-      if (shell) {
-        const shellRect = shell.getBoundingClientRect();
-        const shellContrast = getHeaderContrastBehind(
-          header,
-          shellRect.left + shellRect.width / 2,
-          shellRect.top + shellRect.height / 2,
-        );
-
-        if (header.dataset.headerContrast !== shellContrast) {
-          header.dataset.headerContrast = shellContrast;
-        }
-      }
-
-      for (const zone of colorZones) {
-        const zoneRect = zone.getBoundingClientRect();
-        const zoneContrast = getHeaderContrastBehind(
-          header,
-          zoneRect.left + zoneRect.width / 2,
-          zoneRect.top + zoneRect.height / 2,
-        );
-
-        if (zone.dataset.headerContrast !== zoneContrast) {
-          zone.dataset.headerContrast = zoneContrast;
-        }
-      }
-    };
-
-    let targetProgress = Math.min(window.scrollY / scrollRange, 1);
-    let currentProgress = targetProgress;
-    let animationFrame = 0;
-    let previousFrameTime = 0;
-
-    const applyProgress = (progress: number) => {
-      const fullWidthInlineInset = getFullWidthInlineInset();
-      const floatingInlineInset = getFloatingInlineInset();
-      const currentInlineInset = fullWidthInlineInset + (floatingInlineInset - fullWidthInlineInset) * progress;
-      const currentBarBlur = maximumBackdropBlur * (1 - progress);
-      const currentPillBlur = maximumBackdropBlur * progress;
-
-      header.style.setProperty("--header-shell-translate-y", (maximumTranslateY * progress).toFixed(2) + "px");
-      header.style.setProperty("--header-shell-inline-inset", currentInlineInset.toFixed(2) + "px");
-      header.style.setProperty("--header-bar-blur", currentBarBlur.toFixed(2) + "px");
-      header.style.setProperty("--header-pill-blur", currentPillBlur.toFixed(2) + "px");
-      header.dataset.layoutState = progress <= 0.001 ? "bar" : progress >= 0.999 ? "pills" : "transition";
-
-      const maximumTintStrength =
-        Number.parseFloat(window.getComputedStyle(header).getPropertyValue("--header-tint-maximum")) || 0;
-
-      header.style.setProperty("--header-bar-tint", `${(maximumTintStrength * (1 - progress)).toFixed(1)}%`);
-
-      header.style.setProperty("--header-pill-tint", `${(maximumTintStrength * progress).toFixed(1)}%`);
-      syncHeaderContrasts();
-    };
-
-    const animateToScrollPosition = (timestamp: number) => {
-      animationFrame = 0;
-
-      const elapsedSeconds = Math.min(Math.max((timestamp - previousFrameTime) / 1000, 0), 0.1);
-      const smoothingFactor = 1 - Math.exp(-smoothingRate * elapsedSeconds);
-
-      currentProgress += (targetProgress - currentProgress) * smoothingFactor;
-
-      if (Math.abs(targetProgress - currentProgress) < 0.001) {
-        currentProgress = targetProgress;
-      }
-
-      previousFrameTime = timestamp;
-      applyProgress(currentProgress);
-
-      if (currentProgress !== targetProgress) {
-        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
-      } else {
-        previousFrameTime = 0;
-      }
-    };
-
-    const updateTargetProgress = () => {
-      targetProgress = Math.min(Math.max(window.scrollY / scrollRange, 0), 1);
-
-      if (animationFrame === 0) {
-        previousFrameTime = window.performance.now();
-        animationFrame = window.requestAnimationFrame(animateToScrollPosition);
-      }
-    };
-
-    applyProgress(currentProgress);
-    window.addEventListener("scroll", updateTargetProgress, { passive: true });
-    window.addEventListener("resize", updateTargetProgress);
-
-    return () => {
-      window.removeEventListener("scroll", updateTargetProgress);
-      window.removeEventListener("resize", updateTargetProgress);
-      window.cancelAnimationFrame(animationFrame);
-    };
-  }, []);
 
   useEffect(() => {
     const syncActiveHrefFromHash = () => {
@@ -263,12 +109,39 @@ export function Header() {
       isNavigationScrollingRef.current = true;
     };
 
+    const syncHeroSectionState = () => {
+      const heroSection = document.getElementById("home");
+
+      if (!heroSection) {
+        setIsHeroSectionActive(false);
+        return;
+      }
+
+      const heroSectionHeight = heroSection.getBoundingClientRect().height;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      setIsHeroSectionActive(window.scrollY <= heroSectionHeight * 0.5 + headerHeight);
+    };
+
+    syncHeroSectionState();
+
+    const heroSection = document.getElementById("home");
+    const heroSectionObserver = heroSection ? new ResizeObserver(syncHeroSectionState) : null;
+
+    if (heroSectionObserver && heroSection) {
+      heroSectionObserver.observe(heroSection);
+    }
+
     window.addEventListener("hashchange", syncActiveHrefFromHash);
     window.addEventListener("popstate", syncActiveHrefFromHash);
+    window.addEventListener("scroll", syncHeroSectionState, { passive: true });
+    window.addEventListener("resize", syncHeroSectionState);
 
     return () => {
+      heroSectionObserver?.disconnect();
       window.removeEventListener("hashchange", syncActiveHrefFromHash);
       window.removeEventListener("popstate", syncActiveHrefFromHash);
+      window.removeEventListener("scroll", syncHeroSectionState);
+      window.removeEventListener("resize", syncHeroSectionState);
     };
   }, []);
 
@@ -292,8 +165,9 @@ export function Header() {
         return;
       }
 
-      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
-      const activationLine = headerBottom + (window.innerHeight - headerBottom) * 0.35;
+      const heroSectionHeight = document.getElementById("home")?.getBoundingClientRect().height ?? 0;
+      const headerHeight = headerRef.current?.getBoundingClientRect().height ?? 0;
+      const activationLine = heroSectionHeight * 0.5 - headerHeight;
       let nextActiveHref: NavigationHref | null = null;
 
       for (const { href, section } of sections) {
@@ -427,29 +301,19 @@ export function Header() {
   return (
     <header
       className="site-header"
-      data-header-contrast="on-dark"
-      data-layout-state="bar"
       onClick={(event) => handleSectionLinkClick(event, handleSectionNavigation)}
       ref={headerRef}
     >
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
         <div className="site-header__top">
-          <div
-            className="site-header__group site-header__group--brand"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
+          <div className="site-header__brand">
             <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
-              <span className="site-brand__mark">{business.name}</span>
+              <img alt="" aria-hidden="true" className="site-brand__badge" src={logoBadge} />
             </a>
           </div>
 
-          <div
-            className="site-header__group site-header__group--nav"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
+          <div className="site-header__nav">
             <nav className="site-nav" aria-label="Primary" ref={navRef}>
               <div className="site-nav__track" ref={navTrackRef}>
                 <span
@@ -464,20 +328,17 @@ export function Header() {
                 <NavigationLinks
                   activeHref={activeHref}
                   highlightedHref={highlightedHref}
+                  isHeroSectionActive={isHeroSectionActive}
                   onHoverChange={setHoveredHref}
                 />
               </div>
             </nav>
           </div>
 
-          <div
-            className="site-header__action site-header__group site-header__group--action"
-            data-header-contrast="on-dark"
-            data-header-color-zone
-          >
-            <Button href="#contact" variant="header">
+          <div className="site-header__action">
+            <a className="site-nav__link site-nav__link--header" href="#contact">
               Contact
-            </Button>
+            </a>
           </div>
         </div>
       </div>

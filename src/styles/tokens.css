@@ -46,7 +46,7 @@
   --content-width: 75rem;
   --page-gutter: clamp(1.25rem, 4vw, 4rem);
   --header-height: 4.5rem;
-  --anchor-offset: calc(var(--header-height) + var(--space-4));
+  --anchor-offset: var(--header-height);
 
   /* Shape and depth */
   --border-width: 1px;
@@ -57,7 +57,7 @@
 
   /* Controls */
   --control-height: 4rem;
-  --touch-target-minimum: 4rem;
+  --touch-target-minimum: 3rem;
 
   /* Motion */
   --transition-fast: 150ms;
@@ -65,26 +65,28 @@
   --easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
   /* Brand green scale (500 supplied) */
-  --color-brand-green-100: #d9f5df;
-  --color-brand-green-200: #b2ebc0;
-  --color-brand-green-300: #8ce28f;
-  --color-brand-green-400: #65d881;
+ 
+
+  --color-brand-green-100: #dcf8e3;
+  --color-brand-green-200: #b9f0c7;
+  --color-brand-green-300: #8ae5a0;
+  --color-brand-green-400: #5bd678;
   --color-brand-green-500: #3fce61;
-  --color-brand-green-600: #2eaa4d;
-  --color-brand-green-700: #217c39;
-  --color-brand-green-800: #195f2d;
-  --color-brand-green-900: #103c1d;
+  --color-brand-green-600: #2eac4b;
+  --color-brand-green-700: #27883f;
+  --color-brand-green-800: #246c37;
+  --color-brand-green-900: #20592f;
 
   /* Brand red scale (500 supplied) */
-  --color-brand-red-100: #f4d7d5;
-  --color-brand-red-200: #e9afaa;
-  --color-brand-red-300: #de8780;
-  --color-brand-red-400: #d35f55;
-  --color-brand-red-500: #c8372b;
-  --color-brand-red-600: #a92d24;
-  --color-brand-red-700: #85231c;
-  --color-brand-red-800: #611a15;
-  --color-brand-red-900: #3d100d;
+  --color-brand-red-100: #fce8e6;
+  --color-brand-red-200: #f8c9c4;
+  --color-brand-red-300: #f2a098;
+  --color-brand-red-400: #df6559;
+  --color-brand-red-500: #be2b1f;
+  --color-brand-red-600: #a52319;
+  --color-brand-red-700: #892119;
+  --color-brand-red-800: #701f1a;
+  --color-brand-red-900: #5c1d1a;
 
   /* Neutral scale (900 supplied) */
   --color-neutral-100: #eeeef0;
