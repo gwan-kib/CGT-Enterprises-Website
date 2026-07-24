@@ -9,6 +9,7 @@
 
     min-height: var(--header-height);
     margin-bottom: calc(0px - var(--header-height));
+    box-shadow: 0 0.125rem 0.75rem color-mix(in srgb, var(--color-neutral-900) 15%, transparent);
   }
 
   .site-header,
