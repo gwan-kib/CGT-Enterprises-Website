@@ -14,7 +14,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       <div className="service-card__info">
         <span className="service-card__price">{service.price}</span>
         <a className="service-card__link" href="#contact">
-          Enquire about service
+          Inquire about service
         </a>
         <span className="service-card__number" aria-hidden="true">
           {service.id}

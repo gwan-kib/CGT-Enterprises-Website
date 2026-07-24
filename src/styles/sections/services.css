@@ -60,13 +60,24 @@
   }
 
   .service-card__link {
-    color: var(--color-text-link);
-    font-weight: var(--font-weight-bold);
-    text-underline-offset: 0.3rem;
+    @apply inline-flex items-center justify-center no-underline;
+    min-height: var(--touch-target-minimum);
+    margin: var(--space-1);
+    padding-inline: var(--space-4);
+    border-radius: var(--radius-pill);
+    background: color-mix(in srgb, var(--color-brand-green-500) 30%, transparent);
+    color: var(--color-neutral-900);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.25;
+    opacity: 1;
+    transition: all var(--transition-fast) var(--easing-standard);
   }
 
-  .service-card__link:hover {
-    color: var(--color-text-link-hover);
+  .service-card__link:hover,
+  .service-card__link:focus-visible {
+    background: var(--color-brand-green-400);
+    color: var(--color-neutral-500);
   }
 }
 

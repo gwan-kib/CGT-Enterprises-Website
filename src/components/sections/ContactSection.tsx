@@ -43,7 +43,7 @@ export function ContactSection() {
             <StaticField id="contact-email" label="Email" />
           </div>
           <StaticField id="contact-message" label="Message" multiline />
-          <Button disabled>Send enquiry</Button>
+          <Button disabled>Send inquiry</Button>
           <p className="static-form__status" id="contact-form-status">
             Visual placeholder only. Contact submission is not connected.
           </p>
