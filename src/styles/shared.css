@@ -38,7 +38,7 @@
   .page-section {
     @apply flex min-h-screen items-center;
     min-height: 100svh;
-    padding-block: clamp(5rem, 9vw, 8rem);
+    padding-block: clamp(1rem, 9vw, 2rem);
     background: var(--color-background-page);
   }
 

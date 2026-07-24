@@ -1,17 +1,18 @@
-import { placeholderServices } from '../../data/services'
-import { SectionContainer } from '../layout/SectionContainer'
-import { SectionHeading } from '../ui/SectionHeading'
-import { ServiceCard } from '../ui/ServiceCard'
+import { placeholderServices } from "../../data/services";
+import { SectionContainer } from "../layout/SectionContainer";
+import { SectionHeading } from "../ui/SectionHeading";
+import { ServiceCard } from "../ui/ServiceCard";
 
 export function ServicesSection() {
   return (
     <SectionContainer id="services" labelledBy="services-title" tone="subtle">
       <div className="services-section__intro">
         <SectionHeading
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. The final service names, descriptions, and prices will replace these placeholders."
-          eyebrow="(02) Services and pricing"
+          align="center"
+          description="Explore our currently available services. View starting prices below and contact us for availability."
+          eyebrow="(02) Services"
           id="services-title"
-          title="A clear place to compare available services."
+          title="Available services:"
         />
       </div>
 
@@ -21,5 +22,5 @@ export function ServicesSection() {
         ))}
       </div>
     </SectionContainer>
-  )
+  );
 }
