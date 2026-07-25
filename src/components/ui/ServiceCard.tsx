@@ -7,7 +7,9 @@ interface ServiceCardProps {
 export function ServiceCard({ service }: ServiceCardProps) {
   return (
     <article className="service-card">
-      
+      <span className="service-card__icon material-symbols-outlined" aria-hidden="true">
+        {service.icon}
+      </span>
       <h3 className="service-card__title">{service.name}</h3>
       <p className="service-card__description">{service.description}</p>
 

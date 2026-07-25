@@ -153,6 +153,12 @@
     gap: var(--space-1);
   }
 
+  .site-nav__icon {
+    margin-right: var(--space-2);
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+
   .site-nav__link {
     @apply relative isolate inline-flex items-center justify-center no-underline;
     min-height: var(--touch-target-minimum);

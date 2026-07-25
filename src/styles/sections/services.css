@@ -1,6 +1,6 @@
 @layer components {
   .services-section__intro {
-    margin-bottom: clamp(var(--space-12), 7vw, var(--space-5));
+    margin-bottom: 2rem;
   }
 
   .services-grid {
@@ -13,7 +13,7 @@
   .service-card {
     @apply relative flex flex-col;
     min-width: 0;
-    min-height: 24rem;
+    min-height: 29rem;
     align-items: center;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     padding-bottom: clamp(var(--space-4), 3vw, var(--space-8));
@@ -25,6 +25,13 @@
       border-color var(--transition-standard) var(--easing-standard),
       box-shadow var(--transition-standard) var(--easing-standard),
       transform var(--transition-standard) var(--easing-standard);
+  }
+
+  .service-card__icon {
+    margin-bottom: var(--space-4);
+    color: var(--color-brand-green-600, #2e7d32);
+    font-size: 3rem;
+    line-height: 1;
   }
 
   .service-card__number {

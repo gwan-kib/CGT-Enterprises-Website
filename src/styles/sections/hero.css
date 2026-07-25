@@ -1,6 +1,7 @@
 @layer components {
   .hero-section {
     overflow: hidden;
+    min-height: 100svh;
   }
 
   .hero-section__grid {

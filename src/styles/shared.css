@@ -36,9 +36,9 @@
 
 @layer components {
   .page-section {
-    @apply flex min-h-screen items-center;
-    min-height: 100svh;
-    padding-block: clamp(1rem, 9vw, 2rem);
+    @apply flex items-center;
+    min-height: calc(100svh - var(--header-height));
+    padding-block: clamp(1rem, 9vw, 3rem);
     background: var(--color-background-page);
   }
 

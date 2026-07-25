@@ -33,6 +33,9 @@ function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, onH
               onMouseEnter={() => onHoverChange(item.href)}
               onMouseLeave={() => onHoverChange(null)}
             >
+              <span className="site-nav__icon material-symbols-outlined" aria-hidden="true">
+                {item.icon}
+              </span>
               {item.label}
             </a>
           </li>
@@ -337,6 +340,9 @@ export function Header() {
 
           <div className="site-header__action">
             <a className="site-nav__link site-nav__link--header" href="#contact">
+              <span className="site-nav__icon material-symbols-outlined" aria-hidden="true">
+                call
+              </span>
               Contact
             </a>
           </div>
