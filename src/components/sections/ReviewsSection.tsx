@@ -40,7 +40,6 @@ const placeholderReviews: ReviewCardData[] = [
     id: "placeholder-1",
     date: "07/25/2026",
     detail: "Dump Runs",
-    name: "Customer name",
     quote:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
     rating: 5,
@@ -49,7 +48,6 @@ const placeholderReviews: ReviewCardData[] = [
     id: "placeholder-2",
     date: "07/24/2026",
     detail: "Appliance Disposal",
-    name: "Customer name",
     quote:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
     rating: 5,
@@ -58,7 +56,6 @@ const placeholderReviews: ReviewCardData[] = [
     id: "placeholder-3",
     date: "07/23/2026",
     detail: "Curbside Delivery",
-    name: "Customer name",
     quote:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
     rating: 5,
@@ -67,7 +64,6 @@ const placeholderReviews: ReviewCardData[] = [
     id: "placeholder-4",
     date: "07/22/2026",
     detail: "Household Moving",
-    name: "Customer name",
     quote:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
     rating: 5,
@@ -76,7 +72,6 @@ const placeholderReviews: ReviewCardData[] = [
     id: "placeholder-5",
     date: "07/21/2026",
     detail: "Beverage Recycling",
-    name: "Customer name",
     quote:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
     rating: 5,
@@ -138,10 +133,10 @@ export function ReviewsSection() {
       <div className="reviews-section__intro">
         <SectionHeading
           align="center"
-          description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. These cards show the intended review hierarchy only."
-          eyebrow="(03) Customer reviews"
+          description="Hear from our many happy customers!"
+          eyebrow="(03) Reviews"
           id="reviews-title"
-          title="Customer feedback will live here."
+          title="Customer feedback."
         />
       </div>
 

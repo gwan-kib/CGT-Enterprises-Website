@@ -2,7 +2,6 @@ export interface ReviewCardData {
   date: string;
   detail: string;
   id: string;
-  name: string;
   quote: string;
   rating: number;
 }
@@ -21,7 +20,6 @@ export function ReviewCard({ review }: ReviewCardProps) {
     <article className="review-card">
       <div className="review-card__header">
         <time className="review-card__date">{review.date}</time>
-        <h3 className="review-card__name">{review.name}</h3>
       </div>
 
       <div className="review-card__stars" aria-label={`${review.rating} out of ${TOTAL_STARS} stars`}>
@@ -41,7 +39,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
         <p>&ldquo;{review.quote}&rdquo;</p>
       </blockquote>
 
-      <span className="review-card__detail">{review.detail}</span>
+      <span className="review-card__detail">Service: {review.detail}</span>
     </article>
   );
 }
