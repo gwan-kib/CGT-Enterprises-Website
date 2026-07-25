@@ -1,8 +1,8 @@
 export const business = {
   name: 'CGT Enterprises',
   contact: {
-    email: 'Email placeholder',
+    email: 'cgt@cgtenterprises.ca',
     location: 'Location placeholder',
-    phone: 'Phone placeholder',
+    phone: '(867) 445-5883',
   },
 } as const
