@@ -1,51 +1,153 @@
 @layer components {
   .reviews-section__intro {
-    margin-bottom: clamp(var(--space-12), 7vw, var(--space-20));
+    margin-bottom: clamp(var(--space-8), 4vw, var(--space-16));
   }
 
-  .reviews-section__grid {
-    @apply grid;
+  .reviews-section__carousel-wrapper {
+    @apply relative;
+  }
+
+  .reviews-section__carousel {
+    @apply flex overflow-x-auto;
     gap: var(--space-6);
+    padding-bottom: var(--space-4);
+    padding-inline: calc(50% - 11rem);
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  .reviews-section__carousel::-webkit-scrollbar {
+    display: none;
   }
 
   .review-card {
-    @apply flex flex-col;
-    min-height: 19rem;
-    margin: 0;
+    @apply relative flex shrink-0 flex-col;
+    width: 22rem;
+    min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
     background: var(--color-surface-subtle);
+    box-shadow: 0 0.25rem 1rem rgb(24 23 27 / 6%);
+    scroll-snap-align: center;
+    transition:
+      border-color var(--transition-standard) var(--easing-standard),
+      box-shadow var(--transition-standard) var(--easing-standard),
+      transform var(--transition-standard) var(--easing-standard);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .review-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: var(--shadow-card);
+      transform: translateY(calc(var(--space-2) * -1));
+    }
+  }
+
+  .review-card__header {
+    margin-bottom: var(--space-4);
+  }
+
+  .review-card__date {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  .review-card__name {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-heading-card);
+  }
+
+  .review-card__stars {
+    @apply flex;
+    margin-bottom: var(--space-5);
+    gap: 0.125rem;
+  }
+
+  .review-card__stars .material-symbols-outlined {
+    font-size: 1.5rem;
   }
 
   .review-card__quote {
+    @apply flex-1;
+    margin: 0 0 var(--space-6);
+  }
+
+  .review-card__quote p {
     margin: 0;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
-  .review-card__footer {
-    @apply flex flex-col;
+  .review-card__detail {
+    display: block;
     margin-top: auto;
-    padding-top: var(--space-10);
-    gap: var(--space-1);
+    padding-top: var(--space-6);
     border-top: var(--border-width) solid var(--color-divider);
-  }
-
-  .review-card__footer cite {
-    font-style: normal;
-    font-weight: var(--font-weight-bold);
-  }
-
-  .review-card__footer span {
     color: var(--color-text-muted);
     font-size: var(--font-size-small);
+    line-height: var(--line-height-small);
+  }
+
+  .reviews-section__arrow {
+    @apply absolute z-10 flex items-center justify-center;
+    top: 50%;
+    width: 3rem;
+    height: 3rem;
+    border: var(--border-width) solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition:
+      background-color var(--transition-fast) var(--easing-standard),
+      border-color var(--transition-fast) var(--easing-standard),
+      box-shadow var(--transition-fast) var(--easing-standard),
+      opacity var(--transition-fast) var(--easing-standard);
+  }
+
+  .reviews-section__arrow .material-symbols-outlined {
+    font-size: 1.5rem;
+  }
+
+  .reviews-section__arrow:hover,
+  .reviews-section__arrow:focus-visible {
+    border-color: var(--color-border-strong);
+    background: var(--color-neutral-100);
+    box-shadow: 0 0.25rem 0.75rem rgb(24 23 27 / 10%);
+  }
+
+  .reviews-section__arrow:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .reviews-section__arrow:disabled:hover {
+    border-color: var(--color-border);
+    background: var(--color-surface);
+    box-shadow: none;
+  }
+
+  .reviews-section__arrow--prev {
+    left: -1rem;
+  }
+
+  .reviews-section__arrow--next {
+    right: -1rem;
   }
 }
 
 @media (min-width: 48rem) {
-  .reviews-section__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .reviews-section__carousel {
+    margin-inline: calc(var(--page-gutter) * -0.5);
+    padding-inline: calc(var(--page-gutter) * 0.5);
   }
 }
