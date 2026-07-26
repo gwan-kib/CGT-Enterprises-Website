@@ -5,6 +5,14 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service }: ServiceCardProps) {
+  function handleBookClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    window.dispatchEvent(
+      new CustomEvent("cgt:select-service", { detail: service.id }),
+    );
+    window.location.hash = "contact";
+  }
+
   return (
     <article className="service-card">
       <span className="service-card__icon material-symbols-rounded" aria-hidden="true">
@@ -15,7 +23,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
       <p className="service-card__description">{service.description}</p>
 
       <div className="service-card__info">
-        <a className="service-card__link" href="#contact">
+        <a className="service-card__link" href="#contact" onClick={handleBookClick}>
           Book Service
         </a>
         <span className="service-card__number" aria-hidden="true">

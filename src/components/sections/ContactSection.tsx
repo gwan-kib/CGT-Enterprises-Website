@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { business } from "../../data/business";
+import { placeholderServices } from "../../data/services";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 import { FacebookIcon } from "../ui/FacebookIcon";
@@ -8,6 +9,18 @@ import { StaticField } from "../ui/StaticField";
 
 export function ContactSection() {
   const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [selectedService, setSelectedService] = useState("");
+  const [inquiryType, setInquiryType] = useState("");
+
+  useEffect(() => {
+    function handleServiceSelect(e: Event) {
+      setSelectedService((e as CustomEvent<string>).detail);
+    }
+
+    window.addEventListener("cgt:select-service", handleServiceSelect);
+    return () =>
+      window.removeEventListener("cgt:select-service", handleServiceSelect);
+  }, []);
 
   const handleCopy = useCallback(async (field: string, text: string) => {
     await navigator.clipboard.writeText(text);
@@ -23,7 +36,7 @@ export function ContactSection() {
             description="Visit CGT Enterprises on Facebook"
             eyebrow="(06) Contact"
             id="contact-title"
-            title="What do you need to know?"
+            title="How can we help you?"
           />
 
           <a
@@ -107,6 +120,60 @@ export function ContactSection() {
           <div className="static-form__row">
             <StaticField id="contact-name" label="Name" />
             <StaticField id="contact-email" label="Email" />
+          </div>
+          <div className="static-form__row">
+            <div className="static-field">
+              <label className="static-field__label" htmlFor="contact-service">
+                Service
+              </label>
+              <select
+                className="contact-form__service-select"
+                id="contact-service"
+                onChange={(e) => setSelectedService(e.target.value)}
+                value={selectedService}
+              >
+                <option value="">Select a service...</option>
+                {placeholderServices.map((service) => (
+                  <option key={service.id} value={service.id}>
+                    {service.name}
+                  </option>
+                ))}
+                <option value="other">Other</option>
+              </select>
+              {selectedService === "other" && (
+                <input
+                  className="static-field__control"
+                  placeholder="Describe the service"
+                  readOnly
+                  type="text"
+                />
+              )}
+            </div>
+            <div className="static-field">
+              <label className="static-field__label" htmlFor="contact-inquiry-type">
+                Inquiry type
+              </label>
+              <select
+                className="contact-form__service-select"
+                id="contact-inquiry-type"
+                onChange={(e) => setInquiryType(e.target.value)}
+                value={inquiryType}
+              >
+                <option value="">Select an inquiry...</option>
+                <option value="question">Question</option>
+                <option value="quote">Quote</option>
+                <option value="consultation">Consultation</option>
+                <option value="other">Other</option>
+              </select>
+              {inquiryType === "other" && (
+                <input
+                  className="static-field__control"
+                  placeholder="Describe the inquiry"
+                  readOnly
+                  type="text"
+                />
+              )}
+            </div>
           </div>
           <StaticField id="contact-message" label="Message" multiline />
           <Button disabled>
