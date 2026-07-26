@@ -1,63 +1,105 @@
-import { business } from '../../data/business'
-import { SectionContainer } from '../layout/SectionContainer'
-import { Button } from '../ui/Button'
-import { SectionHeading } from '../ui/SectionHeading'
-import { StaticField } from '../ui/StaticField'
+import { useCallback, useState } from "react";
+import { business } from "../../data/business";
+import { SectionContainer } from "../layout/SectionContainer";
+import { Button } from "../ui/Button";
+import { FacebookIcon } from "../ui/FacebookIcon";
+import { SectionHeading } from "../ui/SectionHeading";
+import { StaticField } from "../ui/StaticField";
 
 export function ContactSection() {
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const handleCopy = useCallback(async (field: string, text: string) => {
+    await navigator.clipboard.writeText(text);
+    setCopiedField(field);
+    setTimeout(() => setCopiedField(null), 1500);
+  }, []);
+
   return (
-    <SectionContainer
-      className="contact-section"
-      id="contact"
-      labelledBy="contact-title"
-      tone="brand"
-    >
+    <SectionContainer className="contact-section" id="contact" labelledBy="contact-title" tone="brand">
       <div className="contact-section__grid">
         <div className="contact-section__content">
           <SectionHeading
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. This area establishes the future contact hierarchy without publishing unconfirmed details."
+            description="And check out our Facebook Page!"
             eyebrow="(06) Contact"
             id="contact-title"
             title="A direct next step belongs here."
           />
 
-          <div className="contact-cards">
-            <div className="contact-card">
+          <a
+            aria-label="Visit CGT Enterprises on Facebook"
+            className="contact-section__facebook-link"
+            href={business.social.facebook}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <FacebookIcon className="contact-section__facebook-icon" />
+          </a>
+
+          <div className="contact-hours">
+            <div className="contact-hours__row">
               <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                 timelapse
               </span>
-              <div className="contact-card__content">
-                <span className="contact-card__label">Operational Hours</span>
-                <span className="contact-card__value">
-                  Mon - Fri: 3 PM - 6 PM | Sat - Sun: 10 AM - 4 PM
-                </span>
-              </div>
+              <span className="contact-card__label">Operational Hours</span>
             </div>
-            <a className="contact-card contact-card--clickable" href="tel:placeholder">
-              <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
-                call
-              </span>
-              <div className="contact-card__content">
-                <span className="contact-card__label">Give Us A Call</span>
-                <span className="contact-card__value">{business.contact.phone}</span>
-              </div>
-              <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
-                arrow_forward
-              </span>
-            </a>
+            <span className="contact-card__value">Mon - Fri: 3 PM - 6 PM | Sat - Sun: 10 AM - 4 PM</span>
+          </div>
 
-            <a className="contact-card contact-card--clickable" href="mailto:cgt@cgtenterprises.ca">
-              <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
-                mail
-              </span>
-              <div className="contact-card__content">
-                <span className="contact-card__label">Send An Email</span>
-                <span className="contact-card__value">{business.contact.email}</span>
-              </div>
-              <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
-                arrow_forward
-              </span>
-            </a>
+          <div className="contact-cards">
+            <div className="contact-card">
+              <a className="contact-card__link" href="tel:placeholder">
+                <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
+                  call
+                </span>
+                <div className="contact-card__content">
+                  <span className="contact-card__value">{business.contact.phone}</span>
+                </div>
+                <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
+                  arrow_forward
+                </span>
+              </a>
+              <button
+                aria-label="Copy phone number"
+                className="contact-card__copy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCopy("phone", business.contact.phone);
+                }}
+                type="button"
+              >
+                <span aria-hidden="true" className="material-symbols-rounded">
+                  {copiedField === "phone" ? "check" : "content_copy"}
+                </span>
+              </button>
+            </div>
+
+            <div className="contact-card">
+              <a className="contact-card__link" href="mailto:cgt@cgtenterprises.ca">
+                <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
+                  mail
+                </span>
+                <div className="contact-card__content">
+                  <span className="contact-card__value">{business.contact.email}</span>
+                </div>
+                <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
+                  arrow_forward
+                </span>
+              </a>
+              <button
+                aria-label="Copy email address"
+                className="contact-card__copy"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCopy("email", business.contact.email);
+                }}
+                type="button"
+              >
+                <span aria-hidden="true" className="material-symbols-rounded">
+                  {copiedField === "email" ? "check" : "content_copy"}
+                </span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -79,5 +121,5 @@ export function ContactSection() {
         </form>
       </div>
     </SectionContainer>
-  )
+  );
 }

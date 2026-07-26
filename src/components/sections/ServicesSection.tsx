@@ -9,7 +9,7 @@ export function ServicesSection() {
       <div className="services-section__intro">
         <SectionHeading
           align="center"
-          description="Explore our currently available services. View starting prices below and contact us for availability."
+          description="View starting prices below. Contact us for availability."
           eyebrow="(02) Services"
           id="services-title"
           title="Available services:"

@@ -67,6 +67,7 @@
 
   .section-heading {
     max-width: 44rem;
+    text-align: center;
   }
 
   .section-heading--center {

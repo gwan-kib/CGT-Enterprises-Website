@@ -6,30 +6,73 @@
 
   .contact-section__content {
     @apply flex flex-col;
-    gap: var(--space-8);
+    gap: var(--space-2);
+  }
+
+  /* ---------- Facebook link ---------- */
+
+  .contact-section__facebook-link {
+    @apply inline-flex items-center justify-center shrink-0 self-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: white;
+    color: blue;
+    opacity: 0.9;
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-section__facebook-link:hover {
+    opacity: 1;
+  }
+
+  .contact-section__facebook-icon {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   /* ---------- Contact cards ---------- */
 
   .contact-cards {
-    @apply flex flex-col;
+    @apply flex flex-col items-center;
     gap: var(--space-4);
+  }
+
+  .contact-hours {
+    padding-top: 0;
+    padding-bottom: var(--space-4);
+    text-align: center;
+    letter-spacing: var(--letter-spacing-label);
+  }
+
+  .contact-hours__row {
+    @apply flex items-center justify-center;
+    gap: var(--space-2);
   }
 
   .contact-card {
-    @apply flex items-center no-underline;
+    @apply flex items-center;
+    gap: var(--space-2);
+    transition: all var(--transition-fast) var(--easing-standard);
+    width: fit-content;
+  }
+
+  .contact-card__link:hover .contact-card__link {
+    transform: scale(1.01);
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__link {
+    @apply flex flex-1 items-center no-underline;
     gap: var(--space-4);
-    padding: var(--space-5);
+    padding: var(--space-1) var(--space-4);
     border-radius: var(--radius-large);
-    background: var(--color-brand-green-300);
+    background: var(--color-neutral-100);
     color: inherit;
+    transition: all var(--transition-fast) var(--easing-standard);
   }
 
-  .contact-card--clickable {
-    transition: background-color var(--transition-fast) var(--easing-standard);
-  }
-
-  .contact-card--clickable:hover {
+  .contact-card__link:hover {
     background: var(--color-brand-green-200);
   }
 
@@ -38,12 +81,11 @@
     font-size: 2rem;
     width: 2.5rem;
     height: 2.5rem;
-    color: var(--color-neutral-900);
     transition: transform var(--transition-fast) var(--easing-standard);
   }
 
-  .contact-card--clickable:hover .contact-card__icon {
-    transform: scale(1.1);
+  .contact-hours .contact-card__icon {
+    font-size: 2.5rem;
   }
 
   .contact-card__content {
@@ -73,9 +115,28 @@
       transform var(--transition-fast) var(--easing-standard);
   }
 
-  .contact-card--clickable:hover .contact-card__arrow {
+  .contact-card__link:hover .contact-card__arrow {
     opacity: 1;
     transform: translateX(2px);
+  }
+
+  .contact-card__copy {
+    @apply grid shrink-0 place-items-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__copy:hover {
+    color: var(--color-brand-green-200);
+  }
+
+  .contact-card__copy .material-symbols-rounded {
+    font-size: 1.5rem;
   }
 
   /* ---------- Form card ---------- */
