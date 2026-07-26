@@ -20,10 +20,10 @@ export function ContactSection() {
       <div className="contact-section__grid">
         <div className="contact-section__content">
           <SectionHeading
-            description="And check out our Facebook Page!"
+            description="Visit CGT Enterprises on Facebook"
             eyebrow="(06) Contact"
             id="contact-title"
-            title="A direct next step belongs here."
+            title="What do you need to know?"
           />
 
           <a
