@@ -13,7 +13,7 @@
   .service-card {
     @apply relative flex flex-col;
     min-width: 0;
-    min-height: 28rem;
+    min-height: 26rem;
     align-items: center;
     padding: clamp(var(--space-6), 3vw, var(--space-8));
     padding-bottom: clamp(var(--space-4), 3vw, var(--space-8));
@@ -39,11 +39,13 @@
   }
 
   .service-card__price {
-    margin-bottom: var(--space-3);
-    color: var(--color-brand-red-600);
+    margin-top: var(--space-1);
+    margin-bottom: var(--space-2);
+    color: var(--color-brand-red-400);
     font-size: 1.2rem;
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-small);
+    text-align: center;
   }
 
   .service-card__title {
@@ -54,7 +56,7 @@
   }
 
   .service-card__description {
-    margin: var(--space-5) 0 0;
+    margin:  0 0;
     color: var(--color-text-muted);
     text-align: center;
   }

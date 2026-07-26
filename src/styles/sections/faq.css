@@ -77,9 +77,4 @@
   .faq-section__grid {
     grid-template-columns: minmax(0, 0.8fr) minmax(28rem, 1.2fr);
   }
-
-  .faq-section__grid .section-heading {
-    position: sticky;
-    top: calc(var(--anchor-offset) + var(--space-8));
-  }
 }

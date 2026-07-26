@@ -1,6 +1,6 @@
 @layer components {
   .reviews-section__intro {
-    margin-bottom: clamp(var(--space-8), 4vw, var(--space-16));
+    margin-bottom: var(--space-10);
   }
 
   .reviews-section__carousel-wrapper {
@@ -11,7 +11,6 @@
     @apply flex overflow-x-auto;
     gap: var(--space-6);
     padding-bottom: var(--space-10);
-    padding-top: var(--space-6);
     padding-inline: calc(50% - 11rem);
     scroll-snap-type: none;
     scrollbar-width: none;

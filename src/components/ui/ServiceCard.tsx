@@ -11,12 +11,12 @@ export function ServiceCard({ service }: ServiceCardProps) {
         {service.icon}
       </span>
       <h3 className="service-card__title">{service.name}</h3>
+      <span className="service-card__price">{service.price}</span>
       <p className="service-card__description">{service.description}</p>
 
       <div className="service-card__info">
-        <span className="service-card__price">{service.price}</span>
         <a className="service-card__link" href="#contact">
-          Inquire about service
+          Book Service
         </a>
         <span className="service-card__number" aria-hidden="true">
           {service.id}
