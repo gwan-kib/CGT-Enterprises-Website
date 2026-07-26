@@ -1,7 +1,7 @@
 import { SectionContainer } from '../layout/SectionContainer'
 import { Button } from '../ui/Button'
-import { ImagePlaceholder } from '../ui/ImagePlaceholder'
 import { SectionHeading } from '../ui/SectionHeading'
+import { StarIllustration } from '../ui/StarIllustration'
 import { StaticField } from '../ui/StaticField'
 
 export function ReviewFormSection() {
@@ -20,7 +20,7 @@ export function ReviewFormSection() {
             id="leave-review-title"
             title="A simple space for future feedback."
           />
-          <ImagePlaceholder ratio="landscape" />
+          <StarIllustration />
         </div>
 
         <form

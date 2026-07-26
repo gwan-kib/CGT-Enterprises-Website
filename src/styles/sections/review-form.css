@@ -7,16 +7,7 @@
   .review-form-section__content .section-heading {
     margin-bottom: var(--space-10);
   }
-
-  .review-form-section .section-heading__eyebrow::after {
-    content: "";
-    display: block;
-    width: 2.5rem;
-    height: 2px;
-    margin-top: var(--space-3);
-    background: var(--color-brand-green-500);
-  }
-
+  
   /* ---------- Form card ---------- */
 
   .review-form {
@@ -30,6 +21,51 @@
   .review-form__send-icon {
     font-size: 1.5rem;
     margin-left: var(--space-2);
+  }
+
+  /* ---------- Star illustration ---------- */
+
+  .star-illustration {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    color: var(--color-brand-green-500);
+
+    --center-size: 15rem;
+
+    --side-size: 8rem;
+    --size-tilt: 20deg;
+    --top-distance: 75%;
+    --side-distance: 18%;
+  }
+
+  .star-illustration__star {
+    position: absolute;
+    line-height: 0;
+  }
+
+  .star-illustration__star--left {
+    left: var(--side-distance);
+    top: var(--top-distance);
+    width: var(--side-size);
+    height: var(--side-size);
+    transform: translate(-50%, -50%) rotate(calc(-1 * var(--size-tilt)));
+  }
+
+  .star-illustration__star--center {
+    left: 50%;
+    top: 50%;
+    width: var(--center-size);
+    height: var(--center-size);
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .star-illustration__star--right {
+    left: calc(100% - var(--side-distance));
+    top: var(--top-distance);
+    width: var(--side-size);
+    height: var(--side-size);
+    transform: translate(-50%, -50%) rotate(var(--size-tilt));
   }
 }
 

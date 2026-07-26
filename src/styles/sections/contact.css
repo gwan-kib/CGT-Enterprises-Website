@@ -9,15 +9,6 @@
     gap: var(--space-8);
   }
 
-  .contact-section .section-heading__eyebrow::after {
-    content: "";
-    display: block;
-    width: 2.5rem;
-    height: 2px;
-    margin-top: var(--space-3);
-    background: var(--color-neutral-900);
-  }
-
   /* ---------- Contact cards ---------- */
 
   .contact-cards {
@@ -51,8 +42,8 @@
     transition: transform var(--transition-fast) var(--easing-standard);
   }
 
-  .contact-card:hover .contact-card__icon {
-    transform: scale(1.05);
+  .contact-card--clickable:hover .contact-card__icon {
+    transform: scale(1.1);
   }
 
   .contact-card__content {
