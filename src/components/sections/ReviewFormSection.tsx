@@ -25,14 +25,19 @@ export function ReviewFormSection() {
 
         <form
           aria-describedby="review-form-status"
-          className="static-form static-form--inverse"
+          className="static-form review-form"
         >
           <div className="static-form__row">
             <StaticField id="review-name" label="Name" />
             <StaticField id="review-email" label="Email" />
           </div>
           <StaticField id="review-message" label="Review" multiline />
-          <Button disabled>Submit review</Button>
+          <Button disabled>
+            Submit review
+            <span aria-hidden="true" className="review-form__send-icon material-symbols-rounded">
+              rate_review
+            </span>
+          </Button>
           <p className="static-form__status" id="review-form-status">
             Visual placeholder only. Review submission is not connected.
           </p>

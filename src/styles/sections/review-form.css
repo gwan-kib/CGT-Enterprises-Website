@@ -7,6 +7,30 @@
   .review-form-section__content .section-heading {
     margin-bottom: var(--space-10);
   }
+
+  .review-form-section .section-heading__eyebrow::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    margin-top: var(--space-3);
+    background: var(--color-brand-green-500);
+  }
+
+  /* ---------- Form card ---------- */
+
+  .review-form {
+    padding: clamp(var(--space-8), 5vw, var(--space-12));
+  }
+
+  .review-form > .button {
+    width: 100%;
+  }
+
+  .review-form__send-icon {
+    font-size: 1.5rem;
+    margin-left: var(--space-2);
+  }
 }
 
 @media (min-width: 64rem) {
