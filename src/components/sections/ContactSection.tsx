@@ -22,48 +22,42 @@ export function ContactSection() {
           />
 
           <div className="contact-cards">
+            <div className="contact-card">
+              <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
+                timelapse
+              </span>
+              <div className="contact-card__content">
+                <span className="contact-card__label">Operational Hours</span>
+                <span className="contact-card__value">
+                  Mon - Fri: 3 PM - 6 PM | Sat - Sun: 10 AM - 4 PM
+                </span>
+              </div>
+            </div>
             <a className="contact-card contact-card--clickable" href="tel:placeholder">
-              <span aria-hidden="true" className="contact-card__icon material-symbols-outlined">
+              <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                 call
               </span>
               <div className="contact-card__content">
-                <span className="contact-card__label">Phone</span>
+                <span className="contact-card__label">Give Us A Call</span>
                 <span className="contact-card__value">{business.contact.phone}</span>
               </div>
-              <span aria-hidden="true" className="contact-card__arrow material-symbols-outlined">
+              <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
                 arrow_forward
               </span>
             </a>
 
-            <a className="contact-card contact-card--clickable" href="mailto:placeholder">
-              <span aria-hidden="true" className="contact-card__icon material-symbols-outlined">
+            <a className="contact-card contact-card--clickable" href="mailto:cgt@cgtenterprises.ca">
+              <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                 mail
               </span>
               <div className="contact-card__content">
-                <span className="contact-card__label">Email</span>
+                <span className="contact-card__label">Send An Email</span>
                 <span className="contact-card__value">{business.contact.email}</span>
               </div>
-              <span aria-hidden="true" className="contact-card__arrow material-symbols-outlined">
+              <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
                 arrow_forward
               </span>
             </a>
-
-            <div className="contact-card">
-              <span aria-hidden="true" className="contact-card__icon material-symbols-outlined">
-                location_on
-              </span>
-              <div className="contact-card__content">
-                <span className="contact-card__label">Location</span>
-                <span className="contact-card__value">{business.contact.location}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="contact-info-card">
-            <h3 className="contact-info-card__heading">Hours</h3>
-            <p className="contact-info-card__text">
-              Mon - Fri: 3 PM - 6 PM | Sat - Sun: 10 AM - 4 PM
-            </p>
           </div>
         </div>
 
@@ -75,7 +69,7 @@ export function ContactSection() {
           <StaticField id="contact-message" label="Message" multiline />
           <Button disabled>
             Send inquiry
-            <span aria-hidden="true" className="contact-form__send-icon material-symbols-outlined">
+            <span aria-hidden="true" className="contact-form__send-icon material-symbols-rounded">
               send
             </span>
           </Button>

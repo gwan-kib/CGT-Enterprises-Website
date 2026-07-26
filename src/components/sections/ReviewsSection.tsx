@@ -148,7 +148,7 @@ export function ReviewsSection() {
           onClick={() => scrollBy("prev")}
           type="button"
         >
-          <span aria-hidden="true" className="material-symbols-outlined">
+          <span aria-hidden="true" className="material-symbols-rounded">
             chevron_left
           </span>
         </button>
@@ -166,7 +166,7 @@ export function ReviewsSection() {
           onClick={() => scrollBy("next")}
           type="button"
         >
-          <span aria-hidden="true" className="material-symbols-outlined">
+          <span aria-hidden="true" className="material-symbols-rounded">
             chevron_right
           </span>
         </button>

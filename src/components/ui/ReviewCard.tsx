@@ -27,7 +27,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
           <span
             key={i}
             aria-hidden="true"
-            className="material-symbols-outlined"
+            className="material-symbols-rounded"
             style={{ color: i < review.rating ? filledColor : emptyColor }}
           >
             star
@@ -36,7 +36,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
       </div>
 
       <blockquote className="review-card__quote">
-        <p>&ldquo;{review.quote}&rdquo;</p>
+        <p>{review.quote}</p>
       </blockquote>
 
       <span className="review-card__detail">Service: {review.detail}</span>

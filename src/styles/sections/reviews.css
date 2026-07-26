@@ -64,7 +64,7 @@
     gap: 0.125rem;
   }
 
-  .review-card__stars .material-symbols-outlined {
+  .review-card__stars .material-symbols-rounded {
     font-size: 1.5rem;
   }
 
@@ -108,7 +108,7 @@
       opacity var(--transition-fast) var(--easing-standard);
   }
 
-  .reviews-section__arrow .material-symbols-outlined {
+  .reviews-section__arrow .material-symbols-rounded {
     font-size: 1.5rem;
   }
 

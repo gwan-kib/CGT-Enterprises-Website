@@ -22,18 +22,16 @@
 
   .contact-cards {
     @apply flex flex-col;
+    gap: var(--space-4);
   }
 
   .contact-card {
     @apply flex items-center no-underline;
     gap: var(--space-4);
-    padding-block: var(--space-4);
-    border-bottom: var(--border-width) solid var(--color-brand-green-600);
+    padding: var(--space-5);
+    border-radius: var(--radius-large);
+    background: var(--color-brand-green-300);
     color: inherit;
-  }
-
-  .contact-card:first-child {
-    border-top: var(--border-width) solid var(--color-brand-green-600);
   }
 
   .contact-card--clickable {
@@ -41,17 +39,20 @@
   }
 
   .contact-card--clickable:hover {
-    background: rgb(0 0 0 / 6%);
+    background: var(--color-brand-green-200);
   }
 
   .contact-card__icon {
     @apply grid shrink-0 place-items-center;
-    font-size: 1.5rem;
+    font-size: 2rem;
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 0.5rem;
-    background: var(--color-brand-green-600);
     color: var(--color-neutral-900);
+    transition: transform var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card:hover .contact-card__icon {
+    transform: scale(1.05);
   }
 
   .contact-card__content {
@@ -74,7 +75,7 @@
 
   .contact-card__arrow {
     @apply shrink-0;
-    font-size: 1.25rem;
+    font-size: 2rem;
     opacity: 0.6;
     transition:
       opacity var(--transition-fast) var(--easing-standard),
@@ -84,30 +85,6 @@
   .contact-card--clickable:hover .contact-card__arrow {
     opacity: 1;
     transform: translateX(2px);
-  }
-
-  /* ---------- Info card ---------- */
-
-  .contact-info-card {
-    padding: var(--space-5) var(--space-6);
-    border: var(--border-width) solid var(--color-neutral-100);
-    border-radius: var(--radius-large);
-    background: var(--color-neutral-100);
-    color: var(--color-text);
-  }
-
-  .contact-info-card__heading {
-    margin: 0;
-    font-size: var(--font-size-heading-card);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-heading-card);
-  }
-
-  .contact-info-card__text {
-    margin: var(--space-2) 0 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
   }
 
   /* ---------- Form card ---------- */

@@ -55,7 +55,7 @@ export function FaqSection() {
                 >
                   <span
                     aria-hidden="true"
-                    className={`faq-item__chevron material-symbols-outlined ${isOpen ? "faq-item__chevron--open" : ""}`}
+                    className={`faq-item__chevron material-symbols-rounded ${isOpen ? "faq-item__chevron--open" : ""}`}
                   >
                     expand_more
                   </span>
