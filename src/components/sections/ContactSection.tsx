@@ -34,7 +34,6 @@ export function ContactSection() {
         <div className="contact-section__content">
           <SectionHeading
             description="Visit CGT Enterprises on Facebook"
-            eyebrow="(06) Contact"
             id="contact-title"
             title="How can we help you?"
           />

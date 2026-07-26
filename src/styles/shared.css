@@ -75,24 +75,6 @@
     text-align: center;
   }
 
-  .section-heading__eyebrow {
-    margin: 0 0 var(--space-5);
-    color: var(--color-brand-red-500);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    text-transform: uppercase;
-  }
-
-  .page-section--dark .section-heading__eyebrow {
-    color: var(--color-brand-green-500);
-  }
-
-  .page-section--brand .section-heading__eyebrow {
-    color: var(--color-neutral-900);
-  }
-
   .section-heading__title {
     margin: 0;
     font-size: clamp(2rem, 1.65rem + 1.4vw, 3rem);

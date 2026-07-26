@@ -24,7 +24,6 @@ export function ReviewFormSection() {
         <div className="review-form-section__content">
           <SectionHeading
             description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. This form is a visual placeholder and does not collect or submit information."
-            eyebrow="(04) Leave a review"
             id="leave-review-title"
             title="A simple space for future feedback."
           />

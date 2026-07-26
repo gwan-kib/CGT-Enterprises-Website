@@ -32,9 +32,8 @@ export function FaqSection() {
       <div className="faq-section__grid">
         <SectionHeading
           description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Approved questions and answers will replace this temporary structure."
-          eyebrow="(05) Frequently asked questions"
           id="faq-title"
-          title="Common questions, arranged for quick scanning."
+          title="Frequent Asked Questions"
         />
 
         <div className="faq-list">

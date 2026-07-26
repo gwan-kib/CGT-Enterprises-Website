@@ -227,7 +227,6 @@ export function ReviewsSection() {
         <SectionHeading
           align="center"
           description="Hear from our many happy customers!"
-          eyebrow="(03) Reviews"
           id="reviews-title"
           title="Customer feedback."
         />

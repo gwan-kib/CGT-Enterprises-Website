@@ -10,7 +10,6 @@ export function ServicesSection() {
         <SectionHeading
           align="center"
           description="View starting prices below. Contact us for details."
-          eyebrow="(02) Services"
           id="services-title"
           title="Available services:"
         />
