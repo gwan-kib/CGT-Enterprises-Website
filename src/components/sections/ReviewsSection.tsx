@@ -82,9 +82,101 @@ export function ReviewsSection() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [closestIndex, setClosestIndex] = useState(0);
 
+  const isDragging = useRef(false);
+  const dragStartX = useRef(0);
+  const dragStartScrollLeft = useRef(0);
+  const isManualScrolling = useRef(false);
+
   const totalCards = placeholderReviews.length;
   const canScrollPrevious = closestIndex > 0;
   const canScrollNext = closestIndex < totalCards - 1;
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    const carousel = carouselRef.current;
+    if (!carousel || e.pointerType !== "mouse") return;
+
+    isDragging.current = true;
+    dragStartX.current = e.clientX;
+    dragStartScrollLeft.current = carousel.scrollLeft;
+    carousel.setPointerCapture(e.pointerId);
+    carousel.classList.add("reviews-section__carousel--grabbing");
+  }, []);
+
+  const handlePointerMove = useCallback((e: React.PointerEvent) => {
+    if (!isDragging.current) return;
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    const dx = dragStartX.current - e.clientX;
+    carousel.scrollLeft = dragStartScrollLeft.current + dx;
+  }, []);
+
+  const snapToClosestCard = useCallback((carousel: HTMLDivElement) => {
+    const allCards = Array.from(
+      carousel.querySelectorAll<HTMLElement>(".review-card"),
+    );
+    const closestIdx = findClosestCardIndex(carousel);
+    if (closestIdx < 0 || closestIdx >= allCards.length) {
+      isManualScrolling.current = false;
+      return;
+    }
+
+    const targetCard = allCards[closestIdx];
+    const offset =
+      getCardCenter(targetCard) - getContainerCenter(carousel);
+
+    if (Math.abs(offset) < 1) {
+      isManualScrolling.current = false;
+      setClosestIndex(closestIdx);
+      return;
+    }
+
+    const onScrollEnd = () => {
+      carousel.removeEventListener("scrollend", onScrollEnd);
+      if (!isDragging.current) {
+        isManualScrolling.current = false;
+      }
+      const idx = findClosestCardIndex(carousel);
+      if (idx !== -1) setClosestIndex(idx);
+    };
+
+    carousel.addEventListener("scrollend", onScrollEnd, { once: true });
+    carousel.scrollBy({ left: offset, behavior: "smooth" });
+  }, []);
+
+  const endDrag = useCallback(() => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+
+    const carousel = carouselRef.current;
+    if (!carousel) return;
+
+    carousel.classList.remove("reviews-section__carousel--grabbing");
+    isManualScrolling.current = true;
+    snapToClosestCard(carousel);
+  }, [snapToClosestCard]);
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      endDrag();
+      const carousel = carouselRef.current;
+      if (carousel && carousel.hasPointerCapture(e.pointerId)) {
+        carousel.releasePointerCapture(e.pointerId);
+      }
+    },
+    [endDrag],
+  );
+
+  const handlePointerCancel = useCallback(
+    (e: React.PointerEvent) => {
+      endDrag();
+      const carousel = carouselRef.current;
+      if (carousel && carousel.hasPointerCapture(e.pointerId)) {
+        carousel.releasePointerCapture(e.pointerId);
+      }
+    },
+    [endDrag],
+  );
 
   const scrollBy = useCallback(
     (direction: "prev" | "next") => {
@@ -120,13 +212,14 @@ export function ReviewsSection() {
     if (!carousel) return;
 
     const handleScrollEnd = () => {
-      const idx = findClosestCardIndex(carousel);
-      if (idx !== -1) setClosestIndex(idx);
+      if (isManualScrolling.current || isDragging.current) return;
+      isManualScrolling.current = true;
+      snapToClosestCard(carousel);
     };
 
     carousel.addEventListener("scrollend", handleScrollEnd);
     return () => carousel.removeEventListener("scrollend", handleScrollEnd);
-  }, []);
+  }, [snapToClosestCard]);
 
   return (
     <SectionContainer id="reviews" labelledBy="reviews-title">
@@ -153,7 +246,14 @@ export function ReviewsSection() {
           </span>
         </button>
 
-        <div className="reviews-section__carousel" ref={carouselRef}>
+        <div
+          className="reviews-section__carousel"
+          ref={carouselRef}
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerCancel}
+        >
           {placeholderReviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}

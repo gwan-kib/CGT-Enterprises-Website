@@ -13,9 +13,14 @@
     padding-bottom: var(--space-10);
     padding-top: var(--space-6);
     padding-inline: calc(50% - 11rem);
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    scroll-snap-type: none;
     scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+  }
+
+  .reviews-section__carousel--grabbing {
+    cursor: grabbing;
   }
 
   .reviews-section__carousel::-webkit-scrollbar {
