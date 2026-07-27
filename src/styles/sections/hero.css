@@ -1,11 +1,11 @@
 @layer components {
   .hero-section {
     overflow: hidden;
+    min-height: 100svh;
   }
 
   .hero-section__grid {
     @apply grid items-center;
-    margin-top: clamp(var(--space-10), 6vw, var(--space-16));
     gap: clamp(var(--space-10), 6vw, var(--space-20));
   }
 
@@ -16,10 +16,10 @@
   }
 
   .hero-section__eyebrow {
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-2);
     color: var(--color-brand-green-500);
     font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     text-transform: uppercase;
@@ -27,39 +27,42 @@
 
   .hero-section__title {
     margin: 0;
-    font-family: var(--font-family-display);
-    font-size: var(--font-size-display);
-    font-weight: var(--font-weight-display);
-    line-height: var(--line-height-display);
-    letter-spacing: var(--letter-spacing-display);
+    font-size: 4rem;
+    font-weight: var(--font-weight-extrabold);
+    line-height: 1.1;
+    letter-spacing: -0.045em;
     text-wrap: balance;
+    padding-bottom: var(--space-6);
+  }
+
+  .hero-section__title-accent {
+    color: var(--color-brand-red-400);
   }
 
   .hero-section__summary {
     max-width: 38rem;
     margin: 0;
     color: var(--color-neutral-200);
-    font-size: 1.125rem;
-    line-height: 1.65;
+    font-size: 1.5rem;
+    line-height: 1.4;
+    text-align: center;
   }
 
   .hero-section__actions {
     @apply flex flex-wrap;
     margin-top: var(--space-8);
     gap: var(--space-4);
-  }
-
-  .hero-section__note,
-  .hero-section__media-note {
-    margin: var(--space-6) 0 0;
-    color: var(--color-neutral-200);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    justify-content: center;
   }
 
   .hero-section__media {
     width: min(100%, 32rem);
     margin-inline: auto;
+  }
+
+  .hero-section__media-image {
+    @apply block h-full w-full;
+    object-fit: contain;
   }
 }
 

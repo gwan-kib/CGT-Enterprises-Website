@@ -1,54 +1,35 @@
-import type { Ref } from 'react'
-import type { Service } from '../../data/services'
+import type { Service } from "../../data/services";
 
 interface ServiceCardProps {
-  articleRef?: Ref<HTMLElement>
-  isActive: boolean
-  onSelect?: () => void
-  service: Service
+  service: Service;
 }
 
-export function ServiceCard({
-  articleRef,
-  isActive,
-  onSelect,
-  service,
-}: ServiceCardProps) {
+export function ServiceCard({ service }: ServiceCardProps) {
+  function handleBookClick(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+    window.dispatchEvent(
+      new CustomEvent("cgt:select-service", { detail: service.id }),
+    );
+    window.location.hash = "contact";
+  }
+
   return (
-    <article
-      className={`service-card${isActive ? ' is-active' : ' is-inactive'}`}
-      data-active={isActive}
-      ref={articleRef}
-      tabIndex={isActive ? -1 : undefined}
-    >
-      <div className="service-card__topline">
+    <article className="service-card">
+      <span className="service-card__icon material-symbols-rounded" aria-hidden="true">
+        {service.icon}
+      </span>
+      <h3 className="service-card__title">{service.name}</h3>
+      <span className="service-card__price">{service.price}</span>
+      <p className="service-card__description">{service.description}</p>
+
+      <div className="service-card__info">
+        <a className="service-card__link" href="#contact" onClick={handleBookClick}>
+          Book Service
+        </a>
         <span className="service-card__number" aria-hidden="true">
           {service.id}
         </span>
-        <span className="service-card__price">{service.price}</span>
       </div>
-      <span className="service-card__state">
-        {isActive ? 'Current service' : 'Available service'}
-      </span>
-      <h3 className="service-card__title">{service.name}</h3>
-      <p className="service-card__description">{service.description}</p>
-      {isActive ? (
-        <a className="service-card__link" href="#contact">
-          Enquire about this service
-        </a>
-      ) : (
-        <>
-          <span aria-hidden="true" className="service-card__select-label">
-            Select this service
-          </span>
-          <button
-            aria-label={`Make ${service.name} the current service`}
-            className="service-card__select"
-            onClick={onSelect}
-            type="button"
-          />
-        </>
-      )}
     </article>
-  )
+  );
 }

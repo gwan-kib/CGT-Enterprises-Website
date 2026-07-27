@@ -1,30 +1,65 @@
 import { business } from '../../data/business'
-import { navigationItems } from '../../data/navigation'
+import { FacebookIcon } from '../ui/FacebookIcon'
 
 export function Footer() {
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className="site-footer">
       <div className="site-footer__inner">
-        <div>
-          <a className="site-footer__brand" href="#home">
-            {business.name}
-          </a>
-          <p className="site-footer__note">Initial website wireframe</p>
+        <div className="site-footer__upper">
+          <div className="site-footer__brand">
+            <span className="site-footer__brand-name">{business.name}</span>
+          </div>
+          <div className="site-footer__contact">
+            <a
+              className="site-footer__contact-link"
+              href={`tel:${business.contact.phone.replace(/\D/g, '')}`}
+            >
+              <span
+                aria-hidden="true"
+                className="site-footer__contact-icon material-symbols-rounded"
+              >
+                call
+              </span>
+              {business.contact.phone}
+            </a>
+            <a
+              className="site-footer__contact-link"
+              href={`mailto:${business.contact.email}`}
+            >
+              <span
+                aria-hidden="true"
+                className="site-footer__contact-icon material-symbols-rounded"
+              >
+                mail
+              </span>
+              {business.contact.email}
+            </a>
+            <a
+              aria-label="Visit CGT Enterprises on Facebook"
+              className="site-footer__social-link"
+              href={business.social.facebook}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <FacebookIcon className="site-footer__social-icon" />
+            </a>
+          </div>
         </div>
 
-        <nav aria-label="Footer">
-          <ul className="site-footer__links">
-            {navigationItems.map((item) => (
-              <li key={item.href}>
-                <a href={item.href}>{item.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <p className="site-footer__status">
-          Placeholder content only. No forms are connected.
-        </p>
+        <div className="site-footer__lower">
+          <small className="site-footer__copyright">
+            &copy; {currentYear} {business.name}. All rights reserved.
+          </small>
+          {/*
+            Temporary placeholder destination.
+            Replace with the approved Privacy Policy URL or route once implemented.
+          */}
+          <a className="site-footer__legal-link" href="#privacy">
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </footer>
   )

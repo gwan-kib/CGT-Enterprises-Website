@@ -1,13 +1,12 @@
 export interface NavigationItem {
-  href: `#${string}`
-  label: string
+  href: `#${string}`;
+  icon: string;
+  label: string;
 }
 
 export const navigationItems: NavigationItem[] = [
-  { href: '#about', label: 'About' },
-  { href: '#services', label: 'Services' },
-  { href: '#reviews', label: 'Reviews' },
-  { href: '#leave-review', label: 'Leave a review' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#contact', label: 'Contact' },
-]
+  { href: "#services", icon: "home_repair_service", label: "Services" },
+  { href: "#reviews", icon: "star_shine", label: "Reviews" },
+  { href: "#leave-review", icon: "rate_review", label: "Leave a review" },
+  { href: "#faq", icon: "quiz", label: "FAQ" },
+];

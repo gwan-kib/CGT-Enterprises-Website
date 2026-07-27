@@ -1,41 +1,191 @@
 @layer components {
   .contact-section__grid {
     @apply grid items-center;
-    gap: clamp(var(--space-12), 7vw, var(--space-24));
+    gap: clamp(var(--space-12), 5vw, var(--space-20));
   }
 
-  .contact-section__details {
-    @apply grid;
-    margin: var(--space-10) 0 0;
-    border-top: var(--border-width) solid var(--color-neutral-900);
+  .contact-section__content {
+    @apply flex flex-col;
+    gap: var(--space-2);
   }
 
-  .contact-section__details > div {
-    @apply grid items-center;
-    grid-template-columns: minmax(5rem, 0.35fr) 1fr;
+  /* ---------- Facebook link ---------- */
+
+  .contact-section__facebook-link {
+    @apply inline-flex items-center justify-center shrink-0 self-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: white;
+    color: blue;
+    opacity: 0.9;
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-section__facebook-link:hover {
+    opacity: 1;
+  }
+
+  .contact-section__facebook-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  /* ---------- Contact cards ---------- */
+
+  .contact-cards {
+    @apply flex flex-col items-center;
     gap: var(--space-4);
-    padding-block: var(--space-4);
-    border-bottom: var(--border-width) solid var(--color-neutral-900);
   }
 
-  .contact-section__details dt {
-    font-size: var(--font-size-small);
+  .contact-hours {
+    padding-top: 0;
+    padding-bottom: var(--space-4);
+    text-align: center;
+    letter-spacing: var(--letter-spacing-label);
+  }
+
+  .contact-hours__row {
+    @apply flex items-center justify-center;
+    gap: var(--space-2);
+  }
+
+  .contact-card {
+    @apply flex items-center;
+    gap: var(--space-2);
+    transition: all var(--transition-fast) var(--easing-standard);
+    width: fit-content;
+  }
+
+  .contact-card__link:hover .contact-card__link {
+    transform: scale(1.01);
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__link {
+    @apply flex flex-1 items-center no-underline;
+    gap: var(--space-4);
+    padding: var(--space-1) var(--space-4);
+    border-radius: var(--radius-large);
+    background: var(--color-brand-green-100);
+    color: inherit;
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__link:hover {
+    background: var(--color-brand-green-200);
+  }
+
+  .contact-card__icon {
+    @apply grid shrink-0 place-items-center;
+    font-size: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    transition: transform var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-hours .contact-card__icon {
+    font-size: 2.5rem;
+  }
+
+  .contact-card__content {
+    @apply flex flex-col;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .contact-card__label {
+    font-size: var(--font-size-label);
     font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-label);
     text-transform: uppercase;
   }
 
-  .contact-section__details dd {
-    margin: 0;
+  .contact-card__value {
     font-weight: var(--font-weight-semibold);
+    overflow-wrap: break-word;
+  }
+
+  .contact-card__arrow {
+    @apply shrink-0;
+    font-size: 2rem;
+    opacity: 0.6;
+    transition:
+      opacity var(--transition-fast) var(--easing-standard),
+      transform var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__link:hover .contact-card__arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+
+  .contact-card__copy {
+    @apply grid shrink-0 place-items-center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: all var(--transition-fast) var(--easing-standard);
+  }
+
+  .contact-card__copy:hover {
+    color: var(--color-brand-green-200);
+  }
+
+  .contact-card__copy .material-symbols-rounded {
+    font-size: 1.5rem;
+  }
+
+  /* ---------- Form card ---------- */
+
+  .contact-form {
+    padding: clamp(var(--space-8), 5vw, var(--space-12));
   }
 
   .contact-section .static-form {
-    box-shadow: none;
+    box-shadow: var(--shadow-card);
+  }
+
+  .contact-form > .button {
+    width: 100%;
+  }
+
+  .contact-form__send-icon {
+    font-size: 1.5rem;
+    margin-left: var(--space-2);
+  }
+
+  /* ---------- Service select ---------- */
+
+  .contact-form__service-select {
+    width: 100%;
+    min-height: var(--control-height);
+    padding: var(--space-3) var(--space-4);
+    border: var(--border-width-strong) solid var(--color-border-strong);
+    border-radius: 0.5rem;
+    background: var(--color-neutral-200);
+    color: var(--color-text);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23524f57' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    background-size: 1.5rem;
+    padding-right: var(--space-12);
+  }
+
+  .contact-form__service-select:invalid {
+    color: var(--color-text-muted);
   }
 }
 
 @media (min-width: 64rem) {
   .contact-section__grid {
-    grid-template-columns: minmax(0, 0.9fr) minmax(24rem, 1.1fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(22rem, 1.15fr);
   }
 }
