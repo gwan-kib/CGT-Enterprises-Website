@@ -52,11 +52,7 @@ export function Footer() {
           <small className="site-footer__copyright">
             &copy; {currentYear} {business.name}. All rights reserved.
           </small>
-          {/*
-            Temporary placeholder destination.
-            Replace with the approved Privacy Policy URL or route once implemented.
-          */}
-          <a className="site-footer__legal-link" href="#privacy">
+          <a className="site-footer__legal-link" href="/privacy-policy.html">
             Privacy Policy
           </a>
         </div>

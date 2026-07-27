@@ -8,6 +8,7 @@
 @import './styles/sections/review-form.css';
 @import './styles/sections/faq.css';
 @import './styles/sections/contact.css';
+@import './styles/pages/privacy.css';
 
 @tailwind base;
 @tailwind components;
