@@ -1,7 +1,7 @@
 @layer components {
   .faq-section__grid {
-    @apply grid items-start;
-    gap: clamp(var(--space-12), 7vw, var(--space-24));
+    @apply grid items-center;
+    gap: var(--space-10);
   }
 
   .faq-list {
@@ -75,20 +75,42 @@
   }
 
   .faq-item__answer-content {
+    @apply items-center;
     overflow: hidden;
     min-height: 0;
   }
 
   .faq-item__answer {
-    max-width: 100%;
-    margin-left: var(--space-2);
+    @apply text-center self-center;
+    margin-inline: auto;
+    max-width: 80%;
     padding-top: var(--space-2);
     color: var(--color-text-muted);
   }
 }
 
-@media (min-width: 64rem) {
-  .faq-section__grid {
-    grid-template-columns: minmax(0, 0.8fr) minmax(28rem, 1.2fr);
-  }
+.faq-section__faq-wrapper {
+  @apply flex items-center justify-center;
+  position: relative;
+  width: 100%;
+  --faq-question-mark-tilt: 25deg;
+}
+
+.faq-section__list-question-mark {
+  @apply flex justify-center;
+  position: absolute;
+  font-size: 15rem;
+  color: var(--color-brand-green-500);
+}
+
+.faq-section__list-question-mark:first-child {
+  top: 0%;
+  left: 0;
+  transform: rotate(calc(-1 * var(--faq-question-mark-tilt)));
+}
+
+.faq-section__list-question-mark:last-child {
+  top: 40%;
+  right: 0;
+  transform: rotate(var(--faq-question-mark-tilt));
 }

@@ -70,7 +70,7 @@
     padding: var(--space-3) var(--space-4);
     border: var(--border-width-strong) solid var(--color-border-strong);
     border-radius: 0.5rem;
-    background: var(--color-surface);
+    background: var(--color-neutral-200);
     color: var(--color-text);
     cursor: pointer;
     font-family: inherit;

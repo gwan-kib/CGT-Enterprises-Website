@@ -221,8 +221,21 @@ export function ReviewsSection() {
     return () => carousel.removeEventListener("scrollend", handleScrollEnd);
   }, [snapToClosestCard]);
 
+  useEffect(() => {
+    const carousel = carouselRef.current;
+    if (!carousel || placeholderReviews.length <= 1) return;
+
+    const allCards = Array.from(
+      carousel.querySelectorAll<HTMLElement>(".review-card"),
+    );
+    const targetCard = allCards[1];
+    const offset = getCardCenter(targetCard) - getContainerCenter(carousel);
+    carousel.scrollBy({ left: offset, behavior: "instant" });
+    setClosestIndex(1);
+  }, []);
+
   return (
-    <SectionContainer id="reviews" labelledBy="reviews-title">
+    <SectionContainer className="reviews-section" id="reviews" labelledBy="reviews-title">
       <div className="reviews-section__intro">
         <SectionHeading
           align="center"

@@ -1,16 +1,75 @@
 @layer components {
+  .reviews-section {
+    position: relative;
+    overflow: hidden;
+
+    --fade-color: var(--color-brand-green-200);
+    --carousel-padding: var(--space-10);
+    --fade-start-in-circle: -15%;
+  }
+
+  .reviews-section::before,
+  .reviews-section::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 45rem;
+    height: 45rem;
+
+    border-radius: 50%;
+
+    background: var(--fade-color);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+
+  .reviews-section::before {
+    left: 0%;
+  }
+
+  .reviews-section::after {
+    left: 100%;
+  }
+
+  .reviews-section .page-section__inner {
+    position: relative;
+    z-index: 1;
+  }
+
   .reviews-section__intro {
-    margin-bottom: var(--space-10);
+    margin-bottom: var(--space-6);
   }
 
   .reviews-section__carousel-wrapper {
     @apply relative;
   }
 
+  .reviews-section__carousel-wrapper::before,
+  .reviews-section__carousel-wrapper::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--carousel-padding) - 2rem);
+    bottom: calc(var(--carousel-padding) - 1rem);
+    z-index: 5;
+    pointer-events: none;
+
+    width: 20rem;
+  }
+
+  .reviews-section__carousel-wrapper::before {
+    left: var(--fade-start-in-circle);
+    background: linear-gradient(to right, var(--fade-color) 0%, var(--fade-color) 70%, transparent 90%);
+  }
+
+  .reviews-section__carousel-wrapper::after {
+    right: var(--fade-start-in-circle);
+    background: linear-gradient(to left, var(--fade-color) 0%, var(--fade-color) 70%, transparent 90%);
+  }
+
   .reviews-section__carousel {
     @apply flex overflow-x-auto;
-    gap: var(--space-6);
-    padding-bottom: var(--space-10);
+    gap: var(--space-10);
+    padding: var(--carousel-padding) 0;
     padding-inline: calc(50% - 11rem);
     scroll-snap-type: none;
     scrollbar-width: none;
@@ -31,21 +90,18 @@
     width: 22rem;
     min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
-    border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
+    border: solid .2rem var(--color-brand-green-200);
     background: var(--color-surface-subtle);
-    box-shadow: 0 0.25rem 1rem rgb(24 23 27 / 6%);
+    box-shadow: 0 0 0 var(--color-brand-green-500);
     scroll-snap-align: center;
     transition:
-      border-color var(--transition-standard) var(--easing-standard),
-      box-shadow var(--transition-standard) var(--easing-standard),
-      transform var(--transition-standard) var(--easing-standard);
+      all var(--transition-standard) var(--easing-standard);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .review-card:hover {
-      border-color: var(--color-border-strong);
-      box-shadow: var(--shadow-card);
+      box-shadow: 0 0 2rem var(--color-brand-green-200);
       transform: translateY(calc(var(--space-2) * -1));
     }
   }

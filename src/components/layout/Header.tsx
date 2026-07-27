@@ -178,7 +178,6 @@ export function Header() {
 
         if (sectionRect.top <= activationLine && sectionRect.bottom > activationLine) {
           nextActiveHref = href;
-          break;
         }
       }
 
