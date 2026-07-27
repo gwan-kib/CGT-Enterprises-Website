@@ -14,13 +14,15 @@ interface NavigationLinksProps {
   activeHref: NavigationHref | null;
   highlightedHref: NavigationHref | null;
   isHeroSectionActive: boolean;
+  homePath?: string;
   onHoverChange: (href: NavigationHref | null) => void;
 }
 
-function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, onHoverChange }: NavigationLinksProps) {
+function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, homePath, onHoverChange }: NavigationLinksProps) {
   return (
     <ul className="site-nav__list">
       {navigationItems.map((item) => {
+        const linkHref = homePath ? homePath + item.href : item.href;
         const isActive = activeHref === item.href;
         const isHighlighted = highlightedHref === item.href;
 
@@ -29,7 +31,7 @@ function NavigationLinks({ activeHref, highlightedHref, isHeroSectionActive, onH
             <a
               aria-current={isActive ? "location" : undefined}
               className={`site-nav__link${isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
-              href={item.href}
+              href={linkHref}
               onMouseEnter={() => onHoverChange(item.href)}
               onMouseLeave={() => onHoverChange(null)}
             >
@@ -89,7 +91,7 @@ function handleSectionLinkClick(
   }
 }
 
-export function Header() {
+export function Header({ homePath }: { homePath?: string }) {
   const headerRef = useRef<HTMLElement>(null);
   const navRef = useRef<HTMLElement>(null);
   const navTrackRef = useRef<HTMLDivElement>(null);
@@ -331,6 +333,7 @@ export function Header() {
                   activeHref={activeHref}
                   highlightedHref={highlightedHref}
                   isHeroSectionActive={isHeroSectionActive}
+                  homePath={homePath}
                   onHoverChange={setHoveredHref}
                 />
               </div>
@@ -338,7 +341,7 @@ export function Header() {
           </div>
 
           <div className="site-header__action">
-            <a className="site-nav__link site-nav__link--header" href="#contact">
+            <a className="site-nav__link site-nav__link--header" href={homePath ? homePath + "#contact" : "#contact"}>
               <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
                 call
               </span>
