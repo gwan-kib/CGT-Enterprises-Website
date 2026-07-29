@@ -11,12 +11,10 @@
   }
 
   .service-card {
-    @apply relative flex flex-col;
+    @apply relative;
     min-width: 0;
     min-height: 26rem;
-    align-items: center;
-    padding: clamp(var(--space-6), 3vw, var(--space-8));
-    padding-bottom: clamp(var(--space-4), 3vw, var(--space-8));
+    overflow: hidden;
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--radius-large);
     background: var(--color-surface);
@@ -25,6 +23,12 @@
       border-color var(--transition-standard) var(--easing-standard),
       box-shadow var(--transition-standard) var(--easing-standard),
       transform var(--transition-standard) var(--easing-standard);
+  }
+
+  .service-card__body {
+    @apply flex flex-col items-center;
+    padding: clamp(var(--space-6), 3vw, var(--space-8));
+    padding-bottom: clamp(var(--space-4), 3vw, var(--space-8));
   }
 
   .service-card__icon {
@@ -56,7 +60,7 @@
   }
 
   .service-card__description {
-    margin:  0 0;
+    margin: 0 0;
     color: var(--color-text-muted);
     text-align: center;
   }
@@ -116,11 +120,76 @@
     outline: var(--border-width-strong) solid var(--color-brand-green-600);
     outline-offset: 2px;
   }
+
+  .service-card__details-overlay {
+    @apply absolute flex flex-col;
+    inset: 0;
+    padding: clamp(var(--space-4), 3vw, var(--space-6));
+    background: color-mix(in srgb, var(--color-surface) 75%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity var(--transition-standard) var(--easing-standard),
+      visibility var(--transition-standard) var(--easing-standard);
+  }
+
+  .service-card__details-overlay--open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .service-card__details-close-bottom {
+    @apply flex items-center justify-center;
+    margin-top: auto;
+    width: 5rem;
+    min-height: var(--touch-target-minimum);
+    padding-inline: var(--space-5);
+    border: var(--border-width-strong) solid var(--color-brand-green-600);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-brand-green-600);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.25;
+    gap: var(--space-2);
+    cursor: pointer;
+    transition:
+      background var(--transition-fast) var(--easing-standard),
+      color var(--transition-fast) var(--easing-standard);
+  }
+
+  .service-card__details-close-bottom:hover {
+    background: var(--color-brand-green-100);
+  }
+
+  .service-card__details-close-bottom:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-brand-green-600);
+    outline-offset: 2px;
+  }
+
+  .service-card__details-body {
+    @apply flex flex-col;
+    overflow-y: auto;
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+    gap: var(--space-3);
+  }
+
+  .service-card__details-text {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    text-align: center;
+  }
 }
 
 @layer components {
   @media (hover: hover) and (pointer: fine) {
-    .service-card:hover {
+    .service-card:not(.service-card--overlay-open):hover {
       border-color: var(--color-border-strong);
       box-shadow: var(--shadow-card);
       transform: translateY(calc(var(--space-2) * -1));
@@ -166,8 +235,7 @@
     }
 
     /* Two cards remaining: move the first one inward. */
-    .services-grid
-      > .service-card:nth-last-child(2):nth-child(3n + 1) {
+    .services-grid > .service-card:nth-last-child(2):nth-child(3n + 1) {
       grid-column: 2 / span 2;
     }
 

@@ -1,13 +1,6 @@
 import { useState } from "react";
+import { faqs } from "../../data/faqs";
 import { SectionContainer } from "../layout/SectionContainer";
-
-const placeholderFaqs = [
-  "Question placeholder one?",
-  "Question placeholder two?",
-  "Question placeholder three?",
-  "Question placeholder four?",
-  "Question placeholder five?",
-];
 
 export function FaqSection() {
   const [openIndices, setOpenIndices] = useState<Set<number>>(
@@ -34,8 +27,8 @@ export function FaqSection() {
             Frequently Asked Questions
           </h2>
           <p className="section-heading__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Approved
-            questions and answers will replace this temporary structure.
+            Common questions about our dump runs, appliance pickup, labour
+            rates, payment methods, and more.
           </p>
         </header>
 
@@ -43,13 +36,13 @@ export function FaqSection() {
           <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">question_mark</span>
 
           <div className="faq-list">
-            {placeholderFaqs.map((question, index) => {
+            {faqs.map((faq, index) => {
               const isOpen = openIndices.has(index);
               const answerId = `faq-answer-${index}`;
               const questionId = `faq-question-${index}`;
 
               return (
-                <div className="faq-item" key={question}>
+                <div className="faq-item" key={faq.question}>
                   <button
                     aria-controls={answerId}
                     aria-expanded={isOpen}
@@ -64,7 +57,7 @@ export function FaqSection() {
                     >
                       expand_more
                     </span>
-                    <span className="faq-item__question-text">{question}</span>
+                    <span className="faq-item__question-text">{faq.question}</span>
                     
                   </button>
                   <div
@@ -74,10 +67,9 @@ export function FaqSection() {
                     role="region"
                   >
                     <div className="faq-item__answer-content">
-                      <p className="faq-item__answer">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed vitae sapien vel justo feugiat ullamcorper.sto feugiat ullamc
-                      </p>
+                      {faq.answer.map((paragraph, pIndex) => (
+                        <p className="faq-item__answer" key={pIndex}>{paragraph}</p>
+                      ))}
                     </div>
                   </div>
                 </div>
