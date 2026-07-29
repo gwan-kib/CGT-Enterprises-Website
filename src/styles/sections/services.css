@@ -64,6 +64,7 @@
   .service-card__info {
     @apply flex flex-col items-center;
     margin-top: auto;
+    gap: var(--space-2);
   }
 
   .service-card__link {
@@ -85,6 +86,35 @@
   .service-card__link:focus-visible {
     background: var(--color-brand-green-400);
     color: var(--color-neutral-500);
+  }
+
+  .service-card__details {
+    @apply inline-flex items-center justify-center;
+    min-height: var(--space-10);
+    margin-top: var(--space-3);
+    padding-inline: var(--space-5);
+    border: var(--border-width-strong) solid var(--color-brand-green-600);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-brand-green-600);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.25;
+    gap: var(--space-2);
+    cursor: pointer;
+    transition:
+      background var(--transition-fast) var(--easing-standard),
+      color var(--transition-fast) var(--easing-standard);
+  }
+
+  .service-card__details:hover {
+    background: var(--color-brand-green-100);
+  }
+
+  .service-card__details:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-brand-green-600);
+    outline-offset: 2px;
   }
 }
 
