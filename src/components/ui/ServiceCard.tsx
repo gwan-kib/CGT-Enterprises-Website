@@ -10,7 +10,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
   const detailsButtonRef = useRef<HTMLButtonElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  const hasDetails = service.details && service.details.length > 0;
+  const hasDetails = service.showDetails && service.details && service.details.length > 0;
 
   const openDetails = useCallback(() => setExpanded(true), []);
   const closeDetails = useCallback(() => {
@@ -94,7 +94,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             ))}
           </div>
           <button
-            className="service-card__details-close"
+            className="service-card__details-close-bottom"
             onClick={closeDetails}
             type="button"
           >

@@ -5,6 +5,7 @@ export interface Service {
   id: string;
   name: string;
   price: string;
+  showDetails: boolean;
 }
 
 export const placeholderServices: Service[] = [
@@ -15,6 +16,7 @@ export const placeholderServices: Service[] = [
     description:
       "We collect and dispose of household waste and/or any unwanted items. Yard cleanouts and indoor item removal are also available for an additional fee.",
     price: "Starting at $60",
+    showDetails: true,
     details: [
       "Under 300 lb: $60 + City tipping fee",
       "300\u2013800 lb: $85 + City tipping fee",
@@ -28,6 +30,7 @@ export const placeholderServices: Service[] = [
     name: "Appliance Disposal",
     description: "We pick up residential appliances placed outside your home. Indoor appliance removal is available for an additional fee depending on stairs, doors, disconnection, and other requirements.",
     price: "Starting at $100",
+    showDetails: false,
     details: [
       "Appliance-disposal details and pricing breakdown go here once the client provides approved copy.",
     ],
@@ -38,6 +41,7 @@ export const placeholderServices: Service[] = [
     name: "Curbside Delivery",
     description: "We pick up your item(s) from the front door and deliver it to the front door of another location. Indoor moving is not included.",
     price: "Starting at $50",
+    showDetails: false,
     details: [
       "Curbside-delivery details and pricing breakdown go here once the client provides approved copy.",
     ],
@@ -48,6 +52,7 @@ export const placeholderServices: Service[] = [
     name: "Household Moving",
     description: "Moving to a new home? We can provide a truck, trailer, or even just a driver to help transport household furniture while you handle loading and unloading.",
     price: "Starting at $60",
+    showDetails: false,
     details: [
       "Household-moving details and pricing breakdown go here once the client provides approved copy.",
     ],
@@ -58,6 +63,7 @@ export const placeholderServices: Service[] = [
     name: "Beverage Recycling",
     description: "We pick up, sort, and count your beverage containers, then pay you 50% of the refundable deposit.",
     price: "50/50 Split",
+    showDetails: false,
     details: [
       "Beverage-recycling details and pricing breakdown go here once the client provides approved copy.",
     ],
