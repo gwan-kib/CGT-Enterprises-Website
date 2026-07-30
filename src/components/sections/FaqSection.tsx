@@ -1,18 +1,9 @@
 import { useState } from "react";
+import { faqs } from "../../data/faqs";
 import { SectionContainer } from "../layout/SectionContainer";
 
-const placeholderFaqs = [
-  "Question placeholder one?",
-  "Question placeholder two?",
-  "Question placeholder three?",
-  "Question placeholder four?",
-  "Question placeholder five?",
-];
-
 export function FaqSection() {
-  const [openIndices, setOpenIndices] = useState<Set<number>>(
-    () => new Set(),
-  );
+  const [openIndices, setOpenIndices] = useState<Set<number>>(() => new Set());
 
   function toggleIndex(index: number) {
     setOpenIndices((prev) => {
@@ -34,38 +25,34 @@ export function FaqSection() {
             Frequently Asked Questions
           </h2>
           <p className="section-heading__description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Approved
-            questions and answers will replace this temporary structure.
+            Common questions about our dump runs, appliance pickup, labour rates, payment methods, and more.
           </p>
         </header>
 
         <div className="faq-section__faq-wrapper">
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">question_mark</span>
-
           <div className="faq-list">
-            {placeholderFaqs.map((question, index) => {
+            {faqs.map((faq, index) => {
               const isOpen = openIndices.has(index);
               const answerId = `faq-answer-${index}`;
               const questionId = `faq-question-${index}`;
 
               return (
-                <div className="faq-item" key={question}>
+                <div className="faq-item" key={faq.question}>
                   <button
                     aria-controls={answerId}
                     aria-expanded={isOpen}
-                    className="faq-item__question"
+                    className={`faq-item__question ${isOpen ? "faq-item__question--open" : ""}`}
                     id={questionId}
                     onClick={() => toggleIndex(index)}
                     type="button"
                   >
+                    <span className="faq-item__question-text">{faq.question}</span>
                     <span
                       aria-hidden="true"
                       className={`faq-item__chevron material-symbols-rounded ${isOpen ? "faq-item__chevron--open" : ""}`}
                     >
                       expand_more
                     </span>
-                    <span className="faq-item__question-text">{question}</span>
-                    
                   </button>
                   <div
                     aria-labelledby={questionId}
@@ -74,18 +61,17 @@ export function FaqSection() {
                     role="region"
                   >
                     <div className="faq-item__answer-content">
-                      <p className="faq-item__answer">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Sed vitae sapien vel justo feugiat ullamcorper.sto feugiat ullamc
-                      </p>
+                      {faq.answer.map((paragraph, pIndex) => (
+                        <p className="faq-item__answer" key={pIndex}>
+                          {paragraph}
+                        </p>
+                      ))}
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">question_mark</span>
         </div>
       </div>
     </SectionContainer>
