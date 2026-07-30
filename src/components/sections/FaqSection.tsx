@@ -3,9 +3,7 @@ import { faqs } from "../../data/faqs";
 import { SectionContainer } from "../layout/SectionContainer";
 
 export function FaqSection() {
-  const [openIndices, setOpenIndices] = useState<Set<number>>(
-    () => new Set(),
-  );
+  const [openIndices, setOpenIndices] = useState<Set<number>>(() => new Set());
 
   function toggleIndex(index: number) {
     setOpenIndices((prev) => {
@@ -27,13 +25,14 @@ export function FaqSection() {
             Frequently Asked Questions
           </h2>
           <p className="section-heading__description">
-            Common questions about our dump runs, appliance pickup, labour
-            rates, payment methods, and more.
+            Common questions about our dump runs, appliance pickup, labour rates, payment methods, and more.
           </p>
         </header>
 
         <div className="faq-section__faq-wrapper">
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">question_mark</span>
+          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">
+            question_mark
+          </span>
 
           <div className="faq-list">
             {faqs.map((faq, index) => {
@@ -51,14 +50,13 @@ export function FaqSection() {
                     onClick={() => toggleIndex(index)}
                     type="button"
                   >
+                    <span className="faq-item__question-text">{faq.question}</span>
                     <span
                       aria-hidden="true"
                       className={`faq-item__chevron material-symbols-rounded ${isOpen ? "faq-item__chevron--open" : ""}`}
                     >
                       expand_more
                     </span>
-                    <span className="faq-item__question-text">{faq.question}</span>
-                    
                   </button>
                   <div
                     aria-labelledby={questionId}
@@ -68,7 +66,9 @@ export function FaqSection() {
                   >
                     <div className="faq-item__answer-content">
                       {faq.answer.map((paragraph, pIndex) => (
-                        <p className="faq-item__answer" key={pIndex}>{paragraph}</p>
+                        <p className="faq-item__answer" key={pIndex}>
+                          {paragraph}
+                        </p>
                       ))}
                     </div>
                   </div>
@@ -77,7 +77,9 @@ export function FaqSection() {
             })}
           </div>
 
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">question_mark</span>
+          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">
+            question_mark
+          </span>
         </div>
       </div>
     </SectionContainer>

@@ -65,9 +65,6 @@ export function ServiceCard({ service }: ServiceCardProps) {
               type="button"
             >
               Details
-              <span className="material-symbols-rounded" aria-hidden="true">
-                arrow_forward
-              </span>
             </button>
           )}
           <a className="service-card__link" href="#contact" onClick={handleBookClick}>
