@@ -30,10 +30,6 @@ export function FaqSection() {
         </header>
 
         <div className="faq-section__faq-wrapper">
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">
-            question_mark
-          </span>
-
           <div className="faq-list">
             {faqs.map((faq, index) => {
               const isOpen = openIndices.has(index);
@@ -45,7 +41,7 @@ export function FaqSection() {
                   <button
                     aria-controls={answerId}
                     aria-expanded={isOpen}
-                    className="faq-item__question"
+                    className={`faq-item__question ${isOpen ? "faq-item__question--open" : ""}`}
                     id={questionId}
                     onClick={() => toggleIndex(index)}
                     type="button"
@@ -76,10 +72,6 @@ export function FaqSection() {
               );
             })}
           </div>
-
-          <span aria-hidden="true" className="faq-section__list-question-mark material-symbols-rounded">
-            question_mark
-          </span>
         </div>
       </div>
     </SectionContainer>

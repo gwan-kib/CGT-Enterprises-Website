@@ -48,7 +48,7 @@ export const faqs: Faq[] = [
   {
     question: "What forms of payment do you take?",
     answer: [
-      "We accept Visa, Mastercard, American Express or most any credit card, in addition, we accept Email Funds Transfer (EFT). Payments are only accepted using our invoicing payment software and email address (cgt@cgtenterprises.ca). We do not take any money until the job is completed and invoiced.",
+      "Email Funds Transfer (EFT), Visa, Mastercard, American Express, most credit cards. Payments are only accepted using our invoicing payment software and email address (cgt@cgtenterprises.ca). We do not take any money until the job is completed and invoiced.",
     ],
   },
   {
