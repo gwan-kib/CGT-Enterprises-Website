@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { business } from "../../data/business";
 import { placeholderServices } from "../../data/services";
+import { showToast } from "../../utils/toast";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 import { FacebookIcon } from "../ui/FacebookIcon";
@@ -22,11 +23,22 @@ export function ContactSection() {
       window.removeEventListener("cgt:select-service", handleServiceSelect);
   }, []);
 
-  const handleCopy = useCallback(async (field: string, text: string) => {
-    await navigator.clipboard.writeText(text);
-    setCopiedField(field);
-    setTimeout(() => setCopiedField(null), 1500);
-  }, []);
+  const handleCopy = useCallback(
+    async (field: "email" | "phone", text: string) => {
+      try {
+        await navigator.clipboard.writeText(text);
+        setCopiedField(field);
+        showToast(
+          field === "phone" ? "Phone number copied." : "Email address copied.",
+          "success",
+        );
+        setTimeout(() => setCopiedField(null), 1500);
+      } catch {
+        showToast("Couldn't copy. Please copy it manually.", "error");
+      }
+    },
+    [],
+  );
 
   return (
     <SectionContainer className="contact-section" id="contact" labelledBy="contact-title" tone="brand">
