@@ -302,6 +302,34 @@ export function Header({ homePath }: { homePath?: string }) {
     }
   }, [activeHref]);
 
+  if (homePath) {
+    return (
+      <header className="site-header" ref={headerRef}>
+        <div className="site-header__shell">
+          <div aria-hidden="true" className="site-header__backdrop" />
+          <div className="site-header__top">
+            <div className="site-header__brand">
+              <a aria-label="CGT Enterprises home" className="site-brand" href={homePath}>
+                <img alt="" aria-hidden="true" className="site-brand__badge" src={logoBadge} />
+              </a>
+            </div>
+
+            <div className="site-header__nav">
+              <a className="site-nav__link site-nav__link--header" href={homePath}>
+                <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
+                  arrow_back
+                </span>
+                Go Back to Main Page
+              </a>
+            </div>
+
+            <div className="site-header__action" />
+          </div>
+        </div>
+      </header>
+    );
+  }
+
   return (
     <header
       className="site-header"

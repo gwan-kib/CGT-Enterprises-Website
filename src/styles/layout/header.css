@@ -188,6 +188,7 @@
     @apply flex shrink-0 items-center;
   }
 
+  .site-header__nav .site-nav__link--header,
   .site-header__action .site-nav__link--header {
     padding-inline: var(--space-4);
     border-radius: var(--radius-pill);
