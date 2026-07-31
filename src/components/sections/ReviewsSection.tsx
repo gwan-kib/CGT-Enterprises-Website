@@ -246,6 +246,9 @@ export function ReviewsSection() {
       </div>
 
       <div className="reviews-section__carousel-wrapper">
+        <span aria-hidden="true" className="reviews-section__circle reviews-section__circle--start" />
+        <span aria-hidden="true" className="reviews-section__circle reviews-section__circle--end" />
+
         <button
           aria-label="Previous review"
           className="reviews-section__arrow reviews-section__arrow--prev"

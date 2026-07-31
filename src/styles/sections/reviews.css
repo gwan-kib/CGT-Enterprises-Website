@@ -6,15 +6,21 @@
     --fade-color: var(--color-brand-green-200);
     --carousel-padding: var(--space-10);
     --fade-start-in-circle: -15%;
+    --circle-size: clamp(
+      22rem,
+      min(50vw, calc(100svh - var(--header-height))),
+      45rem
+    );
+    --edge-fade-depth: clamp(1.5rem, 9vw, 8.75rem);
   }
 
-  .reviews-section::before,
-  .reviews-section::after {
-    content: "";
+  .reviews-section__circle {
+    display: block;
+    pointer-events: none;
     position: absolute;
     top: 50%;
-    width: 45rem;
-    height: 45rem;
+    width: var(--circle-size);
+    height: var(--circle-size);
 
     border-radius: 50%;
 
@@ -23,12 +29,13 @@
     z-index: 0;
   }
 
-  .reviews-section::before {
+  .reviews-section__circle--start {
     left: 0%;
   }
 
-  .reviews-section::after {
-    left: 100%;
+  .reviews-section__circle--end {
+    right: 0%;
+    transform: translate(50%, -50%);
   }
 
   .reviews-section .page-section__inner {
@@ -42,6 +49,7 @@
 
   .reviews-section__carousel-wrapper {
     @apply relative;
+    isolation: isolate;
   }
 
   .reviews-section__carousel-wrapper::before,
@@ -53,7 +61,7 @@
     z-index: 5;
     pointer-events: none;
 
-    width: 20rem;
+    width: calc(15% + var(--edge-fade-depth));
   }
 
   .reviews-section__carousel-wrapper::before {
@@ -68,9 +76,11 @@
 
   .reviews-section__carousel {
     @apply flex overflow-x-auto;
+    position: relative;
+    z-index: 1;
     gap: var(--space-10);
     padding: var(--carousel-padding) 0;
-    padding-inline: calc(50% - 11rem);
+    padding-inline: max(0px, calc(50% - 11rem));
     scroll-snap-type: none;
     scrollbar-width: none;
     cursor: grab;
@@ -87,7 +97,7 @@
 
   .review-card {
     @apply relative flex shrink-0 flex-col;
-    width: 22rem;
+    width: min(22rem, 100%);
     min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border-radius: var(--radius-large);
