@@ -67,42 +67,41 @@
   --transition-standard: 250ms;
   --easing-standard: cubic-bezier(0.2, 0, 0, 1);
 
-  /* Brand green scale (500 supplied) */
- 
-
-  --color-brand-green-100: #dcf8e3;
-  --color-brand-green-200: #b9f0c7;
-  --color-brand-green-300: #8ae5a0;
-  --color-brand-green-400: #5bd678;
-  --color-brand-green-500: #3fce61;
-  --color-brand-green-600: #2eac4b;
-  --color-brand-green-700: #27883f;
-  --color-brand-green-800: #246c37;
-  --color-brand-green-900: #20592f;
-
-  /* Brand red scale (500 supplied) */
+  /* Brand red scale */
   --color-brand-red-100: #fce8e6;
   --color-brand-red-200: #f8c9c4;
   --color-brand-red-300: #f2a098;
   --color-brand-red-400: #df6559;
-  --color-brand-red-500: #be2b1f;
-  --color-brand-red-600: #a52319;
-  --color-brand-red-700: #892119;
-  --color-brand-red-800: #701f1a;
-  --color-brand-red-900: #5c1d1a;
+  --color-brand-red-500: #ab2430;
+  --color-brand-red-600: #8d1e28;
+  --color-brand-red-700: #70181f;
+  --color-brand-red-800: #58171c;
+  --color-brand-red-900: #451217;
 
-  /* Neutral scale (900 supplied) */
+  /* Brand green scale (secondary accent) */
+  --color-brand-green-100: #e8f5e9;
+  --color-brand-green-200: #c8e6c9;
+  --color-brand-green-300: #a5d6a7;
+  --color-brand-green-400: #81c784;
+  --color-brand-green-500: #66bb6a;
+  --color-brand-green-600: #4caf50;
+  --color-brand-green-700: #388e3c;
+  --color-brand-green-800: #2e7d32;
+  --color-brand-green-900: #1b5e20;
+
+  /* Neutral scale */
   --color-neutral-100: #eeeef0;
   --color-neutral-200: #dad9dd;
   --color-neutral-300: #b3b1b7;
   --color-neutral-400: #8c8a92;
+  --color-neutral-500: #6b6770;
   --color-neutral-600: #524f57;
   --color-neutral-700: #3f3d44;
   --color-neutral-800: #2b2a2f;
-  --color-neutral-900: #18171b;
+  --color-neutral-900: #18171c;
 
   /* Brand roles */
-  --color-brand-primary: var(--color-brand-green-500);
+  --color-brand-primary: var(--color-brand-red-500);
 
   /* Background and surface roles */
   --color-background-page: var(--color-neutral-100);
@@ -112,38 +111,22 @@
 
   /* Text roles */
   --color-text: var(--color-neutral-900);
-  --color-text-muted: var(--color-neutral-1000);
+  --color-text-muted: var(--color-neutral-500);
   --color-text-inverse: var(--color-neutral-100);
-  --color-text-on-brand-primary: var(--color-neutral-900);
-  --color-text-link: var(--color-brand-green-700);
-  --color-text-link-hover: var(--color-brand-green-800);
+  --color-text-on-brand-primary: var(--color-neutral-100);
+  --color-text-link: var(--color-brand-red-700);
+  --color-text-link-hover: var(--color-brand-red-800);
 
   /* Border and divider roles */
   --color-border: var(--color-neutral-200);
-  --color-border-strong: var(--color-neutral-1000);
+  --color-border-strong: var(--color-neutral-500);
   --color-divider: var(--color-neutral-200);
 
   /* Shared disabled-action roles */
   --color-action-background-disabled: var(--color-neutral-100);
-  --color-action-text-disabled: var(--color-neutral-1000);
-}
+  --color-action-text-disabled: var(--color-neutral-500);
 
-/*
- * Verified contrast pairings
- *
- * Normal text and interactive labels meet or exceed 4.5:1:
- * - default text / page or surface: 17.84:1
- * - muted text / page or surface: 5.97:1
- * - inverse text / emphasized surface: 17.84:1
- * - on-brand-primary text / primary brand: 8.68:1
- * - action text / default, hover, active backgrounds: 8.68:1, 6.99:1, 5.92:1
- * - link / page, and link hover / page: 5.24:1, 7.73:1
- *
- * Required visible boundaries meet or exceed 3:1:
- * - strong border / white surface: 5.97:1
- * - light-surface focus ring / white: 5.20:1
- * - dark-surface focus ring / emphasized surface: 8.68:1
- *
- * The standard border and divider are decorative only. Use the strong border
- * token whenever a visible control boundary is required.
- */
+  /* Status */
+  --color-status-success: #2eac4b;
+  --color-status-success-icon: #27883f;
+}

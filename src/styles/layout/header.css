@@ -15,17 +15,17 @@
   .site-header,
   .site-header__nav,
   .site-header__action {
-    --header-bar-background-color: var(--color-brand-green-500);
+    --header-bar-background-color: var(--color-brand-primary);
 
     --header-text-color: var(--color-neutral-500);
 
-    --header-highlight-color: var(--color-brand-green-900);
+    --header-highlight-color: var(--color-brand-red-800);
     --header-highlight-text-color: var(--header-text-color);
 
-    --header-action-color: var(--color-brand-green-600);
+    --header-action-color: var(--color-brand-red-600);
     --header-action-text-color: var(--header-text-color);
 
-    --header-action-hover-color: var(--color-brand-green-700);
+    --header-action-hover-color: var(--color-brand-red-700);
     --header-action-hover-text-color: var(--header-text-color);
   }
 
@@ -36,7 +36,7 @@
 
   .site-header__backdrop {
     @apply pointer-events-none absolute inset-0;
-    background: var(--header-bar-background-color, var(--color-brand-green-500));
+    background: var(--header-bar-background-color, var(--color-brand-primary));
   }
 
   .site-header__top {

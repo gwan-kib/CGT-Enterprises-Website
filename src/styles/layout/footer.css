@@ -1,8 +1,8 @@
 @layer components {
   .site-footer {
     padding: 0 var(--space-4);
-    border-top: var(--border-width) solid var(--color-neutral-1000);
-    background: #000;
+    border-top: var(--border-width) solid var(--color-neutral-500);
+    background: var(--color-surface-emphasis);
     color: var(--color-text-inverse);
   }
 
@@ -42,7 +42,7 @@
   }
 
   .site-footer__contact-link:hover {
-    color: var(--color-brand-green-500);
+    color: var(--color-brand-primary);
   }
 
   .site-footer__contact-icon {
@@ -108,7 +108,7 @@
   }
 
   .site-footer__legal-link:hover {
-    color: var(--color-brand-green-500);
+    color: var(--color-brand-primary);
   }
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
-import logoBadge from "../../assets/images/CGT Logo Badge (trimmed).png";
+import logoBadge from "../../assets/images/CGT Enterprises 2C (trimmed).png";
 import { navigationItems } from "../../data/navigation";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];

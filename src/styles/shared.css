@@ -62,7 +62,7 @@
   }
 
   .page-section--dark :where(a, button, input, textarea, summary):focus-visible {
-    outline-color: var(--color-brand-green-500);
+    outline-color: var(--color-brand-primary);
   }
 
   .section-heading {
@@ -124,16 +124,16 @@
   }
 
   .button--primary {
-    background: var(--color-brand-green-500);
-    color: var(--color-neutral-900);
+    background: var(--color-brand-primary);
+    color: var(--color-text-on-brand-primary);
   }
 
   .button--primary:not(:disabled):hover {
-    background: #36b957;
+    background: var(--color-brand-red-400);
   }
 
   .button--primary:not(:disabled):active {
-    background: var(--color-brand-green-600);
+    background: var(--color-brand-red-600);
   }
 
   .button--outline {
@@ -195,10 +195,10 @@
   }
 
   .page-section--dark .image-placeholder {
-    border-color: var(--color-neutral-1000);
+    border-color: var(--color-neutral-500);
     background:
-      linear-gradient(135deg, transparent 49.8%, var(--color-neutral-1000) 50%, transparent 50.2%),
-      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-1000) 50%, transparent 50.2%),
+      linear-gradient(135deg, transparent 49.8%, var(--color-neutral-500) 50%, transparent 50.2%),
+      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-500) 50%, transparent 50.2%),
       var(--color-neutral-900);
   }
 
@@ -214,7 +214,7 @@
   }
 
   .static-form--inverse {
-    border-color: var(--color-neutral-1000);
+    border-color: var(--color-neutral-500);
     background: var(--color-neutral-900);
     box-shadow: none;
     color: var(--color-text-inverse);
@@ -298,7 +298,7 @@
   }
 
   .toast--success {
-    border-color: var(--color-brand-green-600);
+    border-color: var(--color-status-success);
   }
 
   .toast--error {
@@ -315,7 +315,7 @@
   }
 
   .toast--success .toast__icon {
-    color: var(--color-brand-green-700);
+    color: var(--color-status-success-icon);
   }
 
   .toast--error .toast__icon {

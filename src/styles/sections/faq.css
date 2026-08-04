@@ -32,7 +32,7 @@
     border: none;
     width: 100%;
     background: none;
-    color: var(--color-brand-green-900);
+    color: var(--color-brand-green-600);
     cursor: pointer;
     font-family: inherit;
     font-size: var(--font-size-heading-card);
@@ -52,7 +52,7 @@
     left: 50%;
     width: 70%;
     height: .1rem;
-    background: var(--color-brand-green-900);
+    background: var(--color-brand-green-600);
     transform: translateX(-50%);
     opacity: 0;
     transition: opacity .2s var(--easing-standard);

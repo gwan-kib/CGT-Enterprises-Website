@@ -33,7 +33,7 @@
 
   .service-card__icon {
     margin-bottom: var(--space-4);
-    color: var(--color-brand-green-600, #2e7d32);
+    color: var(--color-brand-green-500, #66bb6a);
     font-size: 3rem;
     line-height: 1;
   }
@@ -45,7 +45,7 @@
   .service-card__price {
     margin-top: var(--space-1);
     margin-bottom: var(--space-2);
-    color: var(--color-brand-red-400);
+    color: var(--color-brand-green-400);
     font-size: 1.2rem;
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-small);

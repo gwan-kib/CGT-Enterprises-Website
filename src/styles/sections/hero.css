@@ -17,7 +17,7 @@
 
   .hero-section__eyebrow {
     margin: 0 0 var(--space-2);
-    color: var(--color-brand-green-500);
+    color: var(--color-brand-primary);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-label);
@@ -36,7 +36,7 @@
   }
 
   .hero-section__title-accent {
-    color: var(--color-brand-red-400);
+    color: var(--color-brand-green-400);
   }
 
   .hero-section__summary {
