@@ -35,7 +35,8 @@
   }
 
   .site-header__backdrop {
-    @apply pointer-events-none absolute inset-0;
+    @apply pointer-events-none absolute inset-x-0 top-0;
+    height: var(--header-height);
     background: var(--header-bar-background-color, var(--color-brand-red-500));
   }
 
@@ -55,6 +56,8 @@
   .site-header__brand,
   .site-header__nav,
   .site-header__action {
+    @apply flex items-center;
+    height: 100%;
     min-width: 0;
   }
 
@@ -68,7 +71,7 @@
   }
 
   .site-header__action {
-    justify-self: end;
+    justify-self: center;
   }
 
   .site-brand {
@@ -82,9 +85,12 @@
   .site-brand__badge {
     display: block;
     flex-shrink: 0;
-    width: 4.5rem;
-    height: auto;
+    width: auto;
+    height: 4rem;
+    padding: 0.4rem;
     object-fit: contain;
+    background: var(--color-neutral-900);
+    border-radius: 999px;
   }
 
   .site-nav {
@@ -185,7 +191,7 @@
   }
 
   .site-header__action {
-    @apply flex shrink-0 items-center;
+    @apply shrink-0;
   }
 
   .site-header__nav .site-nav__link--header,
