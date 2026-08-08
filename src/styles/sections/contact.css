@@ -42,7 +42,7 @@
     padding-top: 0;
     padding-bottom: var(--space-4);
     text-align: center;
-    letter-spacing: var(--letter-spacing-label);
+    letter-spacing: 0.01em;
   }
 
   .contact-hours__row {
@@ -66,7 +66,7 @@
     @apply flex flex-1 items-center no-underline;
     gap: var(--space-4);
     padding: var(--space-1) var(--space-4);
-    border-radius: var(--radius-large);
+    border-radius: 1.5rem;
     background: var(--color-brand-green-100);
     color: inherit;
     transition: all var(--transition-fast) var(--easing-standard);
@@ -95,14 +95,14 @@
   }
 
   .contact-card__label {
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-label);
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.4;
     text-transform: uppercase;
   }
 
   .contact-card__value {
-    font-weight: var(--font-weight-semibold);
+    font-weight: 600;
     overflow-wrap: break-word;
   }
 
@@ -126,7 +126,7 @@
     height: 2.5rem;
     border: none;
     background: none;
-    color: var(--color-text-muted);
+    color: var(--color-neutral-500);
     cursor: pointer;
     transition: all var(--transition-fast) var(--easing-standard);
   }
@@ -146,7 +146,7 @@
   }
 
   .contact-section .static-form {
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
   }
 
   .contact-form > .button {
@@ -162,12 +162,12 @@
 
   .contact-form__service-select {
     width: 100%;
-    min-height: var(--control-height);
+    min-height: 4rem;
     padding: var(--space-3) var(--space-4);
-    border: var(--border-width-strong) solid var(--color-border-strong);
+    border: 2px solid var(--color-neutral-500);
     border-radius: 0.5rem;
     background: var(--color-neutral-200);
-    color: var(--color-text);
+    color: var(--color-neutral-900);
     cursor: pointer;
     font-family: inherit;
     font-size: 1rem;
@@ -180,7 +180,7 @@
   }
 
   .contact-form__service-select:invalid {
-    color: var(--color-text-muted);
+    color: var(--color-neutral-500);
   }
 }
 

@@ -17,18 +17,18 @@
 
   .hero-section__eyebrow {
     margin: 0 0 var(--space-2);
-    color: var(--color-brand-primary);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
+    color: var(--color-brand-red-500);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
     text-transform: uppercase;
   }
 
   .hero-section__title {
     margin: 0;
     font-size: 4rem;
-    font-weight: var(--font-weight-extrabold);
+    font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.045em;
     text-wrap: balance;

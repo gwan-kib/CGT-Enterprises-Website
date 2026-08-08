@@ -100,9 +100,9 @@
     width: min(22rem, 100%);
     min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
-    border-radius: var(--radius-large);
+    border-radius: 1.5rem;
     border: solid .2rem var(--color-brand-green-200);
-    background: var(--color-surface-subtle);
+    background: var(--color-neutral-100);
     box-shadow: 0 0 0 var(--color-brand-green-500);
     scroll-snap-align: center;
     transition:
@@ -123,9 +123,9 @@
   .review-card__date {
     display: block;
     margin-bottom: var(--space-1);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    color: var(--color-neutral-500);
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .review-card__stars {
@@ -154,10 +154,10 @@
     display: block;
     margin-top: auto;
     padding-top: var(--space-6);
-    border-top: var(--border-width) solid var(--color-divider);
-    color: var(--color-text-muted);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    border-top: 1px solid var(--color-neutral-200);
+    color: var(--color-neutral-500);
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .reviews-section__arrow {
@@ -165,10 +165,10 @@
     top: 50%;
     width: 3rem;
     height: 3rem;
-    border: var(--border-width) solid var(--color-border);
+    border: 1px solid var(--color-neutral-200);
     border-radius: 50%;
-    background: var(--color-surface);
-    color: var(--color-text);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
     cursor: pointer;
     transform: translateY(-50%);
     transition:
@@ -184,7 +184,7 @@
 
   .reviews-section__arrow:hover,
   .reviews-section__arrow:focus-visible {
-    border-color: var(--color-border-strong);
+    border-color: var(--color-neutral-500);
     background: var(--color-neutral-100);
     box-shadow: 0 0.25rem 0.75rem rgb(24 23 27 / 10%);
   }
@@ -195,8 +195,8 @@
   }
 
   .reviews-section__arrow:disabled:hover {
-    border-color: var(--color-border);
-    background: var(--color-surface);
+    border-color: var(--color-neutral-200);
+    background: var(--color-neutral-100);
     box-shadow: none;
   }
 

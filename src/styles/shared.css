@@ -8,8 +8,8 @@
     min-width: 20rem;
     margin: 0;
     overflow-x: hidden;
-    background: var(--color-background-page);
-    color: var(--color-text);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
     font-family: "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     font-size: 1rem;
     font-weight: 400;
@@ -24,13 +24,13 @@
   }
 
   :where(a, button, input, textarea, summary):focus-visible {
-    outline: var(--border-width-strong) solid var(--color-brand-red-500);
+    outline: 2px solid var(--color-brand-red-500);
     outline-offset: 0.25rem;
   }
 
   ::selection {
-    background: var(--color-brand-primary);
-    color: var(--color-text-on-brand-primary);
+    background: var(--color-brand-red-500);
+    color: var(--color-neutral-100);
   }
 }
 
@@ -39,7 +39,7 @@
     @apply flex items-center;
     min-height: calc(100svh - var(--header-height));
     padding-block: clamp(1rem, 9vw, 3rem);
-    background: var(--color-background-page);
+    background: var(--color-neutral-100);
   }
 
   .page-section__inner {
@@ -52,17 +52,17 @@
   }
 
   .page-section--dark {
-    background: var(--color-surface-emphasis);
-    color: var(--color-text-inverse);
+    background: var(--color-neutral-900);
+    color: var(--color-neutral-100);
   }
 
   .page-section--brand {
-    background: var(--color-brand-primary);
-    color: var(--color-text-on-brand-primary);
+    background: var(--color-brand-red-500);
+    color: var(--color-neutral-100);
   }
 
   .page-section--dark :where(a, button, input, textarea, summary):focus-visible {
-    outline-color: var(--color-brand-primary);
+    outline-color: var(--color-brand-red-500);
   }
 
   .section-heading {
@@ -78,7 +78,7 @@
   .section-heading__title {
     margin: 0;
     font-size: clamp(2rem, 1.65rem + 1.4vw, 3rem);
-    font-weight: var(--font-weight-bold);
+    font-weight: 700;
     line-height: 1.15;
     letter-spacing: -0.025em;
     text-wrap: balance;
@@ -87,7 +87,7 @@
   .section-heading__description {
     max-width: 39rem;
     margin: var(--space-6) 0 0;
-    color: var(--color-text-muted);
+    color: var(--color-neutral-500);
   }
 
   .section-heading--center .section-heading__description {
@@ -104,13 +104,13 @@
 
   .button {
     @apply inline-flex items-center justify-center text-center no-underline;
-    min-height: var(--control-height);
+    min-height: 4rem;
     padding: var(--space-3) var(--space-6);
-    border: var(--border-width-strong) solid transparent;
-    border-radius: var(--radius-pill);
-    font-size: var(--font-size-button);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-button);
+    border: 2px solid transparent;
+    border-radius: 999px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    line-height: 1.2;
     letter-spacing: 0.01em;
     transition:
       background-color var(--transition-fast) var(--easing-standard),
@@ -124,8 +124,8 @@
   }
 
   .button--primary {
-    background: var(--color-brand-primary);
-    color: var(--color-text-on-brand-primary);
+    background: var(--color-brand-red-500);
+    color: var(--color-neutral-100);
   }
 
   .button--primary:not(:disabled):hover {
@@ -139,16 +139,16 @@
   .button--outline {
     border-color: currentColor;
     background: transparent;
-    color: var(--color-text);
+    color: var(--color-neutral-900);
   }
 
   .button--outline:not(:disabled):hover {
-    background: var(--color-surface-emphasis);
-    color: var(--color-text-inverse);
+    background: var(--color-neutral-900);
+    color: var(--color-neutral-100);
   }
 
   .page-section--dark .button--outline {
-    color: var(--color-text-inverse);
+    color: var(--color-neutral-100);
   }
 
   .page-section--dark .button--outline:not(:disabled):hover {
@@ -159,17 +159,17 @@
   .button:disabled {
     cursor: not-allowed;
     border-color: var(--color-neutral-200);
-    background: var(--color-action-background-disabled);
-    color: var(--color-action-text-disabled);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-500);
   }
 
   .image-placeholder {
     @apply relative grid w-full place-items-center overflow-hidden;
-    border: var(--border-width-strong) dashed var(--color-border-strong);
-    border-radius: var(--radius-large);
+    border: 2px dashed var(--color-neutral-500);
+    border-radius: 1.5rem;
     background:
-      linear-gradient(135deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%),
-      linear-gradient(45deg, transparent 49.8%, var(--color-border) 50%, transparent 50.2%), var(--color-surface-subtle);
+      linear-gradient(135deg, transparent 49.8%, var(--color-neutral-200) 50%, transparent 50.2%),
+      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-200) 50%, transparent 50.2%), var(--color-neutral-100);
   }
 
   .image-placeholder--landscape {
@@ -186,12 +186,12 @@
 
   .image-placeholder__label {
     padding: var(--space-2) var(--space-4);
-    border: var(--border-width) solid var(--color-border-strong);
-    border-radius: var(--radius-pill);
-    background: var(--color-surface);
-    color: var(--color-text);
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-semibold);
+    border: 1px solid var(--color-neutral-500);
+    border-radius: 999px;
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+    font-size: 0.875rem;
+    font-weight: 600;
   }
 
   .page-section--dark .image-placeholder {
@@ -206,18 +206,18 @@
     @apply flex flex-col;
     gap: var(--space-6);
     padding: clamp(var(--space-6), 4vw, var(--space-10));
-    border: var(--border-width) solid var(--color-border-strong);
-    border-radius: var(--radius-large);
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
-    color: var(--color-text);
+    border: 1px solid var(--color-neutral-500);
+    border-radius: 1.5rem;
+    background: var(--color-neutral-100);
+    box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
+    color: var(--color-neutral-900);
   }
 
   .static-form--inverse {
     border-color: var(--color-neutral-500);
     background: var(--color-neutral-900);
     box-shadow: none;
-    color: var(--color-text-inverse);
+    color: var(--color-neutral-100);
   }
 
   .static-form__row {
@@ -231,20 +231,20 @@
   }
 
   .static-field__label {
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.01em;
   }
 
   .static-field__control {
     width: 100%;
-    min-height: var(--control-height);
+    min-height: 4rem;
     padding: var(--space-3) var(--space-4);
-    border: var(--border-width-strong) solid var(--color-border-strong);
+    border: 2px solid var(--color-neutral-500);
     border-radius: 0.5rem;
     background: var(--color-neutral-200);
-    color: var(--color-text);
+    color: var(--color-neutral-900);
   }
 
   .static-field__control--textarea {
@@ -253,15 +253,15 @@
   }
 
   .static-field__control::placeholder {
-    color: var(--color-text-muted);
+    color: var(--color-neutral-500);
     opacity: 1;
   }
 
   .static-form__status {
     margin: calc(var(--space-2) * -1) 0 0;
-    color: var(--color-text-muted);
-    font-size: var(--font-size-small);
-    line-height: var(--line-height-small);
+    color: var(--color-neutral-500);
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .static-form--inverse .static-form__status {
@@ -284,11 +284,11 @@
     justify-content: center;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
-    border: var(--border-width-strong) solid var(--color-border-strong);
+    border: 2px solid var(--color-neutral-500);
     border-radius: 999px;
-    background: var(--color-surface);
-    box-shadow: var(--shadow-card);
-    color: var(--color-text);
+    background: var(--color-neutral-100);
+    box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
+    color: var(--color-neutral-900);
     text-align: center;
     animation: toast-drop-in var(--transition-standard) var(--easing-standard);
   }
@@ -306,7 +306,7 @@
   }
 
   .toast--info {
-    border-color: var(--color-border-strong);
+    border-color: var(--color-neutral-500);
   }
 
   .toast__icon {
@@ -323,9 +323,9 @@
   }
 
   .toast__message {
-    font-size: var(--font-size-small);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-small);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.55;
   }
 }
 

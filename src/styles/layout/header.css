@@ -15,9 +15,9 @@
   .site-header,
   .site-header__nav,
   .site-header__action {
-    --header-bar-background-color: var(--color-brand-primary);
+    --header-bar-background-color: var(--color-brand-red-500);
 
-    --header-text-color: var(--color-neutral-500);
+    --header-text-color: var(--color-neutral-100);
 
     --header-highlight-color: var(--color-brand-red-800);
     --header-highlight-text-color: var(--header-text-color);
@@ -36,7 +36,7 @@
 
   .site-header__backdrop {
     @apply pointer-events-none absolute inset-0;
-    background: var(--header-bar-background-color, var(--color-brand-primary));
+    background: var(--header-bar-background-color, var(--color-brand-red-500));
   }
 
   .site-header__top {
@@ -73,7 +73,7 @@
 
   .site-brand {
     @apply inline-flex shrink-0 items-center no-underline;
-    min-height: var(--touch-target-minimum);
+    min-height: 3rem;
     gap: var(--space-3);
     color: var(--header-text-color);
     transition: color var(--transition-fast) var(--easing-standard);
@@ -134,7 +134,7 @@
     content: "";
     position: absolute;
     inset: 0 0.1rem;
-    border-radius: var(--radius-pill);
+    border-radius: 999px;
     background: color-mix(in srgb, var(--header-highlight-color) 50%, transparent);
     transition: background-color var(--transition-fast) var(--easing-standard);
   }
@@ -167,7 +167,7 @@
 
   .site-nav__link {
     @apply relative isolate inline-flex items-center justify-center no-underline;
-    min-height: var(--touch-target-minimum);
+    min-height: 3rem;
     padding-inline: var(--space-3);
     color: var(--header-text-color);
     font-size: 1rem;
@@ -191,7 +191,7 @@
   .site-header__nav .site-nav__link--header,
   .site-header__action .site-nav__link--header {
     padding-inline: var(--space-4);
-    border-radius: var(--radius-pill);
+    border-radius: 999px;
     background: var(--header-action-color);
     color: var(--header-action-text-color);
     font-weight: 700;

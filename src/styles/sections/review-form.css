@@ -66,12 +66,12 @@
 
   .review-form__service-select {
     width: 100%;
-    min-height: var(--control-height);
+    min-height: 4rem;
     padding: var(--space-3) var(--space-4);
-    border: var(--border-width-strong) solid var(--color-border-strong);
+    border: 2px solid var(--color-neutral-500);
     border-radius: 0.5rem;
     background: var(--color-neutral-200);
-    color: var(--color-text);
+    color: var(--color-neutral-900);
     cursor: pointer;
     font-family: inherit;
     font-size: 1rem;
@@ -84,7 +84,7 @@
   }
 
   .review-form__service-select:invalid {
-    color: var(--color-text-muted);
+    color: var(--color-neutral-500);
   }
 
   /* ---------- Star illustration ---------- */
