@@ -33,7 +33,7 @@
 
   .service-card__icon {
     margin-bottom: var(--space-4);
-    color: var(--color-brand-green-500, #66bb6a);
+    color: var(--color-brand-red-500, #ab2430);
     font-size: 3rem;
     line-height: 1;
   }
@@ -45,7 +45,7 @@
   .service-card__price {
     margin-top: var(--space-1);
     margin-bottom: var(--space-2);
-    color: var(--color-brand-green-400);
+    color: var(--color-brand-red-400);
     font-size: 1.2rem;
     font-weight: 700;
     line-height: 1.55;
@@ -77,7 +77,7 @@
     margin: var(--space-1);
     padding-inline: var(--space-4);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--color-brand-green-500) 30%, transparent);
+    background: color-mix(in srgb, var(--color-brand-red-500) 30%, transparent);
     color: var(--color-neutral-900);
     font-size: 1rem;
     font-weight: 700;
@@ -88,7 +88,7 @@
 
   .service-card__link:hover,
   .service-card__link:focus-visible {
-    background: var(--color-brand-green-400);
+    background: var(--color-brand-red-400);
     color: var(--color-neutral-500);
   }
 
@@ -96,10 +96,10 @@
     @apply inline-flex items-center justify-center;
     min-height: var(--space-10);
     padding-inline: var(--space-5);
-    border: 2px solid var(--color-brand-green-600);
+    border: 2px solid var(--color-brand-red-600);
     border-radius: 999px;
     background: transparent;
-    color: var(--color-brand-green-600);
+    color: var(--color-brand-red-600);
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -112,11 +112,11 @@
   }
 
   .service-card__details:hover {
-    background: var(--color-brand-green-200);
+    background: var(--color-brand-red-200);
   }
 
   .service-card__details:focus-visible {
-    outline: 2px solid var(--color-brand-green-600);
+    outline: 2px solid var(--color-brand-red-600);
     outline-offset: 2px;
   }
 
@@ -145,10 +145,10 @@
     width: 3rem;
     height: 3rem;
     padding-inline: var(--space-5);
-    border: 2px solid var(--color-brand-green-600);
+    border: 2px solid var(--color-brand-red-600);
     border-radius: 999px;
     background: transparent;
-    color: var(--color-brand-green-600);
+    color: var(--color-brand-red-600);
     font-family: inherit;
     font-size: 1rem;
     font-weight: 600;
@@ -161,11 +161,11 @@
   }
 
   .service-card__details-close-bottom:hover {
-    background: var(--color-brand-green-200);
+    background: var(--color-brand-red-200);
   }
 
   .service-card__details-close-bottom:focus-visible {
-    outline: 2px solid var(--color-brand-green-600);
+    outline: 2px solid var(--color-brand-red-600);
     outline-offset: 2px;
   }
 

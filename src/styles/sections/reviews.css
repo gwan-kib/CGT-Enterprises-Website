@@ -3,7 +3,7 @@
     position: relative;
     overflow: hidden;
 
-    --fade-color: var(--color-brand-green-200);
+    --fade-color: var(--color-brand-red-200);
     --carousel-padding: var(--space-10);
     --fade-start-in-circle: -15%;
     --circle-size: clamp(
@@ -101,9 +101,9 @@
     min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border-radius: 1.5rem;
-    border: solid .2rem var(--color-brand-green-200);
+    border: solid .2rem var(--color-brand-red-200);
     background: var(--color-neutral-100);
-    box-shadow: 0 0 0 var(--color-brand-green-500);
+    box-shadow: 0 0 0 var(--color-brand-red-500);
     scroll-snap-align: center;
     transition:
       all var(--transition-standard) var(--easing-standard);
@@ -111,7 +111,7 @@
 
   @media (hover: hover) and (pointer: fine) {
     .review-card:hover {
-      box-shadow: 0 0 2rem var(--color-brand-green-200);
+      box-shadow: 0 0 2rem var(--color-brand-red-200);
       transform: translateY(calc(var(--space-2) * -1));
     }
   }

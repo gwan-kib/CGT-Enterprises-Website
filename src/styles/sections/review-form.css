@@ -55,7 +55,7 @@
   }
 
   .review-form__rating-star--active {
-    color: var(--color-brand-green-500);
+    color: var(--color-brand-red-500);
   }
 
   .review-form__rating-star--active .material-symbols-rounded {
@@ -93,7 +93,7 @@
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 10;
-    color: var(--color-brand-green-500);
+    color: var(--color-brand-red-500);
 
     --center-size: 15rem;
 
