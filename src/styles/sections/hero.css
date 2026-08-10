@@ -17,7 +17,7 @@
 
   .hero-section__eyebrow {
     margin: 0 0 var(--space-2);
-    color: var(--color-brand-red-500);
+    color: var(--color-brand-red-400);
     font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.4;

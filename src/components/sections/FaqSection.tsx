@@ -29,49 +29,53 @@ export function FaqSection() {
           </p>
         </header>
 
-        <div className="faq-section__faq-wrapper">
-          <div className="faq-list">
-            {faqs.map((faq, index) => {
-              const isOpen = openIndices.has(index);
-              const answerId = `faq-answer-${index}`;
-              const questionId = `faq-question-${index}`;
+        <div className="faq-wrapper">
+          {faqs.map((faq, index) => {
+            const isOpen = openIndices.has(index);
+            const answerId = `faq-answer-${index}`;
+            const questionId = `faq-question-${index}`;
 
-              return (
-                <div className="faq-item" key={faq.question}>
-                  <button
-                    aria-controls={answerId}
-                    aria-expanded={isOpen}
-                    className={`faq-item__question ${isOpen ? "faq-item__question--open" : ""}`}
-                    id={questionId}
-                    onClick={() => toggleIndex(index)}
-                    type="button"
-                  >
-                    <span className="faq-item__question-text">{faq.question}</span>
-                    <span
-                      aria-hidden="true"
-                      className={`faq-item__chevron material-symbols-rounded ${isOpen ? "faq-item__chevron--open" : ""}`}
-                    >
-                      expand_more
+            return (
+              <div
+                aria-controls={answerId}
+                aria-expanded={isOpen}
+                className="faq-item"
+                key={faq.question}
+                onClick={() => toggleIndex(index)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    toggleIndex(index);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                <div className="faq-item__question">
+                  <span className="faq-item__question-text" id={questionId}>{faq.question}</span>
+                  <span className="faq-item__circle">
+                    <span aria-hidden="true" className="faq-item__circle-icon material-symbols-rounded">
+                      add
                     </span>
-                  </button>
-                  <div
-                    aria-labelledby={questionId}
-                    className={`faq-item__answer-wrapper ${isOpen ? "faq-item__answer-wrapper--open" : ""}`}
-                    id={answerId}
-                    role="region"
-                  >
-                    <div className="faq-item__answer-content">
-                      {faq.answer.map((paragraph, pIndex) => (
-                        <p className="faq-item__answer" key={pIndex}>
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
+                  </span>
+                </div>
+                <div
+                  aria-labelledby={questionId}
+                  className={`faq-item__answer-wrapper ${isOpen ? "faq-item__answer-wrapper--open" : ""}`}
+                  id={answerId}
+                  role="region"
+                >
+                  <div className="faq-item__answer-content">
+                    {faq.answer.map((paragraph, pIndex) => (
+                      <p className="faq-item__answer" key={pIndex}>
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </SectionContainer>
