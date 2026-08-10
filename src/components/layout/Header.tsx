@@ -205,6 +205,15 @@ export function Header({ homePath }: { homePath?: string }) {
         }
       }
 
+      if (nextActiveHref === null && sections.length > 0) {
+        const isNearPageBottom =
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+        if (isNearPageBottom) {
+          nextActiveHref = sections[sections.length - 1].href;
+        }
+      }
+
       setActiveHref((currentHref) => (currentHref === nextActiveHref ? currentHref : nextActiveHref));
     };
 
@@ -337,7 +346,7 @@ export function Header({ homePath }: { homePath?: string }) {
                     <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
                       arrow_back
                     </span>
-                    Go Back to Main Page
+                    Main Page
                   </a>
                 </li>
               </ul>
