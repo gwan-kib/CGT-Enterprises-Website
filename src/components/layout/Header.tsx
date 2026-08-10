@@ -1,7 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
-import logoBadge from "../../assets/images/CGT Dump Runs text REV.png";
 import { navigationItems } from "../../data/navigation";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
@@ -26,30 +25,46 @@ function NavigationLinks({
   onHoverChange,
 }: NavigationLinksProps) {
   return (
-    <ul className="site-nav__list">
-      {navigationItems.map((item) => {
+    <>
+      {navigationItems.map((item, index) => {
         const linkHref = homePath ? homePath + item.href : item.href;
         const isActive = activeHref === item.href;
         const isHighlighted = highlightedHref === item.href;
+        const isTopButton = item.href === "#home";
+        const isTopButtonVisible = isTopButton && !isHeroSectionActive;
+
+        const link = (
+          <a
+            aria-current={isActive ? "location" : undefined}
+            className={`site-nav__link${!isTopButton && isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
+            href={linkHref}
+            onMouseEnter={() => onHoverChange(item.href)}
+            onMouseLeave={() => onHoverChange(null)}
+            tabIndex={isTopButton && !isTopButtonVisible ? -1 : undefined}
+          >
+            <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
+              {item.icon}
+            </span>
+            {item.label}
+          </a>
+        );
 
         return (
-          <li key={item.href}>
-            <a
-              aria-current={isActive ? "location" : undefined}
-              className={`site-nav__link${isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
-              href={linkHref}
-              onMouseEnter={() => onHoverChange(item.href)}
-              onMouseLeave={() => onHoverChange(null)}
-            >
-              <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
-                {item.icon}
-              </span>
-              {item.label}
-            </a>
+          <li
+            aria-hidden={isTopButton && !isTopButtonVisible ? true : undefined}
+            key={item.href}
+            className={
+              isTopButton
+                ? `site-nav__item--top${isTopButtonVisible ? " site-nav__item--top-visible" : ""}`
+                : "site-nav__link--enter"
+            }
+            style={{ "--nav-enter-delay": `${isTopButton ? 0 : index * 60}ms` } as React.CSSProperties}
+          >
+            {isTopButton ? <span className="site-nav__top-link-clip">{link}</span> : link}
           </li>
         );
       })}
-    </ul>
+    </>
   );
 }
 
@@ -106,7 +121,8 @@ export function Header({ homePath }: { homePath?: string }) {
   const [activeHref, setActiveHref] = useState<NavigationHref | null>(() => getNavigationHref(window.location.hash));
   const [hoveredHref, setHoveredHref] = useState<NavigationHref | null>(null);
   const [isHeroSectionActive, setIsHeroSectionActive] = useState(() => window.scrollY <= 0);
-  const highlightedHref = hoveredHref ?? activeHref;
+  const hoverPreviewHref = hoveredHref === "#home" && isHeroSectionActive ? null : hoveredHref;
+  const highlightedHref = hoverPreviewHref ?? (activeHref === "#home" ? null : activeHref);
 
   const handleSectionNavigation = (href: NavigationHref | null) => {
     isNavigationScrollingRef.current = true;
@@ -314,22 +330,18 @@ export function Header({ homePath }: { homePath?: string }) {
         <div className="site-header__shell">
           <div aria-hidden="true" className="site-header__backdrop" />
           <div className="site-header__top">
-            <div className="site-header__brand">
-              <a aria-label="CGT Enterprises home" className="site-brand" href={homePath}>
-                <img alt="" aria-hidden="true" className="site-brand__badge" src={logoBadge} />
-              </a>
-            </div>
-
-            <div className="site-header__nav">
-              <a className="site-nav__link site-nav__link--header" href={homePath}>
-                <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
-                  arrow_back
-                </span>
-                Go Back to Main Page
-              </a>
-            </div>
-
-            <div className="site-header__action" />
+            <nav className="site-nav" aria-label="Primary">
+              <ul className="site-nav__list">
+                <li>
+                  <a className="site-nav__link site-nav__link--header" href={homePath}>
+                    <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
+                      arrow_back
+                    </span>
+                    Go Back to Main Page
+                  </a>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </header>
@@ -344,14 +356,7 @@ export function Header({ homePath }: { homePath?: string }) {
     >
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
-        <div className="site-header__top">
-          <div className="site-header__brand">
-            <a aria-label="CGT Enterprises home" className="site-brand" href="#home">
-              <img alt="" aria-hidden="true" className="site-brand__badge" src={logoBadge} />
-            </a>
-          </div>
-
-          <div className="site-header__nav">
+          <div className="site-header__top">
             <nav className="site-nav" aria-label="Primary" ref={navRef}>
               <div className="site-nav__track" ref={navTrackRef}>
                 <span
@@ -359,30 +364,22 @@ export function Header({ homePath }: { homePath?: string }) {
                   className={
                     "site-nav__indicator" +
                     (highlightedHref ? " site-nav__indicator--visible" : "") +
-                    (hoveredHref ? " site-nav__indicator--preview" : "")
+                    (hoverPreviewHref ? " site-nav__indicator--preview" : "")
                   }
                   ref={navIndicatorRef}
                 />
-                <NavigationLinks
-                  activeHref={activeHref}
-                  highlightedHref={highlightedHref}
-                  isHeroSectionActive={isHeroSectionActive}
-                  homePath={homePath}
-                  onHoverChange={setHoveredHref}
-                />
+                <ul className="site-nav__list">
+                  <NavigationLinks
+                    activeHref={activeHref}
+                    highlightedHref={highlightedHref}
+                    isHeroSectionActive={isHeroSectionActive}
+                    homePath={homePath}
+                    onHoverChange={setHoveredHref}
+                  />
+                </ul>
               </div>
             </nav>
           </div>
-
-          <div className="site-header__action">
-            <a className="site-nav__link site-nav__link--header" href={homePath ? homePath + "#contact" : "#contact"}>
-              <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
-                call
-              </span>
-              Contact
-            </a>
-          </div>
-        </div>
       </div>
     </header>
   );

@@ -5,8 +5,10 @@ export interface NavigationItem {
 }
 
 export const navigationItems: NavigationItem[] = [
+  { href: "#home", icon: "arrow_upward", label: "Top" },
   { href: "#services", icon: "home_repair_service", label: "Services" },
   { href: "#reviews", icon: "star_shine", label: "Reviews" },
   { href: "#leave-review", icon: "rate_review", label: "Leave a review" },
   { href: "#faq", icon: "quiz", label: "FAQ" },
+  { href: "#contact", icon: "call", label: "Contact" },
 ];
