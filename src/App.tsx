@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { ContactSection } from './components/sections/ContactSection'
@@ -9,6 +10,19 @@ import { ServicesSection } from './components/sections/ServicesSection'
 import { ToastRegion } from './components/ui/ToastRegion'
 
 function App() {
+  useEffect(() => {
+    const hash = window.location.hash
+
+    if (!hash) {
+      return
+    }
+
+    const target = document.getElementById(hash.slice(1))
+
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [])
   return (
     <>
       <Header />

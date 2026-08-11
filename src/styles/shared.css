@@ -169,7 +169,8 @@
     border-radius: 1.5rem;
     background:
       linear-gradient(135deg, transparent 49.8%, var(--color-neutral-200) 50%, transparent 50.2%),
-      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-200) 50%, transparent 50.2%), var(--color-neutral-100);
+      linear-gradient(45deg, transparent 49.8%, var(--color-neutral-200) 50%, transparent 50.2%),
+      var(--color-neutral-100);
   }
 
   .image-placeholder--landscape {

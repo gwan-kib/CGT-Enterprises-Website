@@ -6,11 +6,7 @@
     --fade-color: var(--color-brand-red-200);
     --carousel-padding: var(--space-10);
     --fade-start-in-circle: -15%;
-    --circle-size: clamp(
-      22rem,
-      min(50vw, calc(100svh - var(--header-height))),
-      45rem
-    );
+    --circle-size: clamp(22rem, min(50vw, calc(100svh - var(--header-height))), 45rem);
     --edge-fade-depth: clamp(1.5rem, 9vw, 8.75rem);
   }
 
@@ -101,12 +97,11 @@
     min-height: 22rem;
     padding: clamp(var(--space-6), 3vw, var(--space-10));
     border-radius: 1.5rem;
-    border: solid .2rem var(--color-brand-red-200);
+    border: solid 0.2rem var(--color-brand-red-200);
     background: var(--color-neutral-100);
     box-shadow: 0 0 0 var(--color-brand-red-500);
     scroll-snap-align: center;
-    transition:
-      all var(--transition-standard) var(--easing-standard);
+    transition: all var(--transition-standard) var(--easing-standard);
   }
 
   @media (hover: hover) and (pointer: fine) {

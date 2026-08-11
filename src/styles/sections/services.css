@@ -141,7 +141,7 @@
 
   .service-card__details-close-bottom {
     @apply flex items-center justify-center self-center;
-    
+
     width: 3rem;
     height: 3rem;
     padding-inline: var(--space-5);

@@ -232,7 +232,17 @@ export function Header({ homePath }: { homePath?: string }) {
         }
       }
 
-      setActiveHref((currentHref) => (currentHref === nextActiveHref ? currentHref : nextActiveHref));
+      setActiveHref((currentHref) => {
+        if (currentHref === nextActiveHref) {
+          return currentHref;
+        }
+
+        if (nextActiveHref && window.location.hash !== nextActiveHref) {
+          window.history.replaceState(null, "", nextActiveHref);
+        }
+
+        return nextActiveHref;
+      });
     };
 
     const scheduleActiveSectionUpdate = () => {
