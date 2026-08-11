@@ -6,7 +6,7 @@
     --fade-color: var(--color-brand-red-200);
     --carousel-padding: var(--space-10);
     --fade-start-in-circle: -15%;
-    --circle-size: clamp(22rem, min(50vw, calc(100svh - var(--header-height))), 45rem);
+    --circle-size: clamp(18rem, min(50vw, calc(100svh - var(--header-height))), 45rem);
     --edge-fade-depth: clamp(1.5rem, 9vw, 8.75rem);
   }
 
@@ -201,6 +201,24 @@
 
   .reviews-section__arrow--next {
     right: -1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .reviews-section {
+      --circle-size: 20rem;
+    }
+
+    .reviews-section__carousel {
+      padding-inline: 0;
+      margin-inline: calc(var(--page-gutter) * -1);
+      padding-left: var(--page-gutter);
+      padding-right: var(--page-gutter);
+    }
+
+    .reviews-section__carousel-wrapper::before,
+    .reviews-section__carousel-wrapper::after {
+      display: none;
+    }
   }
 }
 
