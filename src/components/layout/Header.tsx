@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
 import { navigationItems } from "../../data/navigation";
@@ -123,12 +123,30 @@ export function Header({ homePath }: { homePath?: string }) {
   const [isHeroSectionActive, setIsHeroSectionActive] = useState(() => window.scrollY <= 0);
   const hoverPreviewHref = hoveredHref === "#home" && isHeroSectionActive ? null : hoveredHref;
   const highlightedHref = hoverPreviewHref ?? (activeHref === "#home" ? null : activeHref);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleSectionNavigation = (href: NavigationHref | null) => {
     isNavigationScrollingRef.current = true;
     setHoveredHref(null);
     setActiveHref(href);
   };
+
+  const closeMobileMenu = useCallback(() => setIsMobileMenuOpen(false), []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeMobileMenu();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen, closeMobileMenu]);
 
   useEffect(() => {
     const syncActiveHrefFromHash = () => {
@@ -365,30 +383,88 @@ export function Header({ homePath }: { homePath?: string }) {
     >
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
-          <div className="site-header__top">
-            <nav className="site-nav" aria-label="Primary" ref={navRef}>
-              <div className="site-nav__track" ref={navTrackRef}>
-                <span
-                  aria-hidden="true"
-                  className={
-                    "site-nav__indicator" +
-                    (highlightedHref ? " site-nav__indicator--visible" : "") +
-                    (hoverPreviewHref ? " site-nav__indicator--preview" : "")
-                  }
-                  ref={navIndicatorRef}
+        <div className="site-header__top">
+          <nav className="site-nav site-nav--desktop" aria-label="Primary" ref={navRef}>
+            <div className="site-nav__track" ref={navTrackRef}>
+              <span
+                aria-hidden="true"
+                className={
+                  "site-nav__indicator" +
+                  (highlightedHref ? " site-nav__indicator--visible" : "") +
+                  (hoverPreviewHref ? " site-nav__indicator--preview" : "")
+                }
+                ref={navIndicatorRef}
+              />
+              <ul className="site-nav__list">
+                <NavigationLinks
+                  activeHref={activeHref}
+                  highlightedHref={highlightedHref}
+                  isHeroSectionActive={isHeroSectionActive}
+                  homePath={homePath}
+                  onHoverChange={setHoveredHref}
                 />
-                <ul className="site-nav__list">
-                  <NavigationLinks
-                    activeHref={activeHref}
-                    highlightedHref={highlightedHref}
-                    isHeroSectionActive={isHeroSectionActive}
-                    homePath={homePath}
-                    onHoverChange={setHoveredHref}
-                  />
-                </ul>
-              </div>
-            </nav>
-          </div>
+              </ul>
+            </div>
+          </nav>
+          <button
+            aria-controls="site-mobile-menu"
+            aria-expanded={isMobileMenuOpen}
+            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            className="site-header__menu-toggle"
+            onClick={(event) => {
+              event.stopPropagation();
+              setIsMobileMenuOpen((open) => !open);
+            }}
+            type="button"
+          >
+            <span className="material-symbols-rounded" aria-hidden="true">
+              {isMobileMenuOpen ? "close" : "menu"}
+            </span>
+          </button>
+        </div>
+        <div
+          className={"site-mobile-menu" + (isMobileMenuOpen ? " site-mobile-menu--open" : "")}
+          id="site-mobile-menu"
+        >
+          <nav className="site-mobile-nav" aria-label="Mobile navigation">
+            <ul className="site-mobile-nav__list">
+              {navigationItems.map((item) => {
+                const isActive = activeHref === item.href;
+
+                return (
+                  <li key={item.href}>
+                    <a
+                      aria-current={isActive ? "location" : undefined}
+                      className={"site-mobile-nav__link" + (isActive ? " site-mobile-nav__link--active" : "")}
+                      href={item.href}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        const sectionId = item.href.slice(1);
+                        const section = document.getElementById(sectionId);
+
+                        if (section) {
+                          handleSectionNavigation(getNavigationHref(item.href));
+                          section.scrollIntoView({ behavior: "smooth", block: "start" });
+
+                          if (window.location.hash !== item.href) {
+                            window.history.pushState(null, "", item.href);
+                          }
+                        }
+
+                        closeMobileMenu();
+                      }}
+                    >
+                      <span className="site-mobile-nav__icon material-symbols-rounded" aria-hidden="true">
+                        {item.icon}
+                      </span>
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </div>
       </div>
     </header>
   );
