@@ -18,7 +18,7 @@ export function FaqSection() {
   }
 
   return (
-    <SectionContainer id="faq" labelledBy="faq-title" tone="subtle">
+    <SectionContainer id="faq" labelledBy="faq-title" tone="brand">
       <div className="faq-section__grid">
         <header className="section-heading section-heading--center">
           <h2 className="section-heading__title" id="faq-title">

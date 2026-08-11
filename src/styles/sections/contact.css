@@ -162,7 +162,7 @@
     min-height: 4rem;
     padding: var(--space-3) var(--space-4);
     border: 2px solid var(--color-neutral-500);
-    border-radius: 0.5rem;
+    border-radius: 99rem;
     background: var(--color-neutral-200);
     color: var(--color-neutral-900);
     cursor: pointer;

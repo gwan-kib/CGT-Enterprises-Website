@@ -30,10 +30,10 @@ function App() {
       <main id="main-content">
         <HeroSection />
         <ServicesSection />
-        <ReviewsSection />
-        <ReviewFormSection />
         <FaqSection />
         <ContactSection />
+        <ReviewsSection />
+        <ReviewFormSection />
       </main>
       <Footer />
     </>

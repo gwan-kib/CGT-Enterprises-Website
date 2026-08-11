@@ -41,7 +41,7 @@ export function ContactSection() {
   );
 
   return (
-    <SectionContainer className="contact-section" id="contact" labelledBy="contact-title" tone="brand">
+    <SectionContainer className="contact-section" id="contact" labelledBy="contact-title" tone="dark">
       <div className="contact-section__grid">
         <div className="contact-section__content">
           <SectionHeading
