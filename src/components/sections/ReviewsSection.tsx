@@ -41,7 +41,7 @@ const placeholderReviews: ReviewCardData[] = [
     date: "07/25/2026",
     detail: "Dump Runs",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
+      "Quick, friendly, and affordable. They cleared out a full trailer-load of junk in under an hour. Highly recommend their dump runs!",
     rating: 5,
   },
   {
@@ -49,7 +49,7 @@ const placeholderReviews: ReviewCardData[] = [
     date: "07/24/2026",
     detail: "Appliance Disposal",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
+      "Had an old fridge and washing machine taking up space. CGT picked them up the next day and handled everything. Made it look easy.",
     rating: 5,
   },
   {
@@ -57,7 +57,7 @@ const placeholderReviews: ReviewCardData[] = [
     date: "07/23/2026",
     detail: "Curbside Delivery",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
+      "Ordered a couch online and needed help getting it from the curb into my living room. They were on time, careful, and professional.",
     rating: 5,
   },
   {
@@ -65,7 +65,7 @@ const placeholderReviews: ReviewCardData[] = [
     date: "07/22/2026",
     detail: "Household Moving",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
+      "Moved our family of four across town without a scratch on anything. Polite crew, fair pricing, and they actually showed up early.",
     rating: 5,
   },
   {
@@ -73,7 +73,7 @@ const placeholderReviews: ReviewCardData[] = [
     date: "07/21/2026",
     detail: "Beverage Recycling",
     quote:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean sed erat vitae sem tempor tincidunt.",
+      "Been bringing my bottles in every month. Fast service, fair counts, and the staff always has a smile. Best recycling depot in Yellowknife.",
     rating: 5,
   },
 ];
@@ -235,7 +235,7 @@ export function ReviewsSection() {
   }, []);
 
   return (
-    <SectionContainer className="reviews-section" id="reviews" labelledBy="reviews-title">
+    <SectionContainer className="reviews-section" id="reviews" labelledBy="reviews-title" tone="brand">
       <div className="reviews-section__intro">
         <SectionHeading
           align="center"
@@ -246,6 +246,9 @@ export function ReviewsSection() {
       </div>
 
       <div className="reviews-section__carousel-wrapper">
+        <span aria-hidden="true" className="reviews-section__circle reviews-section__circle--start" />
+        <span aria-hidden="true" className="reviews-section__circle reviews-section__circle--end" />
+
         <button
           aria-label="Previous review"
           className="reviews-section__arrow reviews-section__arrow--prev"
