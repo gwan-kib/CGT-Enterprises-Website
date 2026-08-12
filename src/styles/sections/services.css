@@ -15,20 +15,16 @@
     min-width: 0;
     min-height: 26rem;
     overflow: hidden;
-    border: 1px solid var(--color-neutral-200);
+    border: .2rem solid var(--color-brand-red-500);
     border-radius: 1.5rem;
     background: var(--color-neutral-100);
-    box-shadow: 0 0.5rem 1.5rem rgb(24 23 27 / 8%);
     transition:
-      border-color var(--transition-standard) var(--easing-standard),
-      box-shadow var(--transition-standard) var(--easing-standard),
-      transform var(--transition-standard) var(--easing-standard);
+      all var(--transition-standard) var(--easing-standard);
   }
 
   .service-card__body {
     @apply flex flex-col items-center h-full;
-    padding: clamp(var(--space-6), 3vw, var(--space-8));
-    padding-bottom: clamp(var(--space-4), 3vw, var(--space-8));
+    padding: var(--space-6);
   }
 
   .service-card__icon {
@@ -95,9 +91,8 @@
     @apply inline-flex items-center justify-center;
     min-height: var(--space-10);
     padding-inline: var(--space-5);
-    border: 2px solid var(--color-brand-red-600);
     border-radius: 999px;
-    background: transparent;
+    background: var(--color-brand-red-200);;
     color: var(--color-brand-red-600);
     font-family: inherit;
     font-size: 1rem;
@@ -106,12 +101,11 @@
     gap: var(--space-2);
     cursor: pointer;
     transition:
-      background var(--transition-fast) var(--easing-standard),
-      color var(--transition-fast) var(--easing-standard);
+      all var(--transition-fast) var(--easing-standard);
   }
 
   .service-card__details:hover {
-    background: var(--color-brand-red-200);
+    background: var(--color-brand-red-300);
   }
 
   .service-card__details:focus-visible {
@@ -129,8 +123,7 @@
     opacity: 0;
     visibility: hidden;
     transition:
-      opacity var(--transition-standard) var(--easing-standard),
-      visibility var(--transition-standard) var(--easing-standard);
+      all var(--transition-standard) var(--easing-standard);
   }
 
   .service-card__details-overlay--open {
@@ -144,23 +137,18 @@
     width: 3rem;
     height: 3rem;
     padding-inline: var(--space-5);
-    border: 2px solid var(--color-brand-red-600);
+    border: .15rem solid var(--color-brand-red-600);
     border-radius: 999px;
-    background: transparent;
+    background: var(--color-brand-red-200);
     color: var(--color-brand-red-600);
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.25;
     gap: var(--space-2);
     cursor: pointer;
     transition:
-      background var(--transition-fast) var(--easing-standard),
-      color var(--transition-fast) var(--easing-standard);
+      all var(--transition-fast) var(--easing-standard);
   }
 
   .service-card__details-close-bottom:hover {
-    background: var(--color-brand-red-200);
+    background: var(--color-brand-red-300);
   }
 
   .service-card__details-close-bottom:focus-visible {
@@ -187,11 +175,15 @@
 }
 
 @layer components {
+  .service-card--overlay-open {
+    box-shadow: 0 .5rem var(--color-brand-red-500);
+    transform: translateY(-.5rem);
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .service-card:not(.service-card--overlay-open):hover {
-      border-color: var(--color-neutral-500);
-      box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
-      transform: translateY(calc(var(--space-2) * -1));
+      box-shadow: 0 .5rem var(--color-brand-red-500);
+      transform: translateY(-.5rem);
     }
   }
 
