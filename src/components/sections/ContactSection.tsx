@@ -138,7 +138,7 @@ export function ContactSection() {
                 Service
               </label>
               <select
-                className="contact-form__service-select"
+                className="static-form__select"
                 id="contact-service"
                 onChange={(e) => setSelectedService(e.target.value)}
                 value={selectedService}
@@ -165,7 +165,7 @@ export function ContactSection() {
                 Inquiry type
               </label>
               <select
-                className="contact-form__service-select"
+                className="static-form__select"
                 id="contact-inquiry-type"
                 onChange={(e) => setInquiryType(e.target.value)}
                 value={inquiryType}

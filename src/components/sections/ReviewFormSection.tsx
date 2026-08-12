@@ -40,7 +40,7 @@ export function ReviewFormSection() {
                 Service received
               </label>
               <select
-                className="review-form__service-select"
+                className="static-form__select"
                 id="review-service"
                 onChange={(e) => setSelectedService(e.target.value)}
                 value={selectedService}

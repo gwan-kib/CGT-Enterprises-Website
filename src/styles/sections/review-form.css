@@ -36,14 +36,14 @@
   }
 
   .review-form__rating-star {
-    @apply inline-flex items-center justify-center;
+    @apply inline-flex items-center justify-center ;
     padding: var(--space-1);
     border: none;
     border-radius: 50%;
     background: none;
-    color: var(--color-neutral-600);
+    color: var(--color-brand-red-200);
     cursor: pointer;
-    font-size: 2.25rem;
+    font-size: 5rem;
     line-height: 1;
     transition:
       color var(--transition-fast) var(--easing-standard),
@@ -54,37 +54,12 @@
     transform: scale(1.15);
   }
 
-  .review-form__rating-star--active {
-    color: var(--color-brand-red-500);
+  .review-form__rating-star .material-symbols-rounded {
+    font-size: 1.5rem;
   }
 
   .review-form__rating-star--active .material-symbols-rounded {
     font-variation-settings: "FILL" 1;
-  }
-
-  /* ---------- Service select ---------- */
-
-  .review-form__service-select {
-    width: 100%;
-    min-height: 4rem;
-    padding: var(--space-3) var(--space-4);
-    border: 2px solid var(--color-neutral-500);
-    border-radius: 0.5rem;
-    background: var(--color-neutral-200);
-    color: var(--color-neutral-900);
-    cursor: pointer;
-    font-family: inherit;
-    font-size: 1rem;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23524f57' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right var(--space-4) center;
-    background-size: 1.5rem;
-    padding-right: var(--space-12);
-  }
-
-  .review-form__service-select:invalid {
-    color: var(--color-neutral-500);
   }
 
   /* ---------- Star illustration ---------- */

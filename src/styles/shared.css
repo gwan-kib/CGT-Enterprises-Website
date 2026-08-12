@@ -163,6 +163,12 @@
     color: var(--color-neutral-500);
   }
 
+  .static-form .button:disabled {
+    border-color: var(--color-brand-red-300);
+    background: var(--color-brand-red-300);
+    color: var(--color-brand-red-700);
+  }
+
   .image-placeholder {
     @apply relative grid w-full place-items-center overflow-hidden;
     border: 2px dashed var(--color-neutral-500);
@@ -225,8 +231,38 @@
     gap: var(--space-6);
   }
 
+  .static-form__select {
+    width: 100%;
+    min-height: 4rem;
+    padding: var(--space-3) var(--space-4);
+    border: none;
+    border-radius: 20rem;
+    background: var(--color-brand-red-200);
+    color: var(--color-neutral-900);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ab2430' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    background-size: 1.5rem;
+    padding-right: var(--space-12);
+  }
+
+  .static-form__select:invalid {
+    color: var(--color-neutral-500);
+  }
+
+  .static-form__select option {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+  }
+
   .static-field {
-    @apply flex flex-col;
+    @apply flex flex-col ;
     gap: var(--space-2);
   }
 
@@ -258,7 +294,7 @@
 
   .static-form__status {
     margin: calc(var(--space-2) * -1) 0 0;
-    color: var(--color-neutral-500);
+    color: var(--color-neutral-800);
     font-size: 0.875rem;
     line-height: 1.55;
   }
