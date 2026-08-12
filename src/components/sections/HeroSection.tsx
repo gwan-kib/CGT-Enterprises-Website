@@ -1,4 +1,4 @@
-import logoBadge from "../../assets/images/CGT Enterprises REV.png";
+import logoBadge from "../../assets/CGT Enterprises REV.png";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 
