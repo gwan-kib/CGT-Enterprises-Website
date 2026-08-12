@@ -207,11 +207,10 @@
     @apply flex flex-col;
     gap: var(--space-6);
     padding: clamp(var(--space-6), 4vw, var(--space-10));
-    border: 1px solid var(--color-neutral-500);
     border-radius: 1.5rem;
-    background: var(--color-neutral-100);
-    box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
+    background: var(--color-brand-red-400);
     color: var(--color-neutral-900);
+    border: .15rem solid var(--color-brand-red-500);
   }
 
   .static-form--inverse {
@@ -242,9 +241,8 @@
     width: 100%;
     min-height: 4rem;
     padding: var(--space-3) var(--space-4);
-    border: 2px solid var(--color-neutral-500);
     border-radius: 0.5rem;
-    background: var(--color-neutral-200);
+    background: var(--color-brand-red-200);
     color: var(--color-neutral-900);
   }
 

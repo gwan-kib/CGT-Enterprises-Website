@@ -100,7 +100,7 @@
     --side-size: 8rem;
     --size-tilt: 20deg;
     --top-distance: 75%;
-    --side-distance: 18%;
+    --side-distance: 10%;
   }
 
   .star-illustration__star {

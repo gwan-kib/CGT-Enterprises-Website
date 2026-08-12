@@ -18,7 +18,7 @@ export function ReviewFormSection() {
       className="review-form-section"
       id="leave-review"
       labelledBy="leave-review-title"
-      tone="subtle"
+      tone="dark"
     >
       <div className="review-form-section__grid">
         <div className="review-form-section__content">

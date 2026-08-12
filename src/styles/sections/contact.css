@@ -23,7 +23,7 @@
   }
 
   .contact-section__facebook-link:hover {
-    opacity: 1;
+    color: darkblue;
   }
 
   .contact-section__facebook-icon {
@@ -67,13 +67,13 @@
     gap: var(--space-4);
     padding: var(--space-1) var(--space-4);
     border-radius: 1.5rem;
-    background: var(--color-brand-red-700);
+    background: var(--color-brand-red-200);
     color: inherit;
     transition: all var(--transition-fast) var(--easing-standard);
   }
 
   .contact-card__link:hover {
-    background: var(--color-brand-red-600);
+    background: var(--color-brand-red-300);
   }
 
   .contact-card__icon {
@@ -109,8 +109,7 @@
   .contact-card__arrow {
     @apply shrink-0;
     font-size: 2rem;
-    transition:
-      all var(--transition-fast) var(--easing-standard);
+    transition: all var(--transition-fast) var(--easing-standard);
   }
 
   .contact-card__link:hover .contact-card__arrow {
@@ -128,8 +127,13 @@
     transition: all var(--transition-fast) var(--easing-standard);
   }
 
-  .contact-card__copy:hover {
-    color: var(--color-brand-red-300);
+  .contact-card__copy:hover,
+  .contact-card__copy--copied {
+    color: var(--color-brand-red-400);
+  }
+
+  .contact-card__copy--copied {
+    cursor: default;
   }
 
   .contact-card__copy .material-symbols-rounded {
@@ -140,10 +144,6 @@
 
   .contact-form {
     padding: clamp(var(--space-8), 5vw, var(--space-12));
-  }
-
-  .contact-section .static-form {
-    box-shadow: 0 1rem 2.5rem rgb(24 23 27 / 10%);
   }
 
   .contact-form > .button {

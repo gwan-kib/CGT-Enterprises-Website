@@ -58,10 +58,22 @@
     text-align: right;
   }
 
+  .site-footer__brand-text {
+    @apply text-center;
+    display: flex;
+    flex-direction: column;
+  }
+
   .site-footer__brand-name {
     font-size: 2rem;
     font-weight: 700;
     line-height: 1.3;
+  }
+
+  .site-footer__brand-hours {
+    color: var(--color-neutral-300);
+    font-size: 0.875rem;
+    line-height: 1.55;
   }
 
   .site-footer__social-link {

@@ -41,7 +41,7 @@ export function ContactSection() {
   );
 
   return (
-    <SectionContainer className="contact-section" id="contact" labelledBy="contact-title" tone="dark">
+    <SectionContainer className="contact-section" id="contact" labelledBy="contact-title">
       <div className="contact-section__grid">
         <div className="contact-section__content">
           <SectionHeading
@@ -67,7 +67,7 @@ export function ContactSection() {
               </span>
               <span className="contact-card__label">Operational Hours</span>
             </div>
-            <span className="contact-card__value">Mon - Fri: 3 PM - 6 PM | Sat - Sun: 10 AM - 4 PM</span>
+            <span className="contact-card__value">{business.hours}</span>
           </div>
 
           <div className="contact-cards">
@@ -85,7 +85,7 @@ export function ContactSection() {
               </a>
               <button
                 aria-label="Copy phone number"
-                className="contact-card__copy"
+                className={`contact-card__copy${copiedField === "phone" ? " contact-card__copy--copied" : ""}`}
                 onClick={(e) => {
                   e.preventDefault();
                   handleCopy("phone", business.contact.phone);
@@ -112,7 +112,7 @@ export function ContactSection() {
               </a>
               <button
                 aria-label="Copy email address"
-                className="contact-card__copy"
+                className={`contact-card__copy${copiedField === "email" ? " contact-card__copy--copied" : ""}`}
                 onClick={(e) => {
                   e.preventDefault();
                   handleCopy("email", business.contact.email);

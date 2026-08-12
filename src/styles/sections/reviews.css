@@ -95,32 +95,27 @@
     @apply relative flex shrink-0 flex-col;
     width: min(22rem, 100%);
     min-height: 22rem;
-    padding: clamp(var(--space-6), 3vw, var(--space-10));
+    padding: var(--space-6);
     border-radius: 1.5rem;
-    border: solid 0.2rem var(--color-brand-red-200);
+    border: solid 0.2rem var(--color-brand-red-400);
     background: var(--color-neutral-100);
-    box-shadow: 0 0 0 var(--color-brand-red-500);
     scroll-snap-align: center;
     transition: all var(--transition-standard) var(--easing-standard);
   }
 
   @media (hover: hover) and (pointer: fine) {
     .review-card:hover {
-      box-shadow: 0 0 2rem var(--color-brand-red-200);
-      transform: translateY(calc(var(--space-2) * -1));
+      transform: translateY(-.5rem);
     }
-  }
-
-  .review-card__header {
-    margin-bottom: var(--space-4);
   }
 
   .review-card__date {
     display: block;
-    margin-bottom: var(--space-1);
+    margin-top: var(--space-1);
     color: var(--color-neutral-500);
     font-size: 0.875rem;
     line-height: 1.55;
+    text-align: center;
   }
 
   .review-card__stars {
@@ -135,10 +130,11 @@
 
   .review-card__quote {
     @apply flex-1;
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-2);
   }
 
   .review-card__quote p {
+    color: var(--color-neutral-900);
     margin: 0;
     font-size: 1rem;
     font-weight: 500;
@@ -146,42 +142,37 @@
   }
 
   .review-card__detail {
+    @apply text-center;
     display: block;
     margin-top: auto;
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--color-neutral-200);
-    color: var(--color-neutral-500);
-    font-size: 0.875rem;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-brand-red-500);
+    color: var(--color-brand-red-500);
+    font-size: 1rem;
     line-height: 1.55;
   }
 
   .reviews-section__arrow {
     @apply absolute z-10 flex items-center justify-center;
     top: 50%;
-    width: 3rem;
-    height: 3rem;
-    border: 1px solid var(--color-neutral-200);
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-900);
+    background: var(--color-brand-red-400);
+    color: var(--color-neutral-100);
     cursor: pointer;
     transform: translateY(-50%);
     transition:
-      background-color var(--transition-fast) var(--easing-standard),
-      border-color var(--transition-fast) var(--easing-standard),
-      box-shadow var(--transition-fast) var(--easing-standard),
-      opacity var(--transition-fast) var(--easing-standard);
+      all var(--transition-fast) var(--easing-standard);
   }
 
   .reviews-section__arrow .material-symbols-rounded {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 
   .reviews-section__arrow:hover,
   .reviews-section__arrow:focus-visible {
-    border-color: var(--color-neutral-500);
-    background: var(--color-neutral-100);
-    box-shadow: 0 0.25rem 0.75rem rgb(24 23 27 / 10%);
+    background: var(--color-brand-red-500);
   }
 
   .reviews-section__arrow:disabled {
