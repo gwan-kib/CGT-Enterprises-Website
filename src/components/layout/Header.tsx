@@ -3,6 +3,7 @@ import type { MouseEvent } from "react";
 
 import brandBadge from "../../assets/CGT Enterprises Badge (alt).png";
 import { navigationItems } from "../../data/navigation";
+import { scrollToSection } from "../../utils/scroll";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
 
@@ -93,7 +94,7 @@ function handleSectionLinkClick(
   onSectionNavigation(getNavigationHref(link.hash));
 
   event.preventDefault();
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  scrollToSection(section);
 
   if (window.location.hash !== link.hash) {
     window.history.pushState(null, "", link.hash);
@@ -456,7 +457,7 @@ export function Header({ homePath }: { homePath?: string }) {
 
                         if (section) {
                           handleSectionNavigation(getNavigationHref(item.href));
-                          section.scrollIntoView({ behavior: "smooth", block: "start" });
+                          scrollToSection(section);
 
                           if (window.location.hash !== item.href) {
                             window.history.pushState(null, "", item.href);

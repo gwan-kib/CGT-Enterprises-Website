@@ -9,6 +9,7 @@ import { ReviewFormSection } from './components/sections/ReviewFormSection'
 import { ReviewsSection } from './components/sections/ReviewsSection'
 import { ServicesSection } from './components/sections/ServicesSection'
 import { ToastRegion } from './components/ui/ToastRegion'
+import { scrollToSection } from './utils/scroll'
 
 function App() {
   useEffect(() => {
@@ -21,7 +22,7 @@ function App() {
     const target = document.getElementById(hash.slice(1))
 
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      scrollToSection(target)
     }
   }, [])
   return (
