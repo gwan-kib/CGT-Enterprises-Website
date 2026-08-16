@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { Service } from "../../data/services";
+import { showToast } from "../../utils/toast";
 
 interface ServiceCardProps {
   service: Service;
@@ -42,6 +43,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
   function handleBookClick(e: React.MouseEvent<HTMLAnchorElement>) {
     e.preventDefault();
     window.dispatchEvent(new CustomEvent("cgt:select-service", { detail: service.id }));
+    showToast(`${service.name} selected. Complete your inquiry below.`);
     window.location.hash = "contact";
   }
 

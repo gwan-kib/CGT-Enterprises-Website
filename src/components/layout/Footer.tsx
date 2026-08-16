@@ -9,7 +9,10 @@ export function Footer() {
       <div className="site-footer__inner">
         <div className="site-footer__upper">
           <div className="site-footer__brand">
-            <span className="site-footer__brand-name">{business.name}</span>
+            <div className="site-footer__brand-text">
+              <span className="site-footer__brand-name">{business.name}</span>
+              <span className="site-footer__brand-hours">{business.hours}</span>
+            </div>
           </div>
           <div className="site-footer__contact">
             <a

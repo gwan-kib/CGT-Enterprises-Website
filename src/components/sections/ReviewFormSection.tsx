@@ -23,9 +23,9 @@ export function ReviewFormSection() {
       <div className="review-form-section__grid">
         <div className="review-form-section__content">
           <SectionHeading
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. This form is a visual placeholder and does not collect or submit information."
+            description="Help us help you. Any and all feedback is greatly appreciated!"
             id="leave-review-title"
-            title="A simple space for future feedback."
+            title="Leave Us A Review!"
           />
           <StarIllustration />
         </div>
@@ -40,7 +40,7 @@ export function ReviewFormSection() {
                 Service received
               </label>
               <select
-                className="review-form__service-select"
+                className="static-form__select"
                 id="review-service"
                 onChange={(e) => setSelectedService(e.target.value)}
                 value={selectedService}
