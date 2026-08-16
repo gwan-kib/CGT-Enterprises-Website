@@ -6,6 +6,7 @@ export interface NavigationItem {
 
 export const navigationItems: NavigationItem[] = [
   { href: "#home", icon: "arrow_upward", label: "Top" },
+  { href: "#about", icon: "groups", label: "About" },
   { href: "#services", icon: "home_repair_service", label: "Services" },
   { href: "#faq", icon: "quiz", label: "FAQ" },
   { href: "#contact", icon: "call", label: "Contact" },

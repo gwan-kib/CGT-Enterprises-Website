@@ -72,17 +72,6 @@ export function ContactSection() {
 
           <div className="contact-cards">
             <div className="contact-card">
-              <a className="contact-card__link" href="tel:placeholder">
-                <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
-                  call
-                </span>
-                <div className="contact-card__content">
-                  <span className="contact-card__value">{business.contact.phone}</span>
-                </div>
-                <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
-                  arrow_forward
-                </span>
-              </a>
               <button
                 aria-label="Copy phone number"
                 className={`contact-card__copy${copiedField === "phone" ? " contact-card__copy--copied" : ""}`}
@@ -96,20 +85,20 @@ export function ContactSection() {
                   {copiedField === "phone" ? "check" : "content_copy"}
                 </span>
               </button>
-            </div>
-
-            <div className="contact-card">
-              <a className="contact-card__link" href="mailto:cgt@cgtenterprises.ca">
+              <a className="contact-card__link" href="tel:placeholder">
                 <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
-                  mail
+                  call
                 </span>
                 <div className="contact-card__content">
-                  <span className="contact-card__value">{business.contact.email}</span>
+                  <span className="contact-card__value">{business.contact.phone}</span>
                 </div>
                 <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
                   arrow_forward
                 </span>
               </a>
+            </div>
+
+            <div className="contact-card">
               <button
                 aria-label="Copy email address"
                 className={`contact-card__copy${copiedField === "email" ? " contact-card__copy--copied" : ""}`}
@@ -123,6 +112,17 @@ export function ContactSection() {
                   {copiedField === "email" ? "check" : "content_copy"}
                 </span>
               </button>
+              <a className="contact-card__link" href="mailto:cgt@cgtenterprises.ca">
+                <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
+                  mail
+                </span>
+                <div className="contact-card__content">
+                  <span className="contact-card__value">{business.contact.email}</span>
+                </div>
+                <span aria-hidden="true" className="contact-card__arrow material-symbols-rounded">
+                  arrow_forward
+                </span>
+              </a>
             </div>
           </div>
         </div>

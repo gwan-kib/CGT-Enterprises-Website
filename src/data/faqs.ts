@@ -6,27 +6,6 @@ export interface Faq {
 export const faqs: Faq[] = [
   {
     question:
-      "How much does it cost for a dump run under 300lbs from the driveway of my home or apartment building?",
-    answer: [
-      "$60 + the City of Yellowknife tipping fee which starts at $20.25 for the first 220lbs, the dumping fee increases with weight.",
-    ],
-  },
-  {
-    question:
-      "How much does it cost for a dump run between 300-800lbs from the driveway of my home or apartment building?",
-    answer: [
-      "$85 + the City of Yellowknife tipping fee which starts at $20.25 for the first 220lbs, the dumping fee increases with weight.",
-    ],
-  },
-  {
-    question:
-      "How much does it cost for a dump run between 800-1100lbs from the driveway of my home or apartment building?",
-    answer: [
-      "$125 + the City of Yellowknife tipping fee which starts at $20.25 for the first 220lbs, the dumping fee increases with weight.",
-    ],
-  },
-  {
-    question:
       "My junk is inside my home, how much do you charge to take that away?",
     answer: [
       "Same as above with labor rates starting at $130 per hour (prorated). Only pay for the labor you use.",

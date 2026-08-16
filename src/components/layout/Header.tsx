@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
+import brandBadge from "../../assets/CGT Enterprises Badge (alt).png";
+import dumpRunsText from "../../assets/CGT Dump Runs text REV (alt).png";
 import { navigationItems } from "../../data/navigation";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
@@ -394,6 +396,9 @@ export function Header({ homePath }: { homePath?: string }) {
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
         <div className="site-header__top">
+          <a className="site-header__brand" href="#home">
+            <img alt="CGT Enterprises" className="site-header__brand-image" src={brandBadge} />
+          </a>
           <nav className="site-nav site-nav--desktop" aria-label="Primary" ref={navRef}>
             <div className="site-nav__track" ref={navTrackRef}>
               <span
@@ -416,6 +421,9 @@ export function Header({ homePath }: { homePath?: string }) {
               </ul>
             </div>
           </nav>
+          <div aria-hidden="true" className="site-header__dump-runs">
+            <img alt="" className="site-header__dump-runs-image" src={dumpRunsText} />
+          </div>
           <button
             aria-controls="site-mobile-menu"
             aria-expanded={isMobileMenuOpen}

@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
+import { AboutSection } from './components/sections/AboutSection'
 import { ContactSection } from './components/sections/ContactSection'
 import { FaqSection } from './components/sections/FaqSection'
 import { HeroSection } from './components/sections/HeroSection'
@@ -29,6 +30,7 @@ function App() {
       <ToastRegion />
       <main id="main-content">
         <HeroSection />
+        <AboutSection />
         <ServicesSection />
         <FaqSection />
         <ContactSection />
