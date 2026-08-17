@@ -1,4 +1,8 @@
 @layer components {
+  .review-form-section {
+    overflow: hidden;
+  }
+
   .review-form-section__grid {
     @apply grid items-center;
     gap: clamp(var(--space-12), 7vw, var(--space-24));
