@@ -1,0 +1,28 @@
+@layer components {
+  .about-section__media {
+    width: min(100%, 48rem);
+    margin-inline: auto;
+    margin-top: var(--space-8);
+  }
+
+  .about-section__media-image {
+    @apply block w-full;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: 1.5rem;
+  }
+
+  .about-section__body {
+    max-width: 50rem;
+    margin: var(--space-8) auto 0;
+    color: var(--color-neutral-900);
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  .about-section__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-6);
+  }
+}

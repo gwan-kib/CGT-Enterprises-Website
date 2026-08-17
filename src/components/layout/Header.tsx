@@ -1,9 +1,13 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 
+import brandBadge from "../../assets/CGT Enterprises Badge (alt).png";
 import { navigationItems } from "../../data/navigation";
+import { scrollToSection } from "../../utils/scroll";
 
 type NavigationHref = (typeof navigationItems)[number]["href"];
+
+const desktopNavigationItems = navigationItems.filter((item) => item.href !== "#home");
 
 function getNavigationHref(hash: string): NavigationHref | null {
   return navigationItems.find((item) => item.href === hash)?.href ?? null;
@@ -13,7 +17,6 @@ interface NavigationLinksProps {
   activeHref: NavigationHref | null;
   highlightedHref: NavigationHref | null;
   isHeroSectionActive: boolean;
-  homePath?: string;
   onHoverChange: (href: NavigationHref | null) => void;
 }
 
@@ -21,46 +24,32 @@ function NavigationLinks({
   activeHref,
   highlightedHref,
   isHeroSectionActive,
-  homePath,
   onHoverChange,
 }: NavigationLinksProps) {
   return (
     <>
-      {navigationItems.map((item, index) => {
-        const linkHref = homePath ? homePath + item.href : item.href;
+      {desktopNavigationItems.map((item, index) => {
         const isActive = activeHref === item.href;
         const isHighlighted = highlightedHref === item.href;
-        const isTopButton = item.href === "#home";
-        const isTopButtonVisible = isTopButton && !isHeroSectionActive;
-
-        const link = (
-          <a
-            aria-current={isActive ? "location" : undefined}
-            className={`site-nav__link${!isTopButton && isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
-            href={linkHref}
-            onMouseEnter={() => onHoverChange(item.href)}
-            onMouseLeave={() => onHoverChange(null)}
-            tabIndex={isTopButton && !isTopButtonVisible ? -1 : undefined}
-          >
-            <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
-              {item.icon}
-            </span>
-            {item.label}
-          </a>
-        );
 
         return (
           <li
-            aria-hidden={isTopButton && !isTopButtonVisible ? true : undefined}
             key={item.href}
-            className={
-              isTopButton
-                ? `site-nav__item--top${isTopButtonVisible ? " site-nav__item--top-visible" : ""}`
-                : "site-nav__link--enter"
-            }
-            style={{ "--nav-enter-delay": `${isTopButton ? 0 : index * 60}ms` } as React.CSSProperties}
+            className="site-nav__link--enter"
+            style={{ "--nav-enter-delay": `${index * 60}ms` } as React.CSSProperties}
           >
-            {isTopButton ? <span className="site-nav__top-link-clip">{link}</span> : link}
+            <a
+              aria-current={isActive ? "location" : undefined}
+              className={`site-nav__link${isHeroSectionActive ? " site-nav__link--hero-active" : ""}${isHighlighted ? " site-nav__link--highlighted" : ""}`}
+              href={item.href}
+              onMouseEnter={() => onHoverChange(item.href)}
+              onMouseLeave={() => onHoverChange(null)}
+            >
+              <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
+                {item.icon}
+              </span>
+              {item.label}
+            </a>
           </li>
         );
       })}
@@ -105,7 +94,7 @@ function handleSectionLinkClick(
   onSectionNavigation(getNavigationHref(link.hash));
 
   event.preventDefault();
-  section.scrollIntoView({ behavior: "smooth", block: "start" });
+  scrollToSection(section);
 
   if (window.location.hash !== link.hash) {
     window.history.pushState(null, "", link.hash);
@@ -394,6 +383,9 @@ export function Header({ homePath }: { homePath?: string }) {
       <div className="site-header__shell">
         <div aria-hidden="true" className="site-header__backdrop" />
         <div className="site-header__top">
+          <a className="site-header__brand" href="#home">
+            <img alt="CGT Enterprises" className="site-header__brand-image" src={brandBadge} />
+          </a>
           <nav className="site-nav site-nav--desktop" aria-label="Primary" ref={navRef}>
             <div className="site-nav__track" ref={navTrackRef}>
               <span
@@ -410,12 +402,23 @@ export function Header({ homePath }: { homePath?: string }) {
                   activeHref={activeHref}
                   highlightedHref={highlightedHref}
                   isHeroSectionActive={isHeroSectionActive}
-                  homePath={homePath}
                   onHoverChange={setHoveredHref}
                 />
               </ul>
             </div>
           </nav>
+          <span
+            className={"site-header__top-link-slot" + (isHeroSectionActive ? "" : " site-header__top-link-slot--open")}
+            inert={isHeroSectionActive ? true : undefined}
+          >
+            <span className="site-header__top-link-clip">
+              <a aria-label="Back to top" className="site-nav__link site-header__top-link" href="#home">
+                <span className="site-nav__icon material-symbols-rounded" aria-hidden="true">
+                  arrow_upward
+                </span>
+              </a>
+            </span>
+          </span>
           <button
             aria-controls="site-mobile-menu"
             aria-expanded={isMobileMenuOpen}
@@ -454,7 +457,7 @@ export function Header({ homePath }: { homePath?: string }) {
 
                         if (section) {
                           handleSectionNavigation(getNavigationHref(item.href));
-                          section.scrollIntoView({ behavior: "smooth", block: "start" });
+                          scrollToSection(section);
 
                           if (window.location.hash !== item.href) {
                             window.history.pushState(null, "", item.href);
@@ -477,5 +480,4 @@ export function Header({ homePath }: { homePath?: string }) {
         </div>
       </div>
     </header>
-  );
-}
+    )}

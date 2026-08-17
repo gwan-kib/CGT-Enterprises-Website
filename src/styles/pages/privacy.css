@@ -1,6 +1,6 @@
 @layer components {
   .privacy-page {
-    padding-block: var(--header-height) var(--space-8);
+    padding-block: calc(var(--header-height) + var(--header-float-gap)) var(--space-8);
     background: var(--color-neutral-100);
   }
 

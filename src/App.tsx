@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
+import { AboutSection } from './components/sections/AboutSection'
 import { ContactSection } from './components/sections/ContactSection'
 import { FaqSection } from './components/sections/FaqSection'
 import { HeroSection } from './components/sections/HeroSection'
@@ -8,6 +9,7 @@ import { ReviewFormSection } from './components/sections/ReviewFormSection'
 import { ReviewsSection } from './components/sections/ReviewsSection'
 import { ServicesSection } from './components/sections/ServicesSection'
 import { ToastRegion } from './components/ui/ToastRegion'
+import { scrollToSection } from './utils/scroll'
 
 function App() {
   useEffect(() => {
@@ -20,7 +22,7 @@ function App() {
     const target = document.getElementById(hash.slice(1))
 
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      scrollToSection(target)
     }
   }, [])
   return (
@@ -29,6 +31,7 @@ function App() {
       <ToastRegion />
       <main id="main-content">
         <HeroSection />
+        <AboutSection />
         <ServicesSection />
         <FaqSection />
         <ContactSection />
