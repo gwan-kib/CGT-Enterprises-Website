@@ -1,5 +1,6 @@
 import aboutImage from "../../assets/IRL Truck and Trailer.png";
 import { SectionContainer } from "../layout/SectionContainer";
+import { Button } from "../ui/Button";
 
 export function AboutSection() {
   return (
@@ -20,8 +21,13 @@ export function AboutSection() {
       </div>
 
       <p className="about-section__body">
-        For 40 years, Trevor Squires has proudly lived and worked in Yellowknife, Northwest Territories. Today, CGT Enterprises—our family-owned and locally operated business—is built on a dual foundation of exceptional client service and deep community dedication. Unlike the fly-by-night "cash job" operators on social media who come and go, we are a fully established business that is here today and here tomorrow. In addition to our core services, our signature waste diversion program actively supports local individuals and families by providing essential items, such as furniture and mattresses, entirely free of charge with complimentary delivery. Contact us today at 867-445-5883 or visit cgtenterprises.ca to learn more.
+      Founded by Trevor Squires, CGT Enterprises is a family-owned and locally operated business backed by Trevor’s 40 years of experience living and working in Yellowknife, NWT. Built on reliable service and a strong commitment to the community, it is an established local business you can count on. One way CGT Enterprises gives back is through its waste diversion program, which provides items such as furniture and mattresses to local individuals and families at no cost, and with free delivery.
+ 
       </p>
+
+      <div className="about-section__actions">
+        <Button href="#contact">Contact us to learn more!</Button>
+      </div>
     </SectionContainer>
   );
 }

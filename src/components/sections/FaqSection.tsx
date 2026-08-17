@@ -25,9 +25,21 @@ export function FaqSection() {
             Frequently Asked Questions
           </h2>
           <p className="section-heading__description">
-            Common questions about our dump runs, appliance pickup, labour rates, payment methods, and more.
+            Common questions and answers.
           </p>
         </header>
+
+        <a
+          className="button faq-section__facility-link"
+          href="https://www.yellowknife.ca/waste-management/solid-waste-facility/visiting"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Yellowknife Solid Waste Facility - Tipping Fees
+          <span className="material-symbols-rounded" aria-hidden="true">
+            arrow_outward
+          </span>
+        </a>
 
         <div className="faq-wrapper">
           {faqs.map((faq, index) => {

@@ -45,7 +45,7 @@ export function ContactSection() {
       <div className="contact-section__grid">
         <div className="contact-section__content">
           <SectionHeading
-            description="Visit CGT Enterprises on Facebook"
+            description="Visit CGT Enterprises on Facebook!"
             id="contact-title"
             title="How can we help you?"
           />

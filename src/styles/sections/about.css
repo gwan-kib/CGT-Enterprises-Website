@@ -13,9 +13,16 @@
   }
 
   .about-section__body {
-    max-width: 44rem;
+    max-width: 50rem;
     margin: var(--space-8) auto 0;
-    color: var(--color-neutral-500);
+    color: var(--color-neutral-900);
+    font-size: 1.2rem;
     text-align: center;
+  }
+
+  .about-section__actions {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-6);
   }
 }
