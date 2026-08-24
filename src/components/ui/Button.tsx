@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 
 type ButtonVariant = 'header' | 'outline' | 'primary'
+type ButtonType = 'button' | 'reset' | 'submit'
 
 const buttonVariantClasses: Record<ButtonVariant, string> = {
   header: 'button--header',
@@ -12,6 +13,7 @@ interface ButtonProps {
   children: ReactNode
   disabled?: boolean
   href?: `#${string}`
+  type?: ButtonType
   variant?: ButtonVariant
 }
 
@@ -19,6 +21,7 @@ export function Button({
   children,
   disabled = false,
   href,
+  type = 'button',
   variant = 'primary',
 }: ButtonProps) {
   const className = `button ${buttonVariantClasses[variant]}`
@@ -36,7 +39,7 @@ export function Button({
       aria-disabled={disabled}
       className={className}
       disabled={disabled}
-      type="button"
+      type={type}
     >
       {children}
     </button>

@@ -10,12 +10,12 @@ The current page includes:
 - Full-viewport Hero, Services and Pricing, Customer Reviews, Leave a Review, FAQ, and Contact sections.
 - A footer with repeated page navigation and a clear prototype-status note.
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
-- Static review and contact form layouts with read-only fields and disabled buttons.
+- A functional, accessible contact form with controlled fields, client-side validation, and loading, success, and error states, alongside a static review form layout.
 - Native FAQ disclosure controls with one example expanded on initial load.
 - A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
-The interface is intentionally a structural wireframe. It does not submit forms, store reviews, call external services, or display real customer or business information.
+The contact form submits through a configurable Google Apps Script endpoint that is not yet connected; until the endpoint is provided, the form reports a submission error. The review form and displayed content remain placeholder wireframe material, and no real customer or business information is shown.
 
 ## Design and accessibility
 
@@ -83,7 +83,7 @@ npm install
 npm run dev
 ```
 
-No environment variables are required by the current implementation. Local `.env` files are excluded from version control.
+An optional `VITE_CONTACT_FORM_ENDPOINT` environment variable points the contact form to the Google Apps Script web app that will receive submissions. Until it is set, the form reports a submission error. Local `.env` files are excluded from version control.
 
 ### Available scripts
 
@@ -115,7 +115,7 @@ The implementation demonstrates:
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
 - Rendering a data-driven four-card Services grid without adding a UI dependency or duplicating service content.
-- Creating static form compositions that show the intended layout without implying working submission behaviour.
+- Building an accessible, controlled contact form with client-side validation and submission states kept separate from the pending backend endpoint.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.
 - Keeping the dependency surface small while using native disclosure controls for simple interactions.
