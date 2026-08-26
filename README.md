@@ -15,7 +15,7 @@ The current page includes:
 - A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
-The contact form submits through a configurable Google Apps Script endpoint that is not yet connected; until the endpoint is provided, the form reports a submission error. The review form and displayed content remain placeholder wireframe material, and no real customer or business information is shown.
+The contact form posts to the shared Google Apps Script endpoint configured via `VITE_APPS_SCRIPT_URL`; until that URL is provided, the form reports a submission error. The review form and displayed content remain placeholder wireframe material, and no real customer or business information is shown.
 
 ## Design and accessibility
 
@@ -83,7 +83,7 @@ npm install
 npm run dev
 ```
 
-An optional `VITE_CONTACT_FORM_ENDPOINT` environment variable points the contact form to the Google Apps Script web app that will receive submissions. Until it is set, the form reports a submission error. Local `.env` files are excluded from version control.
+`VITE_APPS_SCRIPT_URL` points the contact form to the deployed Google Apps Script web app that receives submissions. It is public configuration, not a secret; see `.env.example` for the placeholder. Until it is set, the form reports a submission error. Local `.env` files are excluded from version control.
 
 ### Available scripts
 
@@ -115,7 +115,7 @@ The implementation demonstrates:
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
 - Rendering a data-driven four-card Services grid without adding a UI dependency or duplicating service content.
-- Building an accessible, controlled contact form with client-side validation and submission states kept separate from the pending backend endpoint.
+- Building an accessible, controlled contact form with client-side validation and a response-driven submission lifecycle wired to the shared Apps Script endpoint.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.
 - Keeping the dependency surface small while using native disclosure controls for simple interactions.

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from "react"
 import { business } from "../../data/business";
 import { placeholderServices } from "../../data/services";
 import {
+  mapServerValidationErrors,
   submitContactForm,
   validateContactForm,
   type ContactFormErrors,
@@ -150,10 +151,24 @@ export function ContactSection() {
     setStatus("submitting");
 
     try {
-      await submitContactForm(values);
-      setValues(INITIAL_VALUES);
-      setStatus("success");
-    } catch {
+      const outcome = await submitContactForm(values);
+
+      if (outcome.status === "success") {
+        setValues(INITIAL_VALUES);
+        setStatus("success");
+        return;
+      }
+
+      if (outcome.status === "validation-error") {
+        const serverErrors = mapServerValidationErrors(outcome.details);
+        if (Object.keys(serverErrors).length > 0) {
+          setErrors(serverErrors);
+          focusFirstInvalid(serverErrors);
+          setStatus("idle");
+          return;
+        }
+      }
+
       setStatus("error");
     } finally {
       submittingRef.current = false;
@@ -310,6 +325,49 @@ export function ContactSection() {
 
           <div className="static-form__row">
             <div className="static-field">
+              <label className="static-field__label" htmlFor="contact-inquiry-type">
+                Inquiry type
+              </label>
+              <select
+                className="static-form__select"
+                id="contact-inquiry-type"
+                name="inquiryType"
+                onChange={(e) => updateInquiryType(e.target.value)}
+                value={values.inquiryType}
+              >
+                <option value="">Select an inquiry...</option>
+                <option value="question">Question</option>
+                <option value="quote">Quote</option>
+                <option value="consultation">Consultation</option>
+                <option value="other">Other</option>
+              </select>
+              {values.inquiryType === "other" && (
+                <>
+                  <label className="static-field__label" htmlFor="contact-inquiry-other">
+                    Describe the inquiry
+                  </label>
+                  <input
+                    aria-describedby={
+                      errors.inquiryOther ? "contact-inquiry-other-error" : undefined
+                    }
+                    aria-invalid={errors.inquiryOther ? true : undefined}
+                    className="static-field__control"
+                    id="contact-inquiry-other"
+                    name="inquiryOther"
+                    onChange={(e) => updateField("inquiryOther", e.target.value)}
+                    type="text"
+                    value={values.inquiryOther}
+                  />
+                  {errors.inquiryOther && (
+                    <p className="contact-form__error" id="contact-inquiry-other-error">
+                      {errors.inquiryOther}
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+
+            <div className="static-field">
               <label className="static-field__label" htmlFor="contact-service">
                 Service
               </label>
@@ -348,49 +406,6 @@ export function ContactSection() {
                   {errors.serviceOther && (
                     <p className="contact-form__error" id="contact-service-other-error">
                       {errors.serviceOther}
-                    </p>
-                  )}
-                </>
-              )}
-            </div>
-
-            <div className="static-field">
-              <label className="static-field__label" htmlFor="contact-inquiry-type">
-                Inquiry type
-              </label>
-              <select
-                className="static-form__select"
-                id="contact-inquiry-type"
-                name="inquiryType"
-                onChange={(e) => updateInquiryType(e.target.value)}
-                value={values.inquiryType}
-              >
-                <option value="">Select an inquiry...</option>
-                <option value="question">Question</option>
-                <option value="quote">Quote</option>
-                <option value="consultation">Consultation</option>
-                <option value="other">Other</option>
-              </select>
-              {values.inquiryType === "other" && (
-                <>
-                  <label className="static-field__label" htmlFor="contact-inquiry-other">
-                    Describe the inquiry
-                  </label>
-                  <input
-                    aria-describedby={
-                      errors.inquiryOther ? "contact-inquiry-other-error" : undefined
-                    }
-                    aria-invalid={errors.inquiryOther ? true : undefined}
-                    className="static-field__control"
-                    id="contact-inquiry-other"
-                    name="inquiryOther"
-                    onChange={(e) => updateField("inquiryOther", e.target.value)}
-                    type="text"
-                    value={values.inquiryOther}
-                  />
-                  {errors.inquiryOther && (
-                    <p className="contact-form__error" id="contact-inquiry-other-error">
-                      {errors.inquiryOther}
                     </p>
                   )}
                 </>
