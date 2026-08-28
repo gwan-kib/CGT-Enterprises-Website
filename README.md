@@ -15,7 +15,7 @@ The current page includes:
 - A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
-The contact and review forms post to the shared Google Apps Script endpoint configured via `VITE_APPS_SCRIPT_URL`. Until that URL is provided — and, for reviews, until the review route and Sheet are configured server-side — submissions report a safe error. Displayed reviews and other business content remain placeholder wireframe material, and no real customer or business information is shown.
+The contact and review forms post to the shared Google Apps Script endpoint configured via `VITE_APPS_SCRIPT_URL`. The review form sends an anonymous review (service ID, a 1–5 rating, and a summary) together with a persistent browser client token and a hidden honeypot field; a saved review is held for moderation and is not inserted into the public carousel. Until the URL is provided — and, for reviews, until the review route and Sheet are configured server-side — submissions report a safe error. Displayed reviews and other business content remain placeholder wireframe material, and no real customer or business information is shown.
 
 ## Design and accessibility
 
@@ -83,7 +83,7 @@ npm install
 npm run dev
 ```
 
-`VITE_APPS_SCRIPT_URL` points the contact form to the deployed Google Apps Script web app that receives submissions. It is public configuration, not a secret; see `.env.example` for the placeholder. Until it is set, the form reports a submission error. Local `.env` files are excluded from version control.
+`VITE_APPS_SCRIPT_URL` points the contact and review forms to the deployed Google Apps Script web app that receives submissions. It is public configuration, not a secret; see `.env.example` for the placeholder. Until it is set, the forms report a submission error. Local `.env` files are excluded from version control.
 
 ### Available scripts
 

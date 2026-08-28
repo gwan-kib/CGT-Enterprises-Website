@@ -12,34 +12,43 @@ import { Button } from "../ui/Button";
 import { SectionHeading } from "../ui/SectionHeading";
 import { StarIllustration } from "../ui/StarIllustration";
 
-type FormStatus = "error" | "idle" | "submitting" | "success";
+type FormStatus =
+  | "duplicate"
+  | "error"
+  | "idle"
+  | "submitting"
+  | "success"
+  | "validation-error";
 
 const INITIAL_VALUES: ReviewFormValues = {
   service: "",
-  serviceOther: "",
+  rating: 0,
   summary: "",
-  date: "",
+  website: "",
 };
 
-const ERROR_FIELD_BY_KEY: Record<keyof ReviewFormValues, keyof ReviewFormErrors | null> = {
+const RATING_OPTIONS = [1, 2, 3, 4, 5];
+
+const ERROR_FIELD_BY_KEY: Record<
+  keyof ReviewFormValues,
+  keyof ReviewFormErrors | null
+> = {
   service: "service",
-  serviceOther: "serviceOther",
+  rating: "rating",
   summary: "summary",
-  date: "date",
+  website: null,
 };
 
 const INVALID_FIELD_IDS: Record<keyof ReviewFormErrors, string> = {
   service: "review-service",
-  serviceOther: "review-service-other",
+  rating: "review-rating",
   summary: "review-summary",
-  date: "review-date",
 };
 
 const INVALID_FIELD_ORDER: (keyof ReviewFormErrors)[] = [
   "service",
-  "serviceOther",
+  "rating",
   "summary",
-  "date",
 ];
 
 function withoutError(
@@ -67,12 +76,13 @@ export function ReviewFormSection() {
   }
 
   function updateService(value: string) {
-    setValues((prev) => ({
-      ...prev,
-      service: value,
-      serviceOther: value === "other" ? prev.serviceOther : "",
-    }));
-    setErrors((prev) => withoutError(withoutError(prev, "service"), "serviceOther"));
+    setValues((prev) => ({ ...prev, service: value }));
+    setErrors((prev) => withoutError(prev, "service"));
+  }
+
+  function updateRating(value: number) {
+    setValues((prev) => ({ ...prev, rating: value }));
+    setErrors((prev) => withoutError(prev, "rating"));
   }
 
   function focusFirstInvalid(nextErrors: ReviewFormErrors) {
@@ -118,6 +128,13 @@ export function ReviewFormSection() {
           setStatus("idle");
           return;
         }
+        setStatus("validation-error");
+        return;
+      }
+
+      if (outcome.status === "duplicate") {
+        setStatus("duplicate");
+        return;
       }
 
       setStatus("error");
@@ -130,7 +147,11 @@ export function ReviewFormSection() {
   if (status === "submitting") {
     statusMessage = "Sending your review...";
   } else if (status === "success") {
-    statusMessage = "Thank you! Your review has been submitted for CGT to review.";
+    statusMessage = "Thank you. Your review has been submitted for review.";
+  } else if (status === "duplicate") {
+    statusMessage = "It looks like this review was already submitted.";
+  } else if (status === "validation-error") {
+    statusMessage = "Please check your review and try again.";
   } else if (status === "error") {
     statusMessage = "We couldn't send your review. Please try again.";
   }
@@ -185,52 +206,41 @@ export function ReviewFormSection() {
                   {errors.service}
                 </p>
               )}
-              {values.service === "other" && (
-                <>
-                  <label className="static-field__label" htmlFor="review-service-other">
-                    Describe the service
-                  </label>
-                  <input
-                    aria-describedby={
-                      errors.serviceOther ? "review-service-other-error" : undefined
-                    }
-                    aria-invalid={errors.serviceOther ? true : undefined}
-                    className="static-field__control"
-                    id="review-service-other"
-                    name="serviceOther"
-                    onChange={(e) => updateField("serviceOther", e.target.value)}
-                    type="text"
-                    value={values.serviceOther}
-                  />
-                  {errors.serviceOther && (
-                    <p className="review-form__error" id="review-service-other-error">
-                      {errors.serviceOther}
-                    </p>
-                  )}
-                </>
-              )}
             </div>
 
-            <div className="static-field">
-              <label className="static-field__label" htmlFor="review-date">
-                Date
-              </label>
-              <input
-                aria-describedby={errors.date ? "review-date-error" : undefined}
-                aria-invalid={errors.date ? true : undefined}
-                className="static-field__control"
-                id="review-date"
-                name="date"
-                onChange={(e) => updateField("date", e.target.value)}
-                type="date"
-                value={values.date}
-              />
-              {errors.date && (
-                <p className="review-form__error" id="review-date-error">
-                  {errors.date}
+            <fieldset
+              aria-invalid={errors.rating ? true : undefined}
+              className="static-field review-form__rating-group"
+            >
+              <legend className="static-field__label">Rating</legend>
+              <div
+                aria-describedby={errors.rating ? "review-rating-error" : undefined}
+                className="review-form__rating"
+              >
+                {RATING_OPTIONS.map((star) => (
+                  <label className="review-form__rating-star" key={star}>
+                    <input
+                      aria-label={`${star} star${star === 1 ? "" : "s"}`}
+                      checked={values.rating === star}
+                      className="review-form__rating-input"
+                      id={star === 1 ? "review-rating" : undefined}
+                      name="rating"
+                      onChange={() => updateRating(star)}
+                      type="radio"
+                      value={star}
+                    />
+                    <span aria-hidden="true" className="material-symbols-rounded">
+                      star
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {errors.rating && (
+                <p className="review-form__error" id="review-rating-error">
+                  {errors.rating}
                 </p>
               )}
-            </div>
+            </fieldset>
           </div>
 
           <div className="static-field">
@@ -253,6 +263,17 @@ export function ReviewFormSection() {
               </p>
             )}
           </div>
+
+          <input
+            aria-hidden="true"
+            autoComplete="off"
+            className="review-form__honeypot"
+            name="website"
+            onChange={(e) => updateField("website", e.target.value)}
+            tabIndex={-1}
+            type="text"
+            value={values.website}
+          />
 
           <Button disabled={status === "submitting"} type="submit">
             {status === "submitting" ? "Submitting..." : "Submit review"}

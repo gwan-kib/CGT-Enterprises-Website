@@ -45,6 +45,76 @@
     box-shadow: inset 0 0 0 0.2rem var(--color-brand-red-700);
   }
 
+  /* ---------- Star rating ---------- */
+
+  .review-form__rating {
+    @apply flex items-center;
+    gap: var(--space-1);
+  }
+
+  .review-form__rating-group[aria-invalid="true"] .review-form__rating {
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 0.2rem var(--color-brand-red-700);
+  }
+
+  .review-form__rating-star {
+    @apply relative inline-flex items-center justify-center;
+    min-width: 3rem;
+    min-height: 3rem;
+    border-radius: 50%;
+    color: var(--color-brand-red-200);
+    cursor: pointer;
+    transition:
+      transform var(--transition-fast) var(--easing-standard),
+      color var(--transition-fast) var(--easing-standard);
+  }
+
+  .review-form__rating-star:hover {
+    transform: scale(1.15);
+  }
+
+  .review-form__rating-star .material-symbols-rounded {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .review-form__rating-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .review-form__rating-input:checked + .material-symbols-rounded {
+    font-variation-settings: "FILL" 1;
+    color: var(--color-brand-red-900);
+  }
+
+  .review-form__rating-input:focus-visible + .material-symbols-rounded {
+    outline: 2px solid var(--color-brand-red-500);
+    outline-offset: 0.25rem;
+    border-radius: 50%;
+  }
+
+  .review-form__honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* ---------- Star illustration ---------- */
 
   .star-illustration {

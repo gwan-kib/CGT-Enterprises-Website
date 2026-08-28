@@ -1,22 +1,22 @@
-import { placeholderServices } from "../data/services";
-
 export interface ReviewFormValues {
   service: string;
-  serviceOther: string;
+  rating: number;
   summary: string;
-  date: string;
+  website: string;
 }
 
 export interface ReviewFormErrors {
   service?: string;
-  serviceOther?: string;
+  rating?: string;
   summary?: string;
-  date?: string;
 }
 
-const SERVICE_MAX_LENGTH = 100;
-const SUMMARY_MAX_LENGTH = 5000;
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const SUMMARY_MAX_LENGTH = 750;
+const CLIENT_TOKEN_KEY = "cgt-review-client-token";
+
+function normalizedLength(text: string): number {
+  return text.normalize("NFKC").length;
+}
 
 export function validateReviewForm(values: ReviewFormValues): ReviewFormErrors {
   const errors: ReviewFormErrors = {};
@@ -25,26 +25,15 @@ export function validateReviewForm(values: ReviewFormValues): ReviewFormErrors {
     errors.service = "Please select a service.";
   }
 
-  if (values.service === "other") {
-    const otherService = values.serviceOther.trim();
-    if (!otherService) {
-      errors.serviceOther = "Please describe the service.";
-    } else if (otherService.length > SERVICE_MAX_LENGTH) {
-      errors.serviceOther = "Please keep the service under 100 characters.";
-    }
+  if (!Number.isInteger(values.rating) || values.rating < 1 || values.rating > 5) {
+    errors.rating = "Please choose a rating from 1 to 5.";
   }
 
   const summary = values.summary.trim();
   if (!summary) {
     errors.summary = "Please enter a review.";
-  } else if (summary.length > SUMMARY_MAX_LENGTH) {
-    errors.summary = "Please keep your review under 5,000 characters.";
-  }
-
-  if (!values.date) {
-    errors.date = "Please choose a date.";
-  } else if (!DATE_PATTERN.test(values.date)) {
-    errors.date = "Please choose a valid date.";
+  } else if (normalizedLength(summary) > SUMMARY_MAX_LENGTH) {
+    errors.summary = "Please keep your review under 750 characters.";
   }
 
   return errors;
@@ -53,6 +42,7 @@ export function validateReviewForm(values: ReviewFormValues): ReviewFormErrors {
 export type ReviewSubmitOutcome =
   | { status: "success" }
   | { status: "validation-error"; details: Record<string, string> }
+  | { status: "duplicate" }
   | { status: "error" };
 
 interface ReviewSubmissionResponse {
@@ -70,11 +60,11 @@ export function mapServerValidationErrors(
   if (details.service) {
     errors.service = details.service;
   }
+  if (details.rating) {
+    errors.rating = details.rating;
+  }
   if (details.summary) {
     errors.summary = details.summary;
-  }
-  if (details.date) {
-    errors.date = details.date;
   }
 
   return errors;
@@ -89,46 +79,85 @@ export async function submitReviewForm(
     return { status: "error" };
   }
 
+  let response: Response;
   try {
-    const response = await fetch(endpoint, {
+    response = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
       body: JSON.stringify(buildPayload(values)),
     });
-
-    if (!response.ok) {
-      return { status: "error" };
-    }
-
-    const result = (await response.json()) as ReviewSubmissionResponse;
-
-    if (result.ok) {
-      return { status: "success" };
-    }
-
-    if (result.code === "VALIDATION_ERROR") {
-      return { status: "validation-error", details: result.details ?? {} };
-    }
-
-    return { status: "error" };
   } catch {
     return { status: "error" };
+  }
+
+  if (!response.ok) {
+    return { status: "error" };
+  }
+
+  let result: ReviewSubmissionResponse;
+  try {
+    result = (await response.json()) as ReviewSubmissionResponse;
+  } catch {
+    return { status: "error" };
+  }
+
+  switch (result.code) {
+    case "REVIEW_SAVED":
+      return { status: "success" };
+    case "VALIDATION_ERROR":
+      return { status: "validation-error", details: result.details ?? {} };
+    case "DUPLICATE_SUBMISSION":
+      return { status: "duplicate" };
+    default:
+      return { status: "error" };
   }
 }
 
 function buildPayload(values: ReviewFormValues) {
   return {
     submissionType: "review",
-    service: resolveService(values),
+    service: values.service,
+    rating: values.rating,
     summary: values.summary.trim(),
-    date: values.date,
+    website: values.website.trim(),
+    clientToken: getClientToken(),
   };
 }
 
-function resolveService(values: ReviewFormValues): string {
-  if (values.service === "other") {
-    return values.serviceOther.trim();
+function getClientToken(): string {
+  try {
+    const stored = window.localStorage.getItem(CLIENT_TOKEN_KEY);
+    if (stored) {
+      return stored;
+    }
+
+    const token = generateUuid();
+    window.localStorage.setItem(CLIENT_TOKEN_KEY, token);
+    return token;
+  } catch {
+    return generateUuid();
+  }
+}
+
+function generateUuid(): string {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
   }
 
-  return placeholderServices.find((item) => item.id === values.service)?.name ?? "";
+  const bytes = new Uint8Array(16);
+  if (typeof crypto !== "undefined" && typeof crypto.getRandomValues === "function") {
+    crypto.getRandomValues(bytes);
+  } else {
+    for (let i = 0; i < bytes.length; i += 1) {
+      bytes[i] = Math.floor(Math.random() * 256);
+    }
+  }
+
+  bytes[6] = (bytes[6] & 0x0f) | 0x40;
+  bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+  const hex = Array.from(bytes, (byte) =>
+    byte.toString(16).padStart(2, "0"),
+  ).join("");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }
