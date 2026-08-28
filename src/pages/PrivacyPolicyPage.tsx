@@ -8,13 +8,12 @@ export function PrivacyPolicyPage() {
       <main className="privacy-page" id="main-content">
         <article className="privacy-page__article">
           <p className="privacy-page__notice">
-            Draft for client approval. Before publication, verify the final
-            form fields, retention periods, review display fields, and
-            cookie/analytics behaviour.
+            Draft for client approval. Before publication, verify retention
+            periods and any cookie or analytics behaviour.
           </p>
 
           <h1 className="privacy-page__title">Privacy Policy</h1>
-          <p className="privacy-page__last-updated">Last updated: Jul 25, 2026</p>
+          <p className="privacy-page__last-updated">Last updated: Aug 27, 2026</p>
 
           <section className="privacy-page__section">
             <h2 className="privacy-page__section-title">1. Introduction</h2>
@@ -43,11 +42,19 @@ export function PrivacyPolicyPage() {
             </p>
             <p>
               <strong>Review submissions.</strong> When you submit a review,
-              the form may collect the service type, review summary, service
-              date, and any identifying or contact information shown in the
-              final review form. Please do not include sensitive personal
-              information or information about another person unless you are
-              authorized to provide it.
+              the form collects the service type, a rating, and your review
+              summary. Reviews are anonymous; the review form does not collect
+              your name or email address. Please do not include sensitive
+              personal information or information about another person unless
+              you are authorized to provide it.
+            </p>
+            <p>
+              <strong>Anonymous review identifier.</strong> To help prevent
+              spam, duplicate submissions, and misuse, the review form stores a
+              random anonymous identifier in your browser and sends it with your
+              review submission. This identifier does not identify you by name
+              and is not used for advertising or for tracking your activity on
+              other websites.
             </p>
             <p>
               <strong>Technical information.</strong> CGT&rsquo;s hosting and
@@ -153,18 +160,16 @@ export function PrivacyPolicyPage() {
             <h2 className="privacy-page__section-title">6. Public Reviews</h2>
             <p>
               A review submitted for publication may be visible to anyone who
-              visits the website. Depending on the approved review form, the
-              published review may include the review text, service type,
-              service date, and the reviewer&rsquo;s name or other approved
-              display information.
+              visits the website. Published reviews are anonymous and display
+              only the service type, rating, and review summary.
             </p>
             <p>
-              CGT may review, decline, remove, or make limited formatting edits
-              to submissions for relevance, privacy, safety, clarity, or
-              compliance with the review-submission rules. CGT will not
-              intentionally publish private contact information as part of a
-              review unless the reviewer has clearly requested and authorized
-              it.
+              Reviews are not shown publicly until CGT has reviewed and
+              approved them. CGT may decline, remove, or make limited
+              formatting edits to submissions for relevance, privacy, safety,
+              clarity, or compliance with the review-submission rules. CGT will
+              not intentionally publish private contact information as part of
+              a review.
             </p>
           </section>
 
@@ -227,6 +232,13 @@ export function PrivacyPolicyPage() {
               CGT does not use personal information for targeted advertising.
               The website may use technologies that are strictly necessary to
               operate, secure, or deliver the website and its forms.
+            </p>
+            <p>
+              The review form stores an anonymous identifier in your
+              browser&rsquo;s local storage so CGT can recognize repeated or
+              duplicate submissions and help prevent spam and misuse. This
+              identifier is not used to identify you personally or to track
+              your activity on other websites.
             </p>
             <p>
               If CGT later adds analytics, advertising, or other non-essential

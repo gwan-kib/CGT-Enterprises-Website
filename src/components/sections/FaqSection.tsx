@@ -31,7 +31,7 @@ export function FaqSection() {
 
         <a
           className="button faq-section__facility-link"
-          href="https://www.yellowknife.ca/waste-management/solid-waste-facility/visiting"
+          href="https://www.yellowknife.ca/waste-management/solid-waste-facility/visiting#commercial-rates-for-commercial-vehicles-disposing-of-solid-waste-195"
           rel="noopener noreferrer"
           target="_blank"
         >
