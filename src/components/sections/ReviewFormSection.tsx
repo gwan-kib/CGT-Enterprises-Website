@@ -9,6 +9,7 @@ import {
 } from "../../utils/reviewForm";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
+import { CustomSelect } from "../ui/CustomSelect";
 import { FormSuccess } from "../ui/FormSuccess";
 import { SectionHeading } from "../ui/SectionHeading";
 import { StarIllustration } from "../ui/StarIllustration";
@@ -24,6 +25,11 @@ const INITIAL_VALUES: ReviewFormValues = {
 };
 
 const RATING_OPTIONS = [1, 2, 3, 4, 5];
+
+const SERVICE_OPTIONS = [
+  ...placeholderServices.map((service) => ({ label: service.name, value: service.id })),
+  { label: "Other", value: "other" },
+];
 
 const ERROR_FIELD_BY_KEY: Record<
   keyof ReviewFormValues,
@@ -176,23 +182,16 @@ export function ReviewFormSection() {
               <label className="static-field__label" htmlFor="review-service">
                 Service type
               </label>
-              <select
+              <CustomSelect
                 aria-describedby={errors.service ? "review-service-error" : undefined}
                 aria-invalid={errors.service ? true : undefined}
-                className="static-form__select"
                 id="review-service"
                 name="service"
-                onChange={(e) => updateService(e.target.value)}
+                onChange={updateService}
+                options={SERVICE_OPTIONS}
+                placeholder="Select service type..."
                 value={values.service}
-              >
-                <option value="">Select a service...</option>
-                {placeholderServices.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.name}
-                  </option>
-                ))}
-                <option value="other">Other</option>
-              </select>
+              />
               {errors.service && (
                 <p className="review-form__error" id="review-service-error">
                   {errors.service}

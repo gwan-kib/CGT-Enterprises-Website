@@ -19,14 +19,6 @@
 
   /* ---------- Form card ---------- */
 
-  .review-form {
-    padding: clamp(var(--space-8), 5vw, var(--space-12));
-  }
-
-  .review-form > .button {
-    width: 100%;
-  }
-
   .review-form__send-icon {
     font-size: 1.5rem;
     margin-left: var(--space-2);
@@ -40,8 +32,7 @@
     line-height: 1.45;
   }
 
-  .review-form .static-field__control[aria-invalid="true"],
-  .review-form .static-form__select[aria-invalid="true"] {
+  .review-form .static-field__control[aria-invalid="true"] {
     box-shadow: inset 0 0 0 0.2rem var(--color-brand-red-700);
   }
 

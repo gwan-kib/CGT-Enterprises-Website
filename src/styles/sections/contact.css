@@ -145,13 +145,7 @@
 
   /* ---------- Form card ---------- */
 
-  .contact-form {
-    padding: clamp(var(--space-8), 5vw, var(--space-12));
-  }
 
-  .contact-form > .button {
-    width: 100%;
-  }
 
   .contact-form__send-icon {
     font-size: 1.5rem;
@@ -168,6 +162,27 @@
 
   .contact-form .static-field__control[aria-invalid="true"] {
     box-shadow: inset 0 0 0 0.2rem var(--color-brand-red-700);
+  }
+
+  .contact-form .static-field__control--textarea::-webkit-scrollbar {
+    background: transparent;
+    width: .7rem;
+  }
+
+  .contact-form .static-field__control--textarea::-webkit-scrollbar-track {
+    margin-block: var(--space-2);
+    border-radius: 999px;
+    background: transparent;
+  }
+
+  .contact-form .static-field__control--textarea::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: var(--color-brand-red-500);
+  }
+
+  .contact-form .static-field__control--textarea::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand-red-600);
+    cursor: default;
   }
 
 }

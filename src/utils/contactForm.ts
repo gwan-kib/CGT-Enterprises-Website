@@ -11,6 +11,7 @@ export interface ContactFormValues {
 export interface ContactFormErrors {
   name?: string;
   email?: string;
+  inquiryType?: string;
   serviceOther?: string;
   inquiryOther?: string;
   message?: string;
@@ -31,6 +32,10 @@ export function validateContactForm(values: ContactFormValues): ContactFormError
     errors.email = "Please enter your email address.";
   } else if (!EMAIL_PATTERN.test(email)) {
     errors.email = "Please enter a valid email address.";
+  }
+
+  if (!values.inquiryType) {
+    errors.inquiryType = "Please select an inquiry type.";
   }
 
   if (values.service === "other" && !values.serviceOther.trim()) {
@@ -72,6 +77,9 @@ export function mapServerValidationErrors(
   }
   if (details.email) {
     errors.email = details.email;
+  }
+  if (details.inquiryType) {
+    errors.inquiryType = details.inquiryType;
   }
   if (details.message) {
     errors.message = details.message;

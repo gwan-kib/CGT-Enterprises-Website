@@ -22,7 +22,7 @@ export function validateReviewForm(values: ReviewFormValues): ReviewFormErrors {
   const errors: ReviewFormErrors = {};
 
   if (!values.service) {
-    errors.service = "Please select a service.";
+    errors.service = "Please select a service type.";
   }
 
   if (!Number.isInteger(values.rating) || values.rating < 1 || values.rating > 5) {

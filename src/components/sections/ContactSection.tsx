@@ -11,6 +11,7 @@ import {
 import { showToast } from "../../utils/toast";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
+import { CustomSelect } from "../ui/CustomSelect";
 import { FacebookIcon } from "../ui/FacebookIcon";
 import { FormSuccess } from "../ui/FormSuccess";
 import { SectionHeading } from "../ui/SectionHeading";
@@ -27,12 +28,24 @@ const INITIAL_VALUES: ContactFormValues = {
   message: "",
 };
 
+const INQUIRY_OPTIONS = [
+  { label: "Question", value: "question" },
+  { label: "Quote", value: "quote" },
+  { label: "Consultation", value: "consultation" },
+  { label: "Other", value: "other" },
+] as const;
+
+const SERVICE_OPTIONS = [
+  ...placeholderServices.map((service) => ({ label: service.name, value: service.id })),
+  { label: "Other", value: "other" },
+];
+
 const ERROR_FIELD_BY_KEY: Record<keyof ContactFormValues, keyof ContactFormErrors | null> = {
   name: "name",
   email: "email",
   service: "serviceOther",
   serviceOther: "serviceOther",
-  inquiryType: "inquiryOther",
+  inquiryType: "inquiryType",
   inquiryOther: "inquiryOther",
   message: "message",
 };
@@ -40,6 +53,7 @@ const ERROR_FIELD_BY_KEY: Record<keyof ContactFormValues, keyof ContactFormError
 const INVALID_FIELD_IDS: Record<keyof ContactFormErrors, string> = {
   name: "contact-name",
   email: "contact-email",
+  inquiryType: "contact-inquiry-type",
   serviceOther: "contact-service-other",
   inquiryOther: "contact-inquiry-other",
   message: "contact-message",
@@ -48,6 +62,7 @@ const INVALID_FIELD_IDS: Record<keyof ContactFormErrors, string> = {
 const INVALID_FIELD_ORDER: (keyof ContactFormErrors)[] = [
   "name",
   "email",
+  "inquiryType",
   "serviceOther",
   "inquiryOther",
   "message",
@@ -122,7 +137,9 @@ export function ContactSection() {
       inquiryType: value,
       inquiryOther: value === "other" ? prev.inquiryOther : "",
     }));
-    setErrors((prev) => withoutError(prev, "inquiryOther"));
+    setErrors((prev) =>
+      withoutError(withoutError(prev, "inquiryType"), "inquiryOther"),
+    );
   }
 
   function focusFirstInvalid(nextErrors: ContactFormErrors) {
@@ -327,19 +344,21 @@ export function ContactSection() {
               <label className="static-field__label" htmlFor="contact-inquiry-type">
                 Inquiry type
               </label>
-              <select
-                className="static-form__select"
+              <CustomSelect
+                aria-describedby={errors.inquiryType ? "contact-inquiry-type-error" : undefined}
+                aria-invalid={errors.inquiryType ? true : undefined}
                 id="contact-inquiry-type"
                 name="inquiryType"
-                onChange={(e) => updateInquiryType(e.target.value)}
+                onChange={updateInquiryType}
+                options={INQUIRY_OPTIONS}
+                placeholder="Select an inquiry..."
                 value={values.inquiryType}
-              >
-                <option value="">Select an inquiry...</option>
-                <option value="question">Question</option>
-                <option value="quote">Quote</option>
-                <option value="consultation">Consultation</option>
-                <option value="other">Other</option>
-              </select>
+              />
+              {errors.inquiryType && (
+                <p className="contact-form__error" id="contact-inquiry-type-error">
+                  {errors.inquiryType}
+                </p>
+              )}
               {values.inquiryType === "other" && (
                 <>
                   <label className="static-field__label" htmlFor="contact-inquiry-other">
@@ -370,21 +389,14 @@ export function ContactSection() {
               <label className="static-field__label" htmlFor="contact-service">
                 Service
               </label>
-              <select
-                className="static-form__select"
+              <CustomSelect
                 id="contact-service"
                 name="service"
-                onChange={(e) => updateService(e.target.value)}
+                onChange={updateService}
+                options={SERVICE_OPTIONS}
+                placeholder="Select service type..."
                 value={values.service}
-              >
-                <option value="">Select a service...</option>
-                {placeholderServices.map((service) => (
-                  <option key={service.id} value={service.id}>
-                    {service.name}
-                  </option>
-                ))}
-                <option value="other">Other</option>
-              </select>
+              />
               {values.service === "other" && (
                 <>
                   <label className="static-field__label" htmlFor="contact-service-other">
