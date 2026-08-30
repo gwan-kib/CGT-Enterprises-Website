@@ -1,5 +1,3 @@
-import { placeholderServices } from "../data/services";
-
 export interface ContactFormValues {
   name: string;
   email: string;
@@ -123,26 +121,28 @@ function buildPayload(values: ContactFormValues) {
     submissionType: "contact",
     name: values.name.trim(),
     email: values.email.trim(),
-    service: resolveService(values),
-    inquiryType: resolveInquiryTypeValue(values),
-    message: values.message.trim(),
+    service: values.service,
+    inquiryType: values.inquiryType,
+    message: buildMessage(values),
   };
 }
 
-function resolveService(values: ContactFormValues): string {
-  if (values.service === "other") {
-    return values.serviceOther.trim();
+function buildMessage(values: ContactFormValues): string {
+  const details: string[] = [];
+
+  if (values.service === "other" && values.serviceOther.trim()) {
+    details.push("Service (other): " + values.serviceOther.trim());
   }
 
-  return placeholderServices.find((item) => item.id === values.service)?.name ?? "";
-}
-
-function resolveInquiryTypeValue(values: ContactFormValues): string {
-  if (values.inquiryType === "other") {
-    return values.inquiryOther.trim();
+  if (values.inquiryType === "other" && values.inquiryOther.trim()) {
+    details.push("Inquiry type (other): " + values.inquiryOther.trim());
   }
 
-  return values.inquiryType
-    ? values.inquiryType.charAt(0).toUpperCase() + values.inquiryType.slice(1)
-    : "";
+  const message = values.message.trim();
+
+  if (details.length === 0) {
+    return message;
+  }
+
+  return details.join("\n") + "\n\n" + message;
 }
