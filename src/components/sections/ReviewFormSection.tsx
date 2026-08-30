@@ -9,16 +9,12 @@ import {
 } from "../../utils/reviewForm";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
+import { FormSuccess } from "../ui/FormSuccess";
 import { SectionHeading } from "../ui/SectionHeading";
 import { StarIllustration } from "../ui/StarIllustration";
+import { showToast } from "../../utils/toast";
 
-type FormStatus =
-  | "duplicate"
-  | "error"
-  | "idle"
-  | "submitting"
-  | "success"
-  | "validation-error";
+type FormStatus = "idle" | "submitting" | "success";
 
 const INITIAL_VALUES: ReviewFormValues = {
   service: "",
@@ -93,6 +89,11 @@ export function ReviewFormSection() {
     document.getElementById(INVALID_FIELD_IDS[field])?.focus();
   }
 
+  function reopenForm() {
+    setValues(INITIAL_VALUES);
+    setStatus("idle");
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -128,32 +129,22 @@ export function ReviewFormSection() {
           setStatus("idle");
           return;
         }
-        setStatus("validation-error");
+        showToast("Please check your review and try again.", "error");
+        setStatus("idle");
         return;
       }
 
       if (outcome.status === "duplicate") {
-        setStatus("duplicate");
+        showToast("It looks like this review was already submitted.", "info");
+        setStatus("idle");
         return;
       }
 
-      setStatus("error");
+      showToast("We couldn't send your review. Please try again.", "error");
+      setStatus("idle");
     } finally {
       submittingRef.current = false;
     }
-  }
-
-  let statusMessage = "";
-  if (status === "submitting") {
-    statusMessage = "Sending your review...";
-  } else if (status === "success") {
-    statusMessage = "Thank you. Your review has been submitted for review.";
-  } else if (status === "duplicate") {
-    statusMessage = "It looks like this review was already submitted.";
-  } else if (status === "validation-error") {
-    statusMessage = "Please check your review and try again.";
-  } else if (status === "error") {
-    statusMessage = "We couldn't send your review. Please try again.";
   }
 
   return (
@@ -173,12 +164,13 @@ export function ReviewFormSection() {
           <StarIllustration />
         </div>
 
-        <form
-          aria-busy={status === "submitting"}
-          className="static-form review-form"
-          noValidate
-          onSubmit={handleSubmit}
-        >
+        {status !== "success" && (
+          <form
+            aria-busy={status === "submitting"}
+            className="static-form review-form"
+            noValidate
+            onSubmit={handleSubmit}
+          >
           <div className="static-form__row">
             <div className="static-field">
               <label className="static-field__label" htmlFor="review-service">
@@ -281,11 +273,16 @@ export function ReviewFormSection() {
               rate_review
             </span>
           </Button>
+          </form>
+        )}
 
-          <p className="static-form__status" id="review-form-status" role="status">
-            {statusMessage}
-          </p>
-        </form>
+        {status === "success" && (
+          <FormSuccess
+            actionLabel="Submit another review"
+            message="Thank you. Your review has been submitted for review."
+            onAction={reopenForm}
+          />
+        )}
       </div>
     </SectionContainer>
   );

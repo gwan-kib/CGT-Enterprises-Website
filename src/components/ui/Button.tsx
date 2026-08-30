@@ -13,6 +13,7 @@ interface ButtonProps {
   children: ReactNode
   disabled?: boolean
   href?: `#${string}`
+  onClick?: () => void
   type?: ButtonType
   variant?: ButtonVariant
 }
@@ -21,6 +22,7 @@ export function Button({
   children,
   disabled = false,
   href,
+  onClick,
   type = 'button',
   variant = 'primary',
 }: ButtonProps) {
@@ -39,6 +41,7 @@ export function Button({
       aria-disabled={disabled}
       className={className}
       disabled={disabled}
+      onClick={onClick}
       type={type}
     >
       {children}

@@ -12,9 +12,10 @@ import { showToast } from "../../utils/toast";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 import { FacebookIcon } from "../ui/FacebookIcon";
+import { FormSuccess } from "../ui/FormSuccess";
 import { SectionHeading } from "../ui/SectionHeading";
 
-type FormStatus = "error" | "idle" | "submitting" | "success";
+type FormStatus = "idle" | "submitting" | "success";
 
 const INITIAL_VALUES: ContactFormValues = {
   name: "",
@@ -132,6 +133,11 @@ export function ContactSection() {
     document.getElementById(INVALID_FIELD_IDS[field])?.focus();
   }
 
+  function reopenForm() {
+    setValues(INITIAL_VALUES);
+    setStatus("idle");
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -169,19 +175,11 @@ export function ContactSection() {
         }
       }
 
-      setStatus("error");
+      showToast("We couldn't send your message. Please try again.", "error");
+      setStatus("idle");
     } finally {
       submittingRef.current = false;
     }
-  }
-
-  let statusMessage = "";
-  if (status === "submitting") {
-    statusMessage = "Sending your message...";
-  } else if (status === "success") {
-    statusMessage = "Your message was sent successfully. We'll get back to you soon.";
-  } else if (status === "error") {
-    statusMessage = "We couldn't send your message. Please try again.";
   }
 
   return (
@@ -271,12 +269,13 @@ export function ContactSection() {
           </div>
         </div>
 
-        <form
-          aria-busy={status === "submitting"}
-          className="static-form contact-form"
-          noValidate
-          onSubmit={handleSubmit}
-        >
+        {status !== "success" && (
+          <form
+            aria-busy={status === "submitting"}
+            className="static-form contact-form"
+            noValidate
+            onSubmit={handleSubmit}
+          >
           <div className="static-form__row">
             <div className="static-field">
               <label className="static-field__label" htmlFor="contact-name">
@@ -440,11 +439,16 @@ export function ContactSection() {
               send
             </span>
           </Button>
+          </form>
+        )}
 
-          <p className="static-form__status" id="contact-form-status" role="status">
-            {statusMessage}
-          </p>
-        </form>
+        {status === "success" && (
+          <FormSuccess
+            actionLabel="Send another message"
+            message="Your message was sent successfully. We'll get back to you soon."
+            onAction={reopenForm}
+          />
+        )}
       </div>
     </SectionContainer>
   );

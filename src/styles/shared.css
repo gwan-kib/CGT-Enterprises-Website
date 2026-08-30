@@ -293,15 +293,28 @@
     opacity: 1;
   }
 
-  .static-form__status {
-    margin: calc(var(--space-2) * -1) 0 0;
-    color: var(--color-neutral-800);
-    font-size: 0.875rem;
-    line-height: 1.55;
+  .form-success {
+    @apply flex flex-col items-center justify-center;
+    gap: var(--space-6);
+    padding: var(--space-8);
+    text-align: center;
   }
 
-  .static-form--inverse .static-form__status {
-    color: var(--color-neutral-200);
+  .form-success__icon {
+    font-size: 4.5rem;
+    line-height: 1;
+    color: var(--color-status-success-icon);
+  }
+
+  .page-section--dark .form-success__icon {
+    color: var(--color-brand-green-400);
+  }
+
+  .form-success__message {
+    max-width: 24rem;
+    margin: 0;
+    font-weight: 600;
+    line-height: 1.55;
   }
 
   .toast-region {
