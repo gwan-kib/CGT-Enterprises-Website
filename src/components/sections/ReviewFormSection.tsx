@@ -68,6 +68,7 @@ function withoutError(
 
 export function ReviewFormSection() {
   const [values, setValues] = useState<ReviewFormValues>(INITIAL_VALUES);
+  const [hoveredRating, setHoveredRating] = useState(0);
   const [errors, setErrors] = useState<ReviewFormErrors>({});
   const [status, setStatus] = useState<FormStatus>("idle");
   const submittingRef = useRef(false);
@@ -97,6 +98,7 @@ export function ReviewFormSection() {
 
   function reopenForm() {
     setValues(INITIAL_VALUES);
+    setHoveredRating(0);
     setStatus("idle");
   }
 
@@ -207,24 +209,40 @@ export function ReviewFormSection() {
               <div
                 aria-describedby={errors.rating ? "review-rating-error" : undefined}
                 className="review-form__rating"
+                onMouseLeave={() => setHoveredRating(0)}
               >
-                {RATING_OPTIONS.map((star) => (
-                  <label className="review-form__rating-star" key={star}>
-                    <input
-                      aria-label={`${star} star${star === 1 ? "" : "s"}`}
-                      checked={values.rating === star}
-                      className="review-form__rating-input"
-                      id={star === 1 ? "review-rating" : undefined}
-                      name="rating"
-                      onChange={() => updateRating(star)}
-                      type="radio"
-                      value={star}
-                    />
-                    <span aria-hidden="true" className="material-symbols-rounded">
-                      star
-                    </span>
-                  </label>
-                ))}
+                {RATING_OPTIONS.map((star) => {
+                  const isSelected = star <= values.rating;
+                  const isHovered = star <= hoveredRating;
+
+                  return (
+                    <label
+                      className={`review-form__rating-star${isSelected ? " review-form__rating-star--selected" : ""}${isHovered ? " review-form__rating-star--hovered" : ""}`}
+                      key={star}
+                      onMouseEnter={() => setHoveredRating(star)}
+                    >
+                      <input
+                        aria-label={`${star} star${star === 1 ? "" : "s"}`}
+                        checked={values.rating === star}
+                        className="review-form__rating-input"
+                        id={star === 1 ? "review-rating" : undefined}
+                        name="rating"
+                        onChange={() => updateRating(star)}
+                        onClick={(event) => {
+                          if (values.rating === star) {
+                            event.preventDefault();
+                            updateRating(0);
+                          }
+                        }}
+                        type="radio"
+                        value={star}
+                      />
+                      <span aria-hidden="true" className="material-symbols-rounded">
+                        star
+                      </span>
+                    </label>
+                  );
+                })}
               </div>
               {errors.rating && (
                 <p className="review-form__error" id="review-rating-error">

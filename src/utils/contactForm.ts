@@ -4,7 +4,6 @@ export interface ContactFormValues {
   service: string;
   serviceOther: string;
   inquiryType: string;
-  inquiryOther: string;
   message: string;
 }
 
@@ -13,7 +12,6 @@ export interface ContactFormErrors {
   email?: string;
   inquiryType?: string;
   serviceOther?: string;
-  inquiryOther?: string;
   message?: string;
 }
 
@@ -40,10 +38,6 @@ export function validateContactForm(values: ContactFormValues): ContactFormError
 
   if (values.service === "other" && !values.serviceOther.trim()) {
     errors.serviceOther = "Please describe the service.";
-  }
-
-  if (values.inquiryType === "other" && !values.inquiryOther.trim()) {
-    errors.inquiryOther = "Please describe your inquiry.";
   }
 
   if (!values.message.trim()) {
@@ -140,10 +134,6 @@ function buildMessage(values: ContactFormValues): string {
 
   if (values.service === "other" && values.serviceOther.trim()) {
     details.push("Service (other): " + values.serviceOther.trim());
-  }
-
-  if (values.inquiryType === "other" && values.inquiryOther.trim()) {
-    details.push("Inquiry type (other): " + values.inquiryOther.trim());
   }
 
   const message = values.message.trim();

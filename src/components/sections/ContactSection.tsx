@@ -24,7 +24,6 @@ const INITIAL_VALUES: ContactFormValues = {
   service: "",
   serviceOther: "",
   inquiryType: "",
-  inquiryOther: "",
   message: "",
 };
 
@@ -46,7 +45,6 @@ const ERROR_FIELD_BY_KEY: Record<keyof ContactFormValues, keyof ContactFormError
   service: "serviceOther",
   serviceOther: "serviceOther",
   inquiryType: "inquiryType",
-  inquiryOther: "inquiryOther",
   message: "message",
 };
 
@@ -55,7 +53,6 @@ const INVALID_FIELD_IDS: Record<keyof ContactFormErrors, string> = {
   email: "contact-email",
   inquiryType: "contact-inquiry-type",
   serviceOther: "contact-service-other",
-  inquiryOther: "contact-inquiry-other",
   message: "contact-message",
 };
 
@@ -64,7 +61,6 @@ const INVALID_FIELD_ORDER: (keyof ContactFormErrors)[] = [
   "email",
   "inquiryType",
   "serviceOther",
-  "inquiryOther",
   "message",
 ];
 
@@ -132,14 +128,8 @@ export function ContactSection() {
   }
 
   function updateInquiryType(value: string) {
-    setValues((prev) => ({
-      ...prev,
-      inquiryType: value,
-      inquiryOther: value === "other" ? prev.inquiryOther : "",
-    }));
-    setErrors((prev) =>
-      withoutError(withoutError(prev, "inquiryType"), "inquiryOther"),
-    );
+    setValues((prev) => ({ ...prev, inquiryType: value }));
+    setErrors((prev) => withoutError(prev, "inquiryType"));
   }
 
   function focusFirstInvalid(nextErrors: ContactFormErrors) {
@@ -358,30 +348,6 @@ export function ContactSection() {
                 <p className="contact-form__error" id="contact-inquiry-type-error">
                   {errors.inquiryType}
                 </p>
-              )}
-              {values.inquiryType === "other" && (
-                <>
-                  <label className="static-field__label" htmlFor="contact-inquiry-other">
-                    Describe the inquiry
-                  </label>
-                  <input
-                    aria-describedby={
-                      errors.inquiryOther ? "contact-inquiry-other-error" : undefined
-                    }
-                    aria-invalid={errors.inquiryOther ? true : undefined}
-                    className="static-field__control"
-                    id="contact-inquiry-other"
-                    name="inquiryOther"
-                    onChange={(e) => updateField("inquiryOther", e.target.value)}
-                    type="text"
-                    value={values.inquiryOther}
-                  />
-                  {errors.inquiryOther && (
-                    <p className="contact-form__error" id="contact-inquiry-other-error">
-                      {errors.inquiryOther}
-                    </p>
-                  )}
-                </>
               )}
             </div>
 
