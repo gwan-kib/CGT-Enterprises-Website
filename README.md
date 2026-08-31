@@ -10,12 +10,12 @@ The current page includes:
 - Full-viewport Hero, Services and Pricing, Customer Reviews, Leave a Review, FAQ, and Contact sections.
 - A footer with repeated page navigation and a clear prototype-status note.
 - Clearly labelled placeholder copy, pricing, contact details, reviews, and image areas.
-- Static review and contact form layouts with read-only fields and disabled buttons.
+- Functional, accessible contact and review forms with controlled fields, client-side validation, and loading, success, and error states.
 - Native FAQ disclosure controls with one example expanded on initial load.
 - A responsive Services and Pricing grid with four service cards, direct enquiry links, and readable desktop, tablet, and mobile layouts.
 - Responsive layouts for a 16:9 laptop or desktop display and the approved 1170 x 2532 mobile target.
 
-The interface is intentionally a structural wireframe. It does not submit forms, store reviews, call external services, or display real customer or business information.
+The contact and review forms post to the shared Google Apps Script endpoint configured via `VITE_APPS_SCRIPT_URL`. The review form sends an anonymous review (service ID, a 1–5 rating, and a summary) together with a persistent browser client token and a hidden honeypot field; a saved review is held for moderation and is not inserted into the public carousel. Until the URL is provided — and, for reviews, until the review route and Sheet are configured server-side — submissions report a safe error. Displayed reviews and other business content remain placeholder wireframe material, and no real customer or business information is shown.
 
 ## Design and accessibility
 
@@ -83,7 +83,7 @@ npm install
 npm run dev
 ```
 
-No environment variables are required by the current implementation. Local `.env` files are excluded from version control.
+`VITE_APPS_SCRIPT_URL` points the contact and review forms to the deployed Google Apps Script web app that receives submissions. It is public configuration, not a secret; see `.env.example` for the placeholder. Until it is set, the forms report a submission error. Local `.env` files are excluded from version control.
 
 ### Available scripts
 
@@ -115,7 +115,7 @@ The implementation demonstrates:
 - Separating typed content, component structure, design tokens, shared patterns, and section-specific styling.
 - Building reusable UI only where the wireframe repeats a genuine pattern.
 - Rendering a data-driven four-card Services grid without adding a UI dependency or duplicating service content.
-- Creating static form compositions that show the intended layout without implying working submission behaviour.
+- Building accessible, controlled contact and review forms with client-side validation and response-driven submission lifecycles wired to the shared Apps Script endpoint.
 - Designing desktop and high-density mobile layouts with fluid grids, controlled widths, full-height sections, and accessible touch targets.
 - Maintaining contrast-tested semantic colours and a fluid Manrope typography scale.
 - Keeping the dependency surface small while using native disclosure controls for simple interactions.
