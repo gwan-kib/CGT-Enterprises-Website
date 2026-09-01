@@ -15,7 +15,7 @@
 
   .site-footer__upper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: var(--space-6);
@@ -25,8 +25,9 @@
 
   .site-footer__contact {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
     gap: var(--space-3);
   }
 
@@ -96,7 +97,7 @@
 
   .site-footer__lower {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     gap: var(--space-3);
@@ -125,6 +126,20 @@
   .site-footer__legal-link:hover {
     color: var(--color-brand-red-500);
   }
+
+  @media (max-width: 48rem) {
+    .site-footer__upper {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .site-footer__contact {
+      flex-direction: column;
+    }
+
+    .site-footer__lower {
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 }
-
-
