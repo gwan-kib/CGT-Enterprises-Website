@@ -1,4 +1,6 @@
 export interface ReviewFormValues {
+  name: string;
+  email: string;
   service: string;
   rating: number;
   summary: string;
@@ -6,11 +8,14 @@ export interface ReviewFormValues {
 }
 
 export interface ReviewFormErrors {
+  name?: string;
+  email?: string;
   service?: string;
   rating?: string;
   summary?: string;
 }
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SUMMARY_MAX_LENGTH = 750;
 const CLIENT_TOKEN_KEY = "cgt-review-client-token";
 
@@ -20,6 +25,17 @@ function normalizedLength(text: string): number {
 
 export function validateReviewForm(values: ReviewFormValues): ReviewFormErrors {
   const errors: ReviewFormErrors = {};
+
+  if (!values.name.trim()) {
+    errors.name = "Please enter your name.";
+  }
+
+  const email = values.email.trim();
+  if (!email) {
+    errors.email = "Please enter your email address.";
+  } else if (!EMAIL_PATTERN.test(email)) {
+    errors.email = "Please enter a valid email address.";
+  }
 
   if (!values.service) {
     errors.service = "Please select a service type.";
@@ -57,6 +73,12 @@ export function mapServerValidationErrors(
 ): ReviewFormErrors {
   const errors: ReviewFormErrors = {};
 
+  if (details.name) {
+    errors.name = details.name;
+  }
+  if (details.email) {
+    errors.email = details.email;
+  }
   if (details.service) {
     errors.service = details.service;
   }
@@ -116,6 +138,8 @@ export async function submitReviewForm(
 function buildPayload(values: ReviewFormValues) {
   return {
     submissionType: "review",
+    name: values.name.trim(),
+    email: values.email.trim(),
     service: values.service,
     rating: values.rating,
     summary: values.summary.trim(),
