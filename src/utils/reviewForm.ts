@@ -1,3 +1,5 @@
+import { getServiceName } from "../data/services";
+
 export interface ReviewFormValues {
   name: string;
   email: string;
@@ -140,7 +142,7 @@ function buildPayload(values: ReviewFormValues) {
     submissionType: "review",
     name: values.name.trim(),
     email: values.email.trim(),
-    service: values.service,
+    service: getServiceName(values.service),
     rating: values.rating,
     summary: values.summary.trim(),
     website: values.website.trim(),

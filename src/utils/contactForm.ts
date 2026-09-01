@@ -1,3 +1,5 @@
+import { getServiceName } from "../data/services";
+
 export interface ContactFormValues {
   name: string;
   email: string;
@@ -16,7 +18,18 @@ export interface ContactFormErrors {
 }
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const MESSAGE_MAX_LENGTH = 5000;
+const MESSAGE_MAX_LENGTH = 750;
+
+const INQUIRY_TYPE_LABELS: Record<string, string> = {
+  question: "Question",
+  quote: "Quote",
+  consultation: "Consultation",
+  other: "Other",
+};
+
+function toInquiryTypeLabel(value: string): string {
+  return INQUIRY_TYPE_LABELS[value] ?? value;
+}
 
 export function validateContactForm(values: ContactFormValues): ContactFormErrors {
   const errors: ContactFormErrors = {};
@@ -42,8 +55,8 @@ export function validateContactForm(values: ContactFormValues): ContactFormError
 
   if (!values.message.trim()) {
     errors.message = "Please enter a message.";
-  } else if (values.message.trim().length > MESSAGE_MAX_LENGTH) {
-    errors.message = "Please keep your message under 5,000 characters.";
+  } else if (buildMessage(values).length > MESSAGE_MAX_LENGTH) {
+    errors.message = "Please keep your message under 750 characters.";
   }
 
   return errors;
@@ -123,8 +136,8 @@ function buildPayload(values: ContactFormValues) {
     submissionType: "contact",
     name: values.name.trim(),
     email: values.email.trim(),
-    service: values.service,
-    inquiryType: values.inquiryType,
+    service: getServiceName(values.service),
+    inquiryType: toInquiryTypeLabel(values.inquiryType),
     message: buildMessage(values),
   };
 }
