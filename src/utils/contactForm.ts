@@ -1,4 +1,5 @@
 import { getServiceName } from "../data/services";
+import { getClientToken } from "./clientToken";
 
 export interface ContactFormValues {
   name: string;
@@ -7,6 +8,7 @@ export interface ContactFormValues {
   serviceOther: string;
   inquiryType: string;
   message: string;
+  website: string;
 }
 
 export interface ContactFormErrors {
@@ -19,6 +21,7 @@ export interface ContactFormErrors {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MESSAGE_MAX_LENGTH = 750;
+const CLIENT_TOKEN_KEY = "cgt-contact-client-token";
 
 const INQUIRY_TYPE_LABELS: Record<string, string> = {
   question: "Question",
@@ -139,6 +142,8 @@ function buildPayload(values: ContactFormValues) {
     service: getServiceName(values.service),
     inquiryType: toInquiryTypeLabel(values.inquiryType),
     message: buildMessage(values),
+    website: values.website.trim(),
+    clientToken: getClientToken(CLIENT_TOKEN_KEY),
   };
 }
 

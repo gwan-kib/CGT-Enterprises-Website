@@ -25,6 +25,7 @@ const INITIAL_VALUES: ContactFormValues = {
   serviceOther: "",
   inquiryType: "",
   message: "",
+  website: "",
 };
 
 const INQUIRY_OPTIONS = [
@@ -46,6 +47,7 @@ const ERROR_FIELD_BY_KEY: Record<keyof ContactFormValues, keyof ContactFormError
   serviceOther: "serviceOther",
   inquiryType: "inquiryType",
   message: "message",
+  website: null,
 };
 
 const INVALID_FIELD_IDS: Record<keyof ContactFormErrors, string> = {
@@ -410,6 +412,17 @@ export function ContactSection() {
               </p>
             )}
           </div>
+
+          <input
+            aria-hidden="true"
+            autoComplete="off"
+            className="contact-form__honeypot"
+            name="website"
+            onChange={(e) => updateField("website", e.target.value)}
+            tabIndex={-1}
+            type="text"
+            value={values.website}
+          />
 
           <Button disabled={status === "submitting"} type="submit">
             {status === "submitting" ? "Sending..." : "Send inquiry"}
