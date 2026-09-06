@@ -236,7 +236,7 @@ export function ContactSection() {
                   {copiedField === "phone" ? "check" : "content_copy"}
                 </span>
               </button>
-              <a className="contact-card__link" href="tel:placeholder">
+              <a className="contact-card__link" href={`tel:+1${business.contact.phone.replace(/\D/g, "")}`}>
                 <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                   call
                 </span>
@@ -263,7 +263,7 @@ export function ContactSection() {
                   {copiedField === "email" ? "check" : "content_copy"}
                 </span>
               </button>
-              <a className="contact-card__link" href="mailto:cgt@cgtenterprises.ca">
+              <a className="contact-card__link" href={`mailto:${business.contact.email}`}>
                 <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                   mail
                 </span>

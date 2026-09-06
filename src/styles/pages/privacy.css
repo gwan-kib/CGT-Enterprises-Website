@@ -10,17 +10,6 @@
     padding-block: var(--space-12) var(--space-16);
   }
 
-  .privacy-page__notice {
-    margin: 0 0 var(--space-10);
-    padding: var(--space-4) var(--space-5);
-    border-left: 2px solid var(--color-brand-red-500);
-    border-radius: 0 var(--space-1) var(--space-1) 0;
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-500);
-    font-size: 0.875rem;
-    line-height: 1.55;
-  }
-
   .privacy-page__title {
     margin: 0 0 var(--space-1);
     font-size: clamp(2rem, 1.65rem + 1.4vw, 3rem);

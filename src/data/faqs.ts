@@ -13,8 +13,8 @@ export const faqs: Faq[] = [
   {
     question: 'I need my appliance(s) picked up from my home "curbside". How much is that?',
     answer: [
-        "We can pickup the appliance(s) from outside the home for $100 per appliance. If you need us to come inside, our labor rate (seprate from the cost of the appliences) starts at $130 per hour (prorated).",
-      ],
+      "We can pick up the appliance(s) from outside the home for $100 per appliance. If you need us to come inside, our labour rate (separate from the cost of the appliances) starts at $130 per hour (prorated).",
+    ],
   },
   {
     question: "What forms of payment do you take?",
@@ -23,7 +23,7 @@ export const faqs: Faq[] = [
     ],
   },
   {
-    question: "Do you take dangerous goods? (eg. paint, engine oil, antifreeze...)",
+    question: "Do you take dangerous goods (e.g., paint, engine oil, antifreeze)?",
     answer: ["We do not accept dangerous goods."],
   },
   {
