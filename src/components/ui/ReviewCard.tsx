@@ -18,6 +18,12 @@ export function ReviewCard({ review }: ReviewCardProps) {
 
   return (
     <article className="review-card">
+      
+
+      <blockquote className="review-card__quote" tabIndex={0} aria-label="Customer review">
+        <p>{review.quote}</p>
+      </blockquote>
+      
       <div className="review-card__stars" aria-label={`${review.rating} out of ${TOTAL_STARS} stars`}>
         {Array.from({ length: TOTAL_STARS }, (_, i) => (
           <span
@@ -33,10 +39,6 @@ export function ReviewCard({ review }: ReviewCardProps) {
           </span>
         ))}
       </div>
-
-      <blockquote className="review-card__quote">
-        <p>{review.quote}</p>
-      </blockquote>
 
       <span className="review-card__detail">Service: {review.detail}</span>
       <time className="review-card__date">{review.date}</time>

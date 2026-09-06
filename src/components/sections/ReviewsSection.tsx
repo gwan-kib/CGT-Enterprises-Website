@@ -74,6 +74,7 @@ export function ReviewsSection() {
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     const carousel = carouselRef.current;
     if (!carousel || e.pointerType !== "mouse") return;
+    if (e.target instanceof Element && e.target.closest(".review-card__quote")) return;
 
     isDragging.current = true;
     dragStartX.current = e.clientX;
