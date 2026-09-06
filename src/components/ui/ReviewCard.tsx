@@ -24,7 +24,10 @@ export function ReviewCard({ review }: ReviewCardProps) {
             key={i}
             aria-hidden="true"
             className="material-symbols-rounded"
-            style={{ color: i < review.rating ? filledColor : emptyColor }}
+            style={{
+              color: i < review.rating ? filledColor : emptyColor,
+              fontVariationSettings: `'FILL' ${i < review.rating ? 1 : 0}`,
+            }}
           >
             star
           </span>

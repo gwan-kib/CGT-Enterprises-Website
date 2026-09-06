@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { formatReviewDate, loadReviews } from "../../utils/reviews";
 import type { ReviewCardData } from "../ui/ReviewCard";
 import { ReviewCard } from "../ui/ReviewCard";
 import { SectionContainer } from "../layout/SectionContainer";
@@ -35,61 +36,40 @@ function findClosestCardIndex(container: HTMLElement): number {
   return closestIndex;
 }
 
-const placeholderReviews: ReviewCardData[] = [
-  {
-    id: "placeholder-1",
-    date: "07/25/2026",
-    detail: "Dump Runs",
-    quote:
-      "Quick, friendly, and affordable. They cleared out a full trailer-load of junk in under an hour. Highly recommend their dump runs!",
-    rating: 5,
-  },
-  {
-    id: "placeholder-2",
-    date: "07/24/2026",
-    detail: "Appliance Disposal",
-    quote:
-      "Had an old fridge and washing machine taking up space. CGT picked them up the next day and handled everything. Made it look easy.",
-    rating: 5,
-  },
-  {
-    id: "placeholder-3",
-    date: "07/23/2026",
-    detail: "Curbside Delivery",
-    quote:
-      "Ordered a couch online and needed help getting it from the curb into my living room. They were on time, careful, and professional.",
-    rating: 5,
-  },
-  {
-    id: "placeholder-4",
-    date: "07/22/2026",
-    detail: "Household Moving",
-    quote:
-      "Moved our family of four across town without a scratch on anything. Polite crew, fair pricing, and they actually showed up early.",
-    rating: 5,
-  },
-  {
-    id: "placeholder-5",
-    date: "07/21/2026",
-    detail: "Beverage Recycling",
-    quote:
-      "Been bringing my bottles in every month. Fast service, fair counts, and the staff always has a smile. Best recycling depot in Yellowknife.",
-    rating: 5,
-  },
-];
-
 export function ReviewsSection() {
   const carouselRef = useRef<HTMLDivElement>(null);
+  const [reviews, setReviews] = useState<ReviewCardData[]>([]);
+  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
   const [closestIndex, setClosestIndex] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    loadReviews(controller.signal).then((loadedReviews) => {
+      if (controller.signal.aborted) return;
+      setClosestIndex(0);
+      setReviews(loadedReviews.map((review): ReviewCardData => ({
+        id: review.id,
+        date: formatReviewDate(review.date),
+        detail: review.service,
+        quote: review.summary,
+        rating: review.rating,
+      })));
+      setStatus("success");
+    }).catch(() => {
+      if (!controller.signal.aborted) setStatus("error");
+    });
+    return () => controller.abort();
+  }, []);
 
   const isDragging = useRef(false);
   const dragStartX = useRef(0);
   const dragStartScrollLeft = useRef(0);
   const isManualScrolling = useRef(false);
 
-  const totalCards = placeholderReviews.length;
-  const canScrollPrevious = closestIndex > 0;
-  const canScrollNext = closestIndex < totalCards - 1;
+  const totalCards = reviews.length;
+  const currentIndex = Math.max(0, Math.min(closestIndex, totalCards - 1));
+  const canScrollPrevious = totalCards > 1 && currentIndex > 0;
+  const canScrollNext = totalCards > 1 && currentIndex < totalCards - 1;
 
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     const carousel = carouselRef.current;
@@ -223,16 +203,25 @@ export function ReviewsSection() {
 
   useEffect(() => {
     const carousel = carouselRef.current;
-    if (!carousel || placeholderReviews.length <= 1) return;
+    if (!carousel) return;
+    isDragging.current = false;
+    isManualScrolling.current = false;
+    carousel.classList.remove("reviews-section__carousel--grabbing");
+    if (reviews.length === 0) return;
 
     const allCards = Array.from(
       carousel.querySelectorAll<HTMLElement>(".review-card"),
     );
-    const targetCard = allCards[1];
+    const initialIndex = reviews.length > 1 ? 1 : 0;
+    const targetCard = allCards[initialIndex];
+    if (!targetCard) return;
     const offset = getCardCenter(targetCard) - getContainerCenter(carousel);
     carousel.scrollBy({ left: offset, behavior: "instant" });
-    setClosestIndex(1);
-  }, []);
+    const frame = requestAnimationFrame(() => {
+      setClosestIndex(Math.max(0, findClosestCardIndex(carousel)));
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [reviews]);
 
   return (
     <SectionContainer className="reviews-section" id="reviews" labelledBy="reviews-title" tone="brand">
@@ -262,14 +251,23 @@ export function ReviewsSection() {
         </button>
 
         <div
-          className="reviews-section__carousel"
+          className={`reviews-section__carousel${reviews.length <= 1 ? " reviews-section__carousel--single" : ""}`}
           ref={carouselRef}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerCancel}
         >
-          {placeholderReviews.map((review) => (
+          {reviews.length === 0 && (
+            <p className="reviews-section__status" role={status === "loading" ? "status" : undefined}>
+              {status === "loading"
+                ? "Loading customer reviews..."
+                : status === "error"
+                  ? "Customer reviews are temporarily unavailable."
+                  : "No customer reviews are currently published."}
+            </p>
+          )}
+          {reviews.map((review) => (
             <ReviewCard key={review.id} review={review} />
           ))}
         </div>
