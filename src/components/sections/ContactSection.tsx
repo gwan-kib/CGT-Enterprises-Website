@@ -25,6 +25,7 @@ const INITIAL_VALUES: ContactFormValues = {
   serviceOther: "",
   inquiryType: "",
   message: "",
+  website: "",
 };
 
 const INQUIRY_OPTIONS = [
@@ -46,6 +47,7 @@ const ERROR_FIELD_BY_KEY: Record<keyof ContactFormValues, keyof ContactFormError
   serviceOther: "serviceOther",
   inquiryType: "inquiryType",
   message: "message",
+  website: null,
 };
 
 const INVALID_FIELD_IDS: Record<keyof ContactFormErrors, string> = {
@@ -234,7 +236,7 @@ export function ContactSection() {
                   {copiedField === "phone" ? "check" : "content_copy"}
                 </span>
               </button>
-              <a className="contact-card__link" href="tel:placeholder">
+              <a className="contact-card__link" href={`tel:+1${business.contact.phone.replace(/\D/g, "")}`}>
                 <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                   call
                 </span>
@@ -261,7 +263,7 @@ export function ContactSection() {
                   {copiedField === "email" ? "check" : "content_copy"}
                 </span>
               </button>
-              <a className="contact-card__link" href="mailto:cgt@cgtenterprises.ca">
+              <a className="contact-card__link" href={`mailto:${business.contact.email}`}>
                 <span aria-hidden="true" className="contact-card__icon material-symbols-rounded">
                   mail
                 </span>
@@ -410,6 +412,17 @@ export function ContactSection() {
               </p>
             )}
           </div>
+
+          <input
+            aria-hidden="true"
+            autoComplete="off"
+            className="contact-form__honeypot"
+            name="website"
+            onChange={(e) => updateField("website", e.target.value)}
+            tabIndex={-1}
+            type="text"
+            value={values.website}
+          />
 
           <Button disabled={status === "submitting"} type="submit">
             {status === "submitting" ? "Sending..." : "Send inquiry"}

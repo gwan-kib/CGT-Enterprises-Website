@@ -1,4 +1,4 @@
-import aboutImage from "../../assets/IRL Truck and Trailer.png";
+import aboutImage from "../../assets/IRL Truck and Trailer.webp";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 
@@ -21,8 +21,11 @@ export function AboutSection() {
       </div>
 
       <p className="about-section__body">
-      Founded by Trevor Squires, CGT Enterprises is a family-owned and locally operated business backed by Trevor’s 40 years of experience living and working in Yellowknife, NWT. Built on reliable service and a strong commitment to the community, it is an established local business you can count on. One way CGT Enterprises gives back is through its waste diversion program, which provides items such as furniture and mattresses to local individuals and families at no cost, and with free delivery.
- 
+        Founded by Trevor Squires, CGT Enterprises is a family-owned and locally operated business backed by Trevor’s 40
+        years of experience living and working in Yellowknife, NWT. Built on reliable service and a strong commitment to
+        the community, it is an established local business you can count on. One way CGT Enterprises gives back is
+        through its waste diversion program, which provides items such as furniture and mattresses to local individuals
+        and families at no cost, and with free delivery.
       </p>
 
       <div className="about-section__actions">

@@ -7,13 +7,8 @@ export function PrivacyPolicyPage() {
       <Header homePath="/" />
       <main className="privacy-page" id="main-content">
         <article className="privacy-page__article">
-          <p className="privacy-page__notice">
-            Draft for client approval. Before publication, verify retention
-            periods and any cookie or analytics behaviour.
-          </p>
-
           <h1 className="privacy-page__title">Privacy Policy</h1>
-          <p className="privacy-page__last-updated">Last updated: Aug 27, 2026</p>
+          <p className="privacy-page__last-updated">Last updated: Sep 5, 2026</p>
 
           <section className="privacy-page__section">
             <h2 className="privacy-page__section-title">1. Introduction</h2>
@@ -36,25 +31,26 @@ export function PrivacyPolicyPage() {
             </h2>
             <p>
               <strong>Contact inquiries.</strong> When you use the contact
-              form, we collect the information you choose to provide. This may
-              include your name, email address, phone number, message, and
-              details about the service you are asking about.
+              form, we collect your name, email address, inquiry type, message,
+              and any service details you provide. We also receive any other
+              personal information you choose to include in your message.
             </p>
             <p>
               <strong>Review submissions.</strong> When you submit a review,
-              the form collects the service type, a rating, and your review
-              summary. Reviews are anonymous; the review form does not collect
-              your name or email address. Please do not include sensitive
+              the form requires your name, email address, service type, rating,
+              and review summary. Your name and email address are submitted to
+              CGT with your review but are not included in the public review
+              feed or displayed as reviewer details. Please do not include sensitive
               personal information or information about another person unless
               you are authorized to provide it.
             </p>
             <p>
-              <strong>Anonymous review identifier.</strong> To help prevent
-              spam, duplicate submissions, and misuse, the review form stores a
-              random anonymous identifier in your browser and sends it with your
-              review submission. This identifier does not identify you by name
-              and is not used for advertising or for tracking your activity on
-              other websites.
+              <strong>Form submission identifiers.</strong> To help prevent
+              spam, duplicate submissions, and misuse, the contact and review
+              forms each store a random identifier in your browser and send it
+              with submissions. These identifiers can be associated with the
+              information you submit. The website does not use them for
+              advertising or to track your activity on other websites.
             </p>
             <p>
               <strong>Technical information.</strong> CGT&rsquo;s hosting and
@@ -160,8 +156,12 @@ export function PrivacyPolicyPage() {
             <h2 className="privacy-page__section-title">6. Public Reviews</h2>
             <p>
               A review submitted for publication may be visible to anyone who
-              visits the website. Published reviews are anonymous and display
-              only the service type, rating, and review summary.
+              visits the website. Published review cards display the date,
+              service type, rating, and review summary. The public review feed
+              also includes a review identifier. It does not include the name
+              or email address collected in the review form. Any personal
+              information you include in the review summary may become public
+              if that summary is approved for publication.
             </p>
             <p>
               Reviews are not shown publicly until CGT has reviewed and
@@ -234,11 +234,12 @@ export function PrivacyPolicyPage() {
               operate, secure, or deliver the website and its forms.
             </p>
             <p>
-              The review form stores an anonymous identifier in your
-              browser&rsquo;s local storage so CGT can recognize repeated or
-              duplicate submissions and help prevent spam and misuse. This
-              identifier is not used to identify you personally or to track
-              your activity on other websites.
+              The contact and review forms store separate random identifiers in
+              your browser&rsquo;s local storage so CGT can recognize repeated
+              or duplicate submissions and help prevent spam and misuse. Each
+              identifier is sent with the information you submit through its
+              form. The website does not use these identifiers to track your
+              activity on other websites.
             </p>
             <p>
               If CGT later adds analytics, advertising, or other non-essential

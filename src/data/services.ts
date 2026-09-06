@@ -8,6 +8,19 @@ export interface Service {
   showDetails: boolean;
 }
 
+export function getServiceName(id: string): string {
+  const service = placeholderServices.find((candidate) => candidate.id === id);
+  if (service) {
+    return service.name;
+  }
+
+  if (id === "other") {
+    return "Other";
+  }
+
+  return id;
+}
+
 export const placeholderServices: Service[] = [
   {
     id: "1",

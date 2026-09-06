@@ -18,6 +18,8 @@ import { showToast } from "../../utils/toast";
 type FormStatus = "idle" | "submitting" | "success";
 
 const INITIAL_VALUES: ReviewFormValues = {
+  name: "",
+  email: "",
   service: "",
   rating: 0,
   summary: "",
@@ -35,6 +37,8 @@ const ERROR_FIELD_BY_KEY: Record<
   keyof ReviewFormValues,
   keyof ReviewFormErrors | null
 > = {
+  name: "name",
+  email: "email",
   service: "service",
   rating: "rating",
   summary: "summary",
@@ -42,12 +46,16 @@ const ERROR_FIELD_BY_KEY: Record<
 };
 
 const INVALID_FIELD_IDS: Record<keyof ReviewFormErrors, string> = {
+  name: "review-name",
+  email: "review-email",
   service: "review-service",
   rating: "review-rating",
   summary: "review-summary",
 };
 
 const INVALID_FIELD_ORDER: (keyof ReviewFormErrors)[] = [
+  "name",
+  "email",
   "service",
   "rating",
   "summary",
@@ -179,6 +187,52 @@ export function ReviewFormSection() {
             noValidate
             onSubmit={handleSubmit}
           >
+          <div className="static-form__row">
+            <div className="static-field">
+              <label className="static-field__label" htmlFor="review-name">
+                Name
+              </label>
+              <input
+                aria-describedby={errors.name ? "review-name-error" : undefined}
+                aria-invalid={errors.name ? true : undefined}
+                autoComplete="name"
+                className="static-field__control"
+                id="review-name"
+                name="name"
+                onChange={(e) => updateField("name", e.target.value)}
+                type="text"
+                value={values.name}
+              />
+              {errors.name && (
+                <p className="review-form__error" id="review-name-error">
+                  {errors.name}
+                </p>
+              )}
+            </div>
+
+            <div className="static-field">
+              <label className="static-field__label" htmlFor="review-email">
+                Email
+              </label>
+              <input
+                aria-describedby={errors.email ? "review-email-error" : undefined}
+                aria-invalid={errors.email ? true : undefined}
+                autoComplete="email"
+                className="static-field__control"
+                id="review-email"
+                name="email"
+                onChange={(e) => updateField("email", e.target.value)}
+                type="email"
+                value={values.email}
+              />
+              {errors.email && (
+                <p className="review-form__error" id="review-email-error">
+                  {errors.email}
+                </p>
+              )}
+            </div>
+          </div>
+
           <div className="static-form__row">
             <div className="static-field">
               <label className="static-field__label" htmlFor="review-service">

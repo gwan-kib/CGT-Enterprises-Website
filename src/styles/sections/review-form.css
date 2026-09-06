@@ -122,7 +122,9 @@
 
   .star-illustration__star {
     position: absolute;
-    line-height: 0;
+    font-size: var(--side-size);
+    font-variation-settings: "FILL" 1;
+    line-height: 1;
   }
 
   .star-illustration__star--left {
@@ -138,6 +140,7 @@
     top: 50%;
     width: var(--center-size);
     height: var(--center-size);
+    font-size: var(--center-size);
     transform: translate(-50%, -50%) rotate(0deg);
   }
 
