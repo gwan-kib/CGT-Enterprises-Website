@@ -26,7 +26,7 @@ Use `https://cgtenterprises.ca/` as the production origin. If `www.cgtenterprise
 ## After deployment
 
 - [ ] Confirm HTTPS and the non-www canonical origin. Verify any www redirect and all three old paths with an HTTP client and a browser; check 301 status, Location headers, final section position, and absence of loops.
-- [ ] Confirm `/`, `/privacy-policy.html`, `/robots.txt`, `/sitemap.xml`, `/favicon-32.png`, `/favicon-192.png`, `/apple-touch-icon.png`, and `/images/cgt-social.png` return their actual files with successful responses and appropriate content types.
+- [ ] Confirm `/`, `/privacy-policy.html`, `/robots.txt`, `/sitemap.xml`, and `/images/cgt-social.png` return their actual files with successful responses and appropriate content types.
 - [ ] Check the production HTML for exactly one title and canonical per page, the expected homepage Open Graph tags, valid JSON-LD, and no `noindex` or blocking `X-Robots-Tag` header. Confirm the public robots rules allow crawling.
 - [ ] Validate the live JSON-LD with the [Schema.org validator](https://validator.schema.org/) and inspect the rendered homepage in Google Search Console. LocalBusiness markup describes confirmed facts; no search-feature eligibility or ranking is guaranteed.
 - [ ] Submit `https://cgtenterprises.ca/sitemap.xml` in the existing Search Console property, inspect both real page URLs, and monitor indexing and old-URL errors after cutover.
@@ -34,4 +34,4 @@ Use `https://cgtenterprises.ca/` as the production origin. If `www.cgtenterprise
 
 ## Asset provenance
 
-The 32/192-pixel favicons and 180-pixel Apple icon are resized, square-backed copies of `src/assets/CGT Enterprises Badge (alt).png`. The 1200 x 630 social image contains the existing `CGT Enterprises REV.png` artwork centered on black without cropping or adding copy. The 1024 x 986 hero PNG is a proportionally resized copy of that same source with transparency preserved. Source assets remain intact; no new dependency or generated artwork was added.
+The 1200 x 630 social image contains the existing `CGT Enterprises REV.png` artwork centered on black without cropping or adding copy. The 1024 x 986 hero PNG is a proportionally resized copy of that same source with transparency preserved. Source assets remain intact; no new dependency or generated artwork was added.

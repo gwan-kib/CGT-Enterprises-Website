@@ -44,7 +44,7 @@ React state and browser APIs handle navigation, forms, and carousel interaction.
 
 The homepage HTML contains a Yellowknife-specific title and service description, the `https://cgtenterprises.ca/` canonical URL, Open Graph metadata, and static LocalBusiness JSON-LD. The structured data matches the site's public phone, email, Facebook link, hours, and Yellowknife service area; it includes no street address or review ratings. Keep these static details in `index.html` aligned with `src/data/business.ts` when business information changes.
 
-Vite copies `public/robots.txt`, `public/sitemap.xml`, favicon assets, and the branded social-preview image directly into the production root. The sitemap lists the homepage and `/privacy-policy.html`, which has its own canonical URL. Browser icons are 32 and 192 pixels, with a 180-pixel Apple touch icon. The hero uses a resized logo with explicit dimensions and eager loading; the About photograph remains lazy-loaded. Original branding files are retained. Page content continues to render through React, so crawlers need JavaScript to read the page sections.
+Vite copies `public/robots.txt`, `public/sitemap.xml`, and the branded social-preview image directly into the production root. The sitemap lists the homepage and `/privacy-policy.html`, which has its own canonical URL. Browser favicons use the original CGT PNG artwork. The hero uses a resized logo with explicit dimensions and eager loading; the About photograph remains lazy-loaded. Original branding files are retained. Page content continues to render through React, so crawlers need JavaScript to read the page sections.
 
 ## Stack
 
