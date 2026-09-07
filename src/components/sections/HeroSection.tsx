@@ -1,4 +1,4 @@
-import logoBadge from "../../assets/CGT Enterprises REV.png";
+import logoBadge from "../../assets/images/cgt-hero.png";
 import { SectionContainer } from "../layout/SectionContainer";
 import { Button } from "../ui/Button";
 
@@ -13,9 +13,9 @@ export function HeroSection() {
             <img
               alt="CGT Enterprises logo badge"
               className="hero-section__media-image"
-              height="2000"
+              height="986"
               src={logoBadge}
-              width="2000"
+              width="1024"
             />
           </div>
         </div>
@@ -23,7 +23,7 @@ export function HeroSection() {
           <header className="hero-section__header">
         <p className="hero-section__eyebrow">Family Owned Business</p>
         <h1 className="hero-section__title" id="hero-title">
-          Hauling, recycling, and <span className="hero-section__title-accent">delivery.</span>
+          Hauling, recycling, and delivery <span className="hero-section__title-accent">in Yellowknife.</span>
         </h1>
       </header>
           <p className="hero-section__summary">
